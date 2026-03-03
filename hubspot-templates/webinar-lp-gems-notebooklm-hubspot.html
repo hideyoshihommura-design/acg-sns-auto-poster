@@ -1,7 +1,8 @@
 <!--
   templateType: page
   isAvailableForNewContent: true
-  label: ウェビナーLP - 介護×生成AI実践（Gems×NotebookLM）
+  label: ウェビナーLP - 介護×生成AI実践（Gems×NotebookLM）HubSpot版
+  screenshotPath: ../images/webinar-gems-notebooklm-hubspot-preview.png
 -->
 <!DOCTYPE html>
 <html lang="ja">
@@ -186,7 +187,8 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
       <span>Zoom開催</span>
       <span>デモあり</span>
     </div>
-    <h1 class="text-huge hero-title">介護×生成AI<br><span class="text-accent">実践</span>ウェビナー</h1>
+    {% module "hero_title" path="@hubspot/rich_text", label="ヒーロータイトル",
+      html="<h1 class='text-huge hero-title'>介護×生成AI<br><span class='text-accent'>実践</span>ウェビナー</h1>" %}
     <p class="hero-sub">Gems × NotebookLMで社内規定を活用する</p>
     <div class="hero-cta">
       <a href="#form" class="cta-btn">無料ウェビナーに申し込む</a>
@@ -201,23 +203,24 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
     <div class="section-header">
       <h2 class="text-large section-title">こんな<span class="highlight">課題</span>ありませんか？</h2>
     </div>
-    <div class="problem-grid">
-      <div class="problem-card">
-        <div class="problem-icon">📚</div>
-        <h3>規定集、誰も開かない</h3>
-        <p>分厚いマニュアルがあっても、忙しい現場では確認されない</p>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">🔄</div>
-        <h3>同じ質問を何度も受ける</h3>
-        <p>「この場合どうするんでしたっけ？」が毎日繰り返される</p>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">👶</div>
-        <h3>新人教育に時間がかかる</h3>
-        <p>規定・指針を覚えるまで戦力にならない</p>
-      </div>
-    </div>
+    {% module "problems" path="@hubspot/rich_text", label="問題カード",
+      html="<div class='problem-grid'>
+        <div class='problem-card'>
+          <div class='problem-icon'>📚</div>
+          <h3>規定集、誰も開かない</h3>
+          <p>分厚いマニュアルがあっても、忙しい現場では確認されない</p>
+        </div>
+        <div class='problem-card'>
+          <div class='problem-icon'>🔄</div>
+          <h3>同じ質問を何度も受ける</h3>
+          <p>「この場合どうするんでしたっけ？」が毎日繰り返される</p>
+        </div>
+        <div class='problem-card'>
+          <div class='problem-icon'>👶</div>
+          <h3>新人教育に時間がかかる</h3>
+          <p>規定・指針を覚えるまで戦力にならない</p>
+        </div>
+      </div>" %}
   </div>
 </section>
 
@@ -228,30 +231,31 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
       <h2 class="text-large section-title"><span class="highlight">Gems × NotebookLM</span>とは？</h2>
       <p class="section-lead">Googleの2つのAIツールを組み合わせた新しい活用法</p>
     </div>
-    <div class="whatis-container">
-      <div class="whatis-card">
-        <h3>📘 NotebookLM</h3>
-        <p>ドキュメントをアップロードすると、その内容だけを元に回答するAI</p>
-        <ul>
-          <li>社内規定PDFをアップロード</li>
-          <li>ソース限定で正確な回答</li>
-          <li>出典を明示してくれる</li>
-        </ul>
+    {% module "whatis" path="@hubspot/rich_text", label="ツール説明",
+      html="<div class='whatis-container'>
+        <div class='whatis-card'>
+          <h3>📘 NotebookLM</h3>
+          <p>ドキュメントをアップロードすると、その内容だけを元に回答するAI</p>
+          <ul>
+            <li>社内規定PDFをアップロード</li>
+            <li>ソース限定で正確な回答</li>
+            <li>出典を明示してくれる</li>
+          </ul>
+        </div>
+        <div class='whatis-card'>
+          <h3>💎 Gems</h3>
+          <p>カスタム指示を設定できる「自分専用のGemini」</p>
+          <ul>
+            <li>役割を設定（例：介護規定アドバイザー）</li>
+            <li>回答スタイルをカスタマイズ</li>
+            <li>繰り返し使える</li>
+          </ul>
+        </div>
       </div>
-      <div class="whatis-card">
-        <h3>💎 Gems</h3>
-        <p>カスタム指示を設定できる「自分専用のGemini」</p>
-        <ul>
-          <li>役割を設定（例：介護規定アドバイザー）</li>
-          <li>回答スタイルをカスタマイズ</li>
-          <li>繰り返し使える</li>
-        </ul>
-      </div>
-    </div>
-    <div class="synergy-box">
-      <h3>🔗 組み合わせると…</h3>
-      <p>「社内規定に基づいて、わかりやすく回答する専用AIアシスタント」が完成</p>
-    </div>
+      <div class='synergy-box'>
+        <h3>🔗 組み合わせると…</h3>
+        <p>「社内規定に基づいて、わかりやすく回答する専用AIアシスタント」が完成</p>
+      </div>" %}
   </div>
 </section>
 
@@ -262,41 +266,42 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
       <h2 class="text-large section-title">介護現場の<span class="highlight">活用例</span></h2>
       <p class="section-lead">ウェビナーでは実際にデモをお見せします</p>
     </div>
-    <div class="usecase-grid">
-      <div class="usecase-card">
-        <div class="usecase-num">01</div>
-        <div class="usecase-content">
-          <h3>夜勤スタッフの緊急対応</h3>
-          <p>深夜に判断を迫られる場面で、規定をすぐに確認できる</p>
-          <div class="usecase-demo">
-            <div class="demo-q">👤「利用者が転倒しました。報告手順を教えてください」</div>
-            <div class="demo-a">🤖「事故報告書の作成手順は以下の通りです。まず…」（規定p.23より）</div>
+    {% module "usecases" path="@hubspot/rich_text", label="ユースケース",
+      html="<div class='usecase-grid'>
+        <div class='usecase-card'>
+          <div class='usecase-num'>01</div>
+          <div class='usecase-content'>
+            <h3>夜勤スタッフの緊急対応</h3>
+            <p>深夜に判断を迫られる場面で、規定をすぐに確認できる</p>
+            <div class='usecase-demo'>
+              <div class='demo-q'>👤「利用者が転倒しました。報告手順を教えてください」</div>
+              <div class='demo-a'>🤖「事故報告書の作成手順は以下の通りです。まず…」（規定p.23より）</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-num">02</div>
-        <div class="usecase-content">
-          <h3>新人教育の効率化</h3>
-          <p>先輩に聞きにくいことも、AIなら気軽に質問できる</p>
-          <div class="usecase-demo">
-            <div class="demo-q">👤「入浴介助の基本手順と注意点を教えて」</div>
-            <div class="demo-a">🤖「入浴介助マニュアルに基づくと、以下の5ステップで…」（指針p.45より）</div>
+        <div class='usecase-card'>
+          <div class='usecase-num'>02</div>
+          <div class='usecase-content'>
+            <h3>新人教育の効率化</h3>
+            <p>先輩に聞きにくいことも、AIなら気軽に質問できる</p>
+            <div class='usecase-demo'>
+              <div class='demo-q'>👤「入浴介助の基本手順と注意点を教えて」</div>
+              <div class='demo-a'>🤖「入浴介助マニュアルに基づくと、以下の5ステップで…」（指針p.45より）</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="usecase-card">
-        <div class="usecase-num">03</div>
-        <div class="usecase-content">
-          <h3>監査対応の準備</h3>
-          <p>規定の要約や資料作成をAIがサポート</p>
-          <div class="usecase-demo">
-            <div class="demo-q">👤「身体拘束に関する規定を要約して」</div>
-            <div class="demo-a">🤖「身体拘束廃止に関する規定の要点は以下の3点です…」（規定p.78-82より）</div>
+        <div class='usecase-card'>
+          <div class='usecase-num'>03</div>
+          <div class='usecase-content'>
+            <h3>監査対応の準備</h3>
+            <p>規定の要約や資料作成をAIがサポート</p>
+            <div class='usecase-demo'>
+              <div class='demo-q'>👤「身体拘束に関する規定を要約して」</div>
+              <div class='demo-a'>🤖「身体拘束廃止に関する規定の要点は以下の3点です…」（規定p.78-82より）</div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </div>" %}
   </div>
 </section>
 
@@ -312,23 +317,24 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
     <div class="section-header">
       <h2 class="text-large section-title">このウェビナーで<span class="highlight">わかること</span></h2>
     </div>
-    <div class="benefit-grid">
-      <div class="benefit-card">
-        <div class="benefit-icon">🎯</div>
-        <h3>Gems × NotebookLMの基本</h3>
-        <p>2つのツールの違いと連携方法をゼロから解説</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">🎬</div>
-        <h3>介護現場での実演デモ</h3>
-        <p>実際の規定を使ったAI活用を画面共有で見られる</p>
-      </div>
-      <div class="benefit-card">
-        <div class="benefit-icon">📋</div>
-        <h3>明日から始める設定手順</h3>
-        <p>難しい設定は不要。すぐに試せる方法をお伝えします</p>
-      </div>
-    </div>
+    {% module "benefits" path="@hubspot/rich_text", label="ベネフィット",
+      html="<div class='benefit-grid'>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>🎯</div>
+          <h3>Gems × NotebookLMの基本</h3>
+          <p>2つのツールの違いと連携方法をゼロから解説</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>🎬</div>
+          <h3>介護現場での実演デモ</h3>
+          <p>実際の規定を使ったAI活用を画面共有で見られる</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>📋</div>
+          <h3>明日から始める設定手順</h3>
+          <p>難しい設定は不要。すぐに試せる方法をお伝えします</p>
+        </div>
+      </div>" %}
   </div>
 </section>
 
@@ -338,28 +344,29 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
     <div class="section-header">
       <h2 class="text-large section-title">導入は<span class="highlight">かんたん</span>4ステップ</h2>
     </div>
-    <div class="steps-container">
-      <div class="step-card">
-        <div class="step-num">1</div>
-        <h3>規定をPDF化</h3>
-        <p>既存の規定・指針をPDFにまとめる</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">2</div>
-        <h3>NotebookLMに登録</h3>
-        <p>PDFをアップロードするだけ</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">3</div>
-        <h3>Gemsを設定</h3>
-        <p>「介護規定アドバイザー」として指示を設定</p>
-      </div>
-      <div class="step-card">
-        <div class="step-num">4</div>
-        <h3>スタッフに共有</h3>
-        <p>URLを共有すれば全員が使える</p>
-      </div>
-    </div>
+    {% module "steps" path="@hubspot/rich_text", label="ステップ",
+      html="<div class='steps-container'>
+        <div class='step-card'>
+          <div class='step-num'>1</div>
+          <h3>規定をPDF化</h3>
+          <p>既存の規定・指針をPDFにまとめる</p>
+        </div>
+        <div class='step-card'>
+          <div class='step-num'>2</div>
+          <h3>NotebookLMに登録</h3>
+          <p>PDFをアップロードするだけ</p>
+        </div>
+        <div class='step-card'>
+          <div class='step-num'>3</div>
+          <h3>Gemsを設定</h3>
+          <p>「介護規定アドバイザー」として指示を設定</p>
+        </div>
+        <div class='step-card'>
+          <div class='step-num'>4</div>
+          <h3>スタッフに共有</h3>
+          <p>URLを共有すれば全員が使える</p>
+        </div>
+      </div>" %}
   </div>
 </section>
 
@@ -371,13 +378,14 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
     </div>
     <div class="details-box">
       <div class="details-header">ウェビナー詳細</div>
-      <div class="details-row"><span class="details-label">テーマ</span><span class="details-value">介護×生成AI 実践ウェビナー</span></div>
-      <div class="details-row"><span class="details-label">内容</span><span class="details-value">Gems × NotebookLMで社内規定を活用する方法</span></div>
-      <div class="details-row"><span class="details-label">日時</span><span class="details-value">※決定次第ご案内します</span></div>
-      <div class="details-row"><span class="details-label">形式</span><span class="details-value">Zoom（オンライン）</span></div>
-      <div class="details-row"><span class="details-label">参加費</span><span class="details-value"><span class="price">無料</span></span></div>
-      <div class="details-row"><span class="details-label">対象</span><span class="details-value">介護事業者（経営者・施設長・管理者）</span></div>
-      <div class="details-row"><span class="details-label">録画</span><span class="details-value">参加者全員に配信</span></div>
+      {% module "event_details" path="@hubspot/rich_text", label="開催概要",
+        html="<div class='details-row'><span class='details-label'>テーマ</span><span class='details-value'>介護×生成AI 実践ウェビナー</span></div>
+        <div class='details-row'><span class='details-label'>内容</span><span class='details-value'>Gems × NotebookLMで社内規定を活用する方法</span></div>
+        <div class='details-row'><span class='details-label'>日時</span><span class='details-value'>※決定次第ご案内します</span></div>
+        <div class='details-row'><span class='details-label'>形式</span><span class='details-value'>Zoom（オンライン）</span></div>
+        <div class='details-row'><span class='details-label'>参加費</span><span class='details-value'><span class='price'>無料</span></span></div>
+        <div class='details-row'><span class='details-label'>対象</span><span class='details-value'>介護事業者（経営者・施設長・管理者）</span></div>
+        <div class='details-row'><span class='details-label'>録画</span><span class='details-value'>参加者全員に配信</span></div>" %}
     </div>
   </div>
 </section>
@@ -389,11 +397,11 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
     <p class="section-lead">日程決定時に優先案内します</p>
   </div>
   <div class="form-wrapper">
-    {% form
-      form_to_use="{{ module.form.form_id }}"
-      response_type="{{ module.form.response_type }}"
-      message="{{ module.form.message }}"
-    %}
+    {% module "webinar_form" path="@hubspot/form", label="ウェビナー申込みフォーム",
+      form={
+        "response_type": "inline",
+        "message": "お申し込みありがとうございます！<br>日程が決まり次第、メールでご案内します。"
+      } %}
   </div>
   <p class="form-note">※ 営業電話は一切いたしません</p>
 </section>
@@ -405,22 +413,23 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
       <h2 class="text-large section-title">よくある<span class="highlight">質問</span></h2>
     </div>
     <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q">NotebookLMやGemsは無料で使えますか？</div>
-        <div class="faq-a">はい、どちらもGoogleアカウントがあれば無料で利用できます。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">ITに詳しくなくても大丈夫ですか？</div>
-        <div class="faq-a">大丈夫です。ウェビナーでは画面を見せながら丁寧に解説します。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">当日参加できません。</div>
-        <div class="faq-a">録画を配信します。お申し込みだけでもどうぞ。</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">社内規定をアップロードしてセキュリティは大丈夫？</div>
-        <div class="faq-a">NotebookLMはGoogleのセキュリティ基準に準拠しています。詳しくはウェビナーで解説します。</div>
-      </div>
+      {% module "faq_content" path="@hubspot/rich_text", label="FAQ",
+        html="<div class='faq-item'>
+          <div class='faq-q'>NotebookLMやGemsは無料で使えますか？</div>
+          <div class='faq-a'>はい、どちらもGoogleアカウントがあれば無料で利用できます。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>ITに詳しくなくても大丈夫ですか？</div>
+          <div class='faq-a'>大丈夫です。ウェビナーでは画面を見せながら丁寧に解説します。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>当日参加できません。</div>
+          <div class='faq-a'>録画を配信します。お申し込みだけでもどうぞ。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>社内規定をアップロードしてセキュリティは大丈夫？</div>
+          <div class='faq-a'>NotebookLMはGoogleのセキュリティ基準に準拠しています。詳しくはウェビナーで解説します。</div>
+        </div>" %}
     </div>
   </div>
 </section>
@@ -434,7 +443,8 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
 
 <!-- ========== フッター ========== -->
 <footer class="lp-footer">
-  <p>© 2026 ホリエモンAI学校 介護校 ｜ <a href="https://fc.horiemon.ai/kaigo">ホーム</a> ｜ <a href="https://fc.horiemon.ai/kaigo/privacy">プライバシーポリシー</a></p>
+  {% module "footer_text" path="@hubspot/rich_text", label="フッター",
+    html="<p>© 2026 ホリエモンAI学校 介護校 ｜ <a href='https://fc.horiemon.ai/kaigo'>ホーム</a> ｜ <a href='https://fc.horiemon.ai/kaigo/privacy'>プライバシーポリシー</a></p>" %}
 </footer>
 
 {{ standard_footer_includes }}
