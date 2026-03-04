@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介護現場のAI活用例｜ホリエモンAI学校 介護校</title>
+<style>
+/* ========== Base ========== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --c-primary: #1e3a5f;
+  --c-primary-light: #e8eef5;
+  --c-accent: #dc2626;
+  --c-green: #16a34a;
+  --c-green-light: #f0fdf4;
+  --c-green-border: #bbf7d0;
+  --c-gray: #6b7280;
+  --c-gray-light: #f3f4f6;
+  --c-gray-border: #e5e7eb;
+  --c-text: #1a1a2e;
+  --c-text-sub: #555;
+  --c-bg: #ffffff;
+  --radius: 10px;
+}
+html { font-size: 15px; }
+body {
+  font-family: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+  color: var(--c-text);
+  background: var(--c-bg);
+  line-height: 1.8;
+}
+
+/* ========== Print ========== */
+@media print {
+  body { font-size: 11px; }
+  .page-break { page-break-before: always; }
+  .cover { page-break-after: always; }
+  .no-print { display: none; }
+  section { padding: 1.5rem 2rem; }
+}
+
+/* ========== Layout ========== */
+.container { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
+section { padding: 2.5rem 0; }
+section + section { border-top: 1px solid var(--c-gray-border); }
+
+/* ========== Cover ========== */
+.cover {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8e 50%, #1e3a5f 100%);
+  color: #fff;
+  padding: 6rem 2rem;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cover-inner { max-width: 700px; }
+.cover-label {
+  font-size: .85rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+  margin-bottom: 1.5rem;
+}
+.cover h1 {
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1.4;
+  margin-bottom: 1.5rem;
+}
+.cover h1 span { color: #fbbf24; }
+.cover-sub {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,.7);
+  margin-bottom: 3rem;
+  line-height: 1.8;
+}
+.cover-badge {
+  display: inline-block;
+  padding: .5rem 1.5rem;
+  border: 2px solid rgba(255,255,255,.3);
+  border-radius: 30px;
+  font-size: .9rem;
+  color: rgba(255,255,255,.9);
+  letter-spacing: .05em;
+}
+
+/* ========== Typography ========== */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--c-primary);
+  margin-bottom: 1.5rem;
+  padding-bottom: .5rem;
+  border-bottom: 3px solid var(--c-primary);
+}
+h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 2rem 0 .8rem;
+  color: var(--c-text);
+}
+h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 1.2rem 0 .5rem;
+}
+p { margin-bottom: .8rem; }
+
+/* ========== Use Case Number ========== */
+.usecase-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: var(--c-primary);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-right: .6rem;
+  vertical-align: middle;
+}
+.usecase-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--c-primary);
+  margin-bottom: .3rem;
+}
+.usecase-subtitle {
+  font-size: 1rem;
+  color: var(--c-text-sub);
+  margin-bottom: 1.5rem;
+}
+
+/* ========== Problem List ========== */
+.problems {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  margin: 1rem 0;
+}
+.problems li {
+  margin-bottom: .4rem;
+  list-style: none;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: .95rem;
+}
+.problems li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--c-accent);
+  font-weight: 700;
+}
+
+/* ========== Before / After ========== */
+.ba-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+@media (max-width: 600px) {
+  .ba-grid { grid-template-columns: 1fr; }
+}
+.ba-box {
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  font-size: .9rem;
+  line-height: 1.7;
+}
+.ba-before {
+  background: var(--c-gray-light);
+  border: 1px solid var(--c-gray-border);
+}
+.ba-after {
+  background: var(--c-green-light);
+  border: 1px solid var(--c-green-border);
+}
+.ba-label {
+  font-weight: 800;
+  font-size: .85rem;
+  margin-bottom: .5rem;
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+}
+.ba-before .ba-label { color: var(--c-gray); }
+.ba-after .ba-label { color: var(--c-green); }
+
+/* ========== Steps ========== */
+.steps {
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+.steps li {
+  counter-increment: step;
+  padding: .8rem 1rem .8rem 3.5rem;
+  position: relative;
+  margin-bottom: .5rem;
+  background: var(--c-primary-light);
+  border-radius: var(--radius);
+  font-size: .95rem;
+}
+.steps li::before {
+  content: 'STEP ' counter(step);
+  position: absolute;
+  left: .8rem;
+  top: .8rem;
+  font-size: .7rem;
+  font-weight: 800;
+  color: var(--c-primary);
+  letter-spacing: .05em;
+}
+
+/* ========== Prompt Box ========== */
+.prompt-box {
+  background: #1e293b;
+  color: #e2e8f0;
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius);
+  margin: .8rem 0;
+  font-family: "Courier New", monospace;
+  font-size: .85rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  position: relative;
+}
+.prompt-label {
+  font-size: .7rem;
+  font-weight: 700;
+  color: #fbbf24;
+  letter-spacing: .1em;
+  margin-bottom: .5rem;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+/* ========== Effect Table ========== */
+.effect-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+.effect-table th {
+  background: var(--c-primary);
+  color: #fff;
+  padding: .6rem .8rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: .85rem;
+}
+.effect-table td {
+  padding: .6rem .8rem;
+  border-bottom: 1px solid var(--c-gray-border);
+}
+.effect-table tr:nth-child(even) td {
+  background: #f8fafc;
+}
+.effect-table .highlight {
+  color: var(--c-green);
+  font-weight: 700;
+}
+
+/* ========== Callout ========== */
+.callout {
+  border-left: 4px solid var(--c-primary);
+  background: var(--c-primary-light);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: .9rem;
+}
+.callout strong { color: var(--c-primary); }
+
+/* ========== Scene Card ========== */
+.scene-card {
+  background: #f8fafc;
+  border: 1px solid var(--c-gray-border);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.5rem;
+  margin: .8rem 0;
+}
+.scene-card h4 {
+  font-size: .95rem;
+  margin: 0 0 .5rem;
+}
+.scene-q {
+  background: #fff;
+  border: 1px solid var(--c-gray-border);
+  border-radius: 8px;
+  padding: .6rem 1rem;
+  margin: .5rem 0;
+  font-size: .88rem;
+  color: var(--c-primary);
+}
+.scene-a {
+  background: var(--c-green-light);
+  border: 1px solid var(--c-green-border);
+  border-radius: 8px;
+  padding: .6rem 1rem;
+  margin: .5rem 0;
+  font-size: .85rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+/* ========== Summary Section ========== */
+.summary-box {
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8e 100%);
+  color: #fff;
+  border-radius: var(--radius);
+  padding: 2rem;
+  margin: 1.5rem 0;
+}
+.summary-box h3 {
+  color: #fff;
+  font-size: 1.2rem;
+  margin: 0 0 1rem;
+}
+.summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .9rem;
+}
+.summary-table th {
+  padding: .5rem .8rem;
+  text-align: left;
+  color: rgba(255,255,255,.6);
+  font-size: .8rem;
+  border-bottom: 1px solid rgba(255,255,255,.2);
+}
+.summary-table td {
+  padding: .6rem .8rem;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+}
+.summary-table .num { color: #fbbf24; font-weight: 700; }
+
+/* ========== Feature Grid ========== */
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+@media (max-width: 600px) {
+  .feature-grid { grid-template-columns: 1fr; }
+}
+.feature-item {
+  background: #f8fafc;
+  border: 1px solid var(--c-gray-border);
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+}
+.feature-item h4 {
+  margin: 0 0 .3rem;
+  font-size: .95rem;
+  color: var(--c-primary);
+}
+.feature-item p {
+  font-size: .88rem;
+  color: var(--c-text-sub);
+  margin: 0;
+}
+
+/* ========== CTA ========== */
+.cta-section {
+  text-align: center;
+  padding: 3rem 0;
+}
+.cta-section h2 {
+  border-bottom: none;
+  font-size: 1.6rem;
+}
+.cta-btn {
+  display: inline-block;
+  padding: .8rem 2.5rem;
+  background: var(--c-accent);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  margin: .5rem;
+}
+.cta-btn-sub {
+  background: transparent;
+  color: var(--c-primary);
+  border: 2px solid var(--c-primary);
+}
+
+/* ========== Footer ========== */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--c-text-sub);
+  font-size: .85rem;
+  border-top: 1px solid var(--c-gray-border);
+}
+
+/* ========== Notebook LM Box ========== */
+.tool-intro {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.tool-intro h4 {
+  color: var(--c-primary);
+  margin: 0 0 .5rem;
+  font-size: 1.05rem;
+}
+.tool-features {
+  list-style: none;
+  padding: 0;
+  margin: .5rem 0 0;
+}
+.tool-features li {
+  padding: .3rem 0 .3rem 1.5rem;
+  position: relative;
+  font-size: .92rem;
+}
+.tool-features li::before {
+  content: attr(data-icon);
+  position: absolute;
+  left: 0;
+}
+
+/* ========== Print Button ========== */
+.print-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  padding: .8rem 1.5rem;
+  background: var(--c-primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  z-index: 100;
+  font-family: "Noto Sans JP", sans-serif;
+}
+.print-btn:hover { background: #2d5a8e; }
+@media print { .print-btn { display: none; } }
+</style>
+</head>
+<body>
+
+<!-- 印刷ボタン -->
+<button class="print-btn no-print" onclick="window.print()">PDF に保存</button>
+
+<!-- ========== 表紙 ========== -->
+<div class="cover">
+<div class="cover-inner">
+<p class="cover-label">ホリエモンAI学校 介護校</p>
+<h1>介護現場の「困った」を<br>AIで解決する<span>5</span>つの方法</h1>
+<p class="cover-sub">記録・ケアプラン・シフト・送迎・研修——<br>現場の書類業務をAIで自動化し、<br>スタッフが「ケア」に集中できる環境を作ります。</p>
+<span class="cover-badge">受講者の95%がAI未経験からスタート</span>
+</div>
+</div>
+
+<!-- ========== はじめに ========== -->
+<div class="container">
+<section>
+<h2>はじめに</h2>
+<p>介護スタッフの業務時間の約3〜4割が、記録・書類作成に費やされていると言われています。</p>
+<p>ホリエモンAI学校 介護校では、<strong>介護・在宅医療に特化した240以上の動画講義</strong>で、現場スタッフが「明日から使える」AI活用スキルを身につけることができます。</p>
+<p>この資料では、受講後すぐに実践できる代表的な活用例を5つご紹介します。</p>
+</section>
+
+<!-- ========== 活用例 1 ========== -->
+<section class="page-break">
+<div class="usecase-title"><span class="usecase-num">1</span>介護記録の作成</div>
+<p class="usecase-subtitle">音声で喋るだけで介護記録が完成</p>
+
+<h3>こんな課題はありませんか？</h3>
+<ul class="problems">
+<li>1人あたり毎日30分〜1時間、介護記録の作成に時間を取られている</li>
+<li>夜勤明けのスタッフが疲労の中で記録を書いている</li>
+<li>ケアの合間に手が離せず、その場でメモを取れないことがある</li>
+<li>記録の書き方にばらつきがあり、監査時に指摘を受けることがある</li>
+</ul>
+
+<h3>AIでこう変わります</h3>
+<div class="ba-grid">
+<div class="ba-box ba-before">
+<div class="ba-label">&#x274C; Before</div>
+利用者の様子を思い出しながら、一から文章を手入力。1件あたり15〜20分。夜勤帯の記録はまとめて翌朝書くことも。介助中はメモが取れず、後で思い出せないことも。書き方が人によって異なり、統一感がない。
+</div>
+<div class="ba-box ba-after">
+<div class="ba-label">&#x2705; After</div>
+ケアの直後にスマホで30秒〜1分、声で記録を残す。「佐藤さん、朝食全量摂取、むせなし」——これだけでOK。AIが音声を文字に起こし、介護記録のフォーマットに沿った文章を自動生成。<strong>1件あたり3〜5分で完了。</strong>文体・用語が統一され、監査対応もスムーズに。
+</div>
+</div>
+
+<h3>具体的な使い方</h3>
+<ol class="steps">
+<li>ケアの直後にスマホの音声入力で利用者の様子を話す（30秒〜1分）</li>
+<li>AIが音声を自動で文字起こし</li>
+<li>「この内容を介護記録として整えてください」と指示</li>
+<li>フォーマットに沿った記録文が完成 → 確認して終了</li>
+</ol>
+
+<div class="callout">
+<strong>音声入力のメリット：</strong>手がふさがっている介助中や移動中でも記録を残せます。記憶が新鮮なうちに話すので、情報の抜け漏れも防げます。
+</div>
+
+<h3>AIへの指示文の例</h3>
+<div class="prompt-box"><div class="prompt-label">PROMPT</div>以下は介護スタッフが音声入力で残した記録メモです。
+介護記録のフォーマットに整えてください。
+客観的な表現を使い、バイタル・食事・排泄・活動・特記事項の
+項目に分けて記載してください。話し言葉は書き言葉に直してください。
+
+音声メモ：
+「佐藤さん、朝ごはん全部食べました、むせはなかったです。
+血圧128の78、熱は36.4。午前中のレクに参加して塗り絵を
+楽しそうにやってました。10時にトイレ誘導して排尿ありました。
+お昼ご飯のあとに足が痛いって言ってたので看護師さんに伝えました。」</div>
+
+<h3>期待できる効果</h3>
+<table class="effect-table">
+<thead><tr><th>指標</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>記録作成時間（1件）</td><td>15〜20分</td><td class="highlight">3〜5分</td></tr>
+<tr><td>1日の削減時間（10件）</td><td>—</td><td class="highlight">約2〜3時間</td></tr>
+<tr><td>フォーマット統一率</td><td>ばらつきあり</td><td class="highlight">ほぼ100%</td></tr>
+<tr><td>介助中の記録</td><td>後でまとめて入力</td><td class="highlight">音声でその場で記録可能</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ========== 活用例 2 ========== -->
+<section class="page-break">
+<div class="usecase-title"><span class="usecase-num">2</span>ケアプランの自動作成</div>
+<p class="usecase-subtitle">アセスメント中に喋るだけで、訪問当日にプラン完成</p>
+
+<h3>こんな課題はありませんか？</h3>
+<ul class="problems">
+<li>ケアプランの文章作成に時間がかかり、本来のアセスメントに集中できない</li>
+<li>アセスメント訪問の後、事務所に戻ってから改めて入力する二度手間がある</li>
+<li>定型的な表現が多くなりがちで、利用者一人ひとりに合った計画が書きにくい</li>
+<li>計画の見直し時期が重なると、対応が追いつかない</li>
+</ul>
+
+<h3>AIでこう変わります</h3>
+<div class="ba-grid">
+<div class="ba-box ba-before">
+<div class="ba-label">&#x274C; Before</div>
+アセスメント訪問でメモを取り、事務所に戻ってから情報を整理してケアプランを手入力。1件あたり1〜2時間。過去のプランをコピーして修正するため、内容が画一的になりがち。訪問から時間が経つと、利用者の細かな様子を思い出せないことも。
+</div>
+<div class="ba-box ba-after">
+<div class="ba-label">&#x2705; After</div>
+アセスメント訪問中にスマホで音声録音。利用者やご家族との会話、観察した内容を喋りながら記録するだけで、AIがアセスメント情報を自動抽出→ケアプランを自動作成。<strong>事務所に戻る頃にはプランの原案が出来上がっている。</strong>1件あたり15〜30分で完了。
+</div>
+</div>
+
+<h3>具体的な使い方</h3>
+<ol class="steps">
+<li>訪問中にスマホで音声入力しながら、利用者の状態・意向・生活環境を話す</li>
+<li>AIが音声を文字起こし → アセスメント項目に自動分類</li>
+<li>長期目標・短期目標・サービス内容まで一気に自動作成</li>
+<li>ケアマネジャーが内容を確認・最終調整して完成</li>
+</ol>
+
+<div class="callout">
+<strong>ポイント：</strong>アセスメントしながら喋るだけで、訪問→記録→プラン作成の工程が一つに。「訪問して、戻って、入力して」の二度手間がなくなります。
+</div>
+
+<h3>AIへの指示文の例</h3>
+<div class="prompt-box"><div class="prompt-label">PROMPT</div>以下はアセスメント訪問中にケアマネジャーが音声入力した内容です。
+この情報をもとに、居宅サービス計画書（第2表）を作成してください。
+長期目標・短期目標・サービス内容・頻度を具体的に記載してください。
+
+音声メモ：
+「田中花子さん、80歳女性、要介護2です。
+左膝の変形性関節症があって、歩行には杖を使っています。
+室内は手すりを使って何とか移動できるけど、外出はほぼできない状態。
+認知機能は長谷川式28点でしっかりされています。
+ご本人は『できるだけこの家で暮らしたい、買い物にも行きたい』と。
+娘さんは『転倒が一番心配。週に何回かデイサービスに行ってほしい』と。
+今のサービスは訪問介護が週2回と、福祉用具で杖と手すりを借りています。
+浴室の段差が気になりました。手すりの追加を検討したほうがいいかも。
+食事は自分で作れているけど、立ち仕事がつらそうでした。」</div>
+
+<h3>期待できる効果</h3>
+<table class="effect-table">
+<thead><tr><th>指標</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>作成時間（1件）</td><td>1〜2時間</td><td class="highlight">15〜30分</td></tr>
+<tr><td>アセスメント→完成まで</td><td>訪問後、別日に作成</td><td class="highlight">訪問当日中に完成</td></tr>
+<tr><td>見直し対応</td><td>1週間以上</td><td class="highlight">1〜2日</td></tr>
+<tr><td>文章の具体性</td><td>定型的</td><td class="highlight">訪問時の生の情報が反映</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ========== 活用例 3 ========== -->
+<section class="page-break">
+<div class="usecase-title"><span class="usecase-num">3</span>シフト表の自動作成</div>
+<p class="usecase-subtitle">複雑な条件もAIにおまかせ</p>
+
+<h3>こんな課題はありませんか？</h3>
+<ul class="problems">
+<li>毎月のシフト作成に管理者が丸1日〜2日かかっている</li>
+<li>夜勤回数・連勤制限・資格配置など、考慮すべき条件が多すぎる</li>
+<li>急な欠勤時の調整が大変で、管理者の負担が集中している</li>
+</ul>
+
+<h3>AIでこう変わります</h3>
+<div class="ba-grid">
+<div class="ba-box ba-before">
+<div class="ba-label">&#x274C; Before</div>
+スタッフの希望休・資格・労働時間制限をExcelや紙で確認しながらパズルのように組み立てる。完成まで丸1日以上。1人変更するとドミノ式に修正が必要になることも。
+</div>
+<div class="ba-box ba-after">
+<div class="ba-label">&#x2705; After</div>
+スタッフの条件（希望休・資格・夜勤上限等）をAIに渡すと、配置基準を満たすシフト案を<strong>複数パターン提案。</strong>所要時間は2〜3時間に短縮。急な変更にも素早く対応可能。
+</div>
+</div>
+
+<h3>具体的な使い方</h3>
+<ol class="steps">
+<li>スタッフの情報（氏名・資格・勤務形態・希望休・夜勤上限等）をまとめる</li>
+<li>施設の配置基準（日勤帯の最低人数・夜勤の人数等）を条件として設定</li>
+<li>AIに「この条件でシフト表を作成してください」と指示</li>
+<li>複数のシフト案から管理者が最終調整して確定</li>
+</ol>
+
+<h3>期待できる効果</h3>
+<table class="effect-table">
+<thead><tr><th>指標</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>シフト作成時間</td><td>丸1日〜2日</td><td class="highlight">2〜3時間</td></tr>
+<tr><td>条件漏れ・配置ミス</td><td>月1〜2回発生</td><td class="highlight">ほぼゼロ</td></tr>
+<tr><td>急な変更への対応</td><td>数時間</td><td class="highlight">30分〜1時間</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ========== 活用例 4 ========== -->
+<section class="page-break">
+<div class="usecase-title"><span class="usecase-num">4</span>送迎表の自動作成</div>
+<p class="usecase-subtitle">最適ルートを瞬時に計算、キャンセルにも即対応</p>
+
+<h3>こんな課題はありませんか？</h3>
+<ul class="problems">
+<li>毎日の送迎ルート・時間割の作成に、担当者が30分〜1時間かかっている</li>
+<li>当日の欠席連絡が入るたびに、ルートを一から組み直す必要がある</li>
+<li>利用者の住所・車いす対応・乗車時間の希望など、条件が多すぎる</li>
+<li>ベテランの「頭の中のルート」に依存していて、その人が休むと回らない</li>
+</ul>
+
+<h3>AIでこう変わります</h3>
+<div class="ba-grid">
+<div class="ba-box ba-before">
+<div class="ba-label">&#x274C; Before</div>
+利用者の住所一覧と地図を見ながら、手作業でルートを組む。車いす対応・乗車時間の希望・同乗の相性なども考慮。毎朝30分〜1時間かけて送迎表を作成。キャンセルが1件入るとルート全体の組み直しが発生。ベテランの経験と勘に頼っている状態。
+</div>
+<div class="ba-box ba-after">
+<div class="ba-label">&#x2705; After</div>
+利用者リスト・条件をAIに渡すだけで、最適な送迎ルート・車両割り当て・時間割を自動作成。<strong>所要時間は5〜10分。</strong>当日の欠席連絡にも「〇〇さんキャンセル」と伝えるだけでルートを即座に再計算。誰でも同じ品質の送迎表が作れる。
+</div>
+</div>
+
+<h3>具体的な使い方</h3>
+<ol class="steps">
+<li>利用者の情報（住所・車いすの有無・希望到着時間等）をまとめる</li>
+<li>車両情報（台数・定員・車いす対応可否）と施設の住所を設定</li>
+<li>AIに「この条件で送迎ルートと時間割を作成してください」と指示</li>
+<li>ルート案を確認して確定。キャンセル時は該当者を伝えて再作成</li>
+</ol>
+
+<div class="callout">
+<strong>ポイント：</strong>一度情報をまとめれば、日々の作業は「今日の利用者はこの人たち」と伝えるだけ。急な変更にも数分で対応でき、ベテラン依存を解消できます。
+</div>
+
+<h3>期待できる効果</h3>
+<table class="effect-table">
+<thead><tr><th>指標</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>送迎表の作成時間（毎日）</td><td>30分〜1時間</td><td class="highlight">5〜10分</td></tr>
+<tr><td>キャンセル時のルート変更</td><td>15〜30分</td><td class="highlight">数分</td></tr>
+<tr><td>ベテラン不在時の対応</td><td>混乱・遅延</td><td class="highlight">誰でも同品質で作成可能</td></tr>
+<tr><td>乗車時間の最適化</td><td>経験と勘に依存</td><td class="highlight">AIが最短ルートを計算</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ========== 活用例 5 ========== -->
+<section class="page-break">
+<div class="usecase-title"><span class="usecase-num">5</span>NotebookLMで「いつでも聞ける研修」を作る</div>
+<p class="usecase-subtitle">Googleの無料AIツールで、24時間対応のAI研修講師を作る</p>
+
+<h3>こんな課題はありませんか？</h3>
+<ul class="problems">
+<li>新人が入るたびに同じ研修を繰り返している。教える側の負担が大きい</li>
+<li>マニュアルはあるが分厚くて読まれない。「どこに書いてあるか分からない」と聞かれる</li>
+<li>夜勤中や休日に判断に迷っても、すぐに確認できる手段がない</li>
+<li>外国人スタッフが増えているが、日本語のマニュアルだけでは理解しきれない</li>
+</ul>
+
+<div class="tool-intro">
+<h4>NotebookLMとは？</h4>
+<p>Googleが提供する<strong>無料</strong>のAIツールです。マニュアルや研修資料をアップロードすると、<strong>その資料の内容だけを参照して回答するAI</strong>が作れます。アップロードした資料以外の情報は使わないため、<strong>嘘の回答（ハルシネーション）を防げる</strong>のが最大の特徴です。</p>
+<ul class="tool-features">
+<li data-icon="🎧">Audio Overview：資料をポッドキャスト風の音声に自動変換</li>
+<li data-icon="📊">スライド自動生成：研修用プレゼンをPPTX形式で出力</li>
+<li data-icon="💬">質問応答：スタッフがいつでも資料の内容を質問できる</li>
+</ul>
+</div>
+
+<h3>AIでこう変わります</h3>
+<div class="ba-grid">
+<div class="ba-box ba-before">
+<div class="ba-label">&#x274C; Before</div>
+新人が入るたびに先輩スタッフが時間を取って研修を実施。マニュアルは紙やPDFで配布するが、分厚くて読まれない。夜勤中に「この場合どうすれば？」と迷っても確認する手段がない。外国人スタッフはマニュアルの日本語が難しく、理解に時間がかかる。
+</div>
+<div class="ba-box ba-after">
+<div class="ba-label">&#x2705; After</div>
+マニュアル・研修資料をNotebookLMにアップロードするだけで、<strong>「24時間いつでも質問できるAI研修講師」が完成。</strong>夜勤中でもスマホで「転倒時の対応手順は？」と聞けば即回答。Audio Overviewで通勤中に聞ける音声教材も自動生成。スライドも自動作成されるので、研修の準備時間がほぼゼロに。
+</div>
+</div>
+
+<h3>活用シーンの例</h3>
+
+<div class="scene-card">
+<h4>🌙 シーン1：夜勤中の緊急対応</h4>
+<div class="scene-q">「利用者が転倒して頭を打ちました。出血はないですが、意識はあります。どう対応すれば？」</div>
+<div class="scene-a">事故対応マニュアル（p.12-14）に基づき、以下の手順で対応してください。
+1. 利用者を安静にし、バイタルサインを測定
+2. 意識レベルの確認（JCS・GCSで評価）
+3. 看護師（夜間オンコール）に連絡
+4. 事故報告書を作成
+5. 翌朝、ご家族と主治医に報告
+※頭部打撲の場合、24時間は経過観察が必要です。
+（出典：事故対応マニュアル 第3章 p.12-14）</div>
+</div>
+
+<div class="scene-card">
+<h4>📖 シーン2：新人スタッフの自主学習</h4>
+<div class="scene-q">「食事介助で気をつけるポイントを教えてください」</div>
+<div class="scene-a">研修資料「食事介助の基本」（p.5-8）より：
+1. 姿勢：座位を保ち、顎を少し引いた状態にする
+2. ペース：一口の量はティースプーン1杯程度
+3. 声かけ：「お魚ですよ」など、何を食べるか伝える
+4. 観察：むせ・咳・表情の変化に注意
+5. 記録：摂取量・むせの有無・所要時間を記録
+（出典：研修資料「食事介助の基本」p.5-8）</div>
+</div>
+
+<div class="scene-card">
+<h4>🌏 シーン3：外国人スタッフへの対応</h4>
+<div class="scene-q">「排泄介助の手順をやさしい日本語で教えてください」</div>
+<div class="scene-a">排泄介助（はいせつかいじょ）の手順です。
+1. 利用者（りようしゃ）に「トイレに行きますか？」と聞きます
+2. 「はい」と言ったら、トイレまで一緒に歩きます
+3. ズボンを下ろすのを手伝います
+4. 終わったら、拭くのを手伝います
+5. 手を洗うのを手伝います
+6. 記録（きろく）を書きます
+（出典：介護マニュアル 第5章「排泄介助」p.20-24）</div>
+</div>
+
+<h3>期待できる効果</h3>
+<table class="effect-table">
+<thead><tr><th>指標</th><th>Before</th><th>After</th></tr></thead>
+<tbody>
+<tr><td>新人研修の準備時間</td><td>半日〜1日</td><td class="highlight">ほぼゼロ</td></tr>
+<tr><td>マニュアルの参照</td><td>分厚いPDFから探す</td><td class="highlight">質問→即回答＋出典表示</td></tr>
+<tr><td>夜勤中の疑問解決</td><td>翌日まで待つ</td><td class="highlight">スマホで即回答</td></tr>
+<tr><td>音声教材の作成</td><td>外注 or 不可</td><td class="highlight">自動生成（無料）</td></tr>
+<tr><td>外国人スタッフ対応</td><td>対応困難</td><td class="highlight">やさしい日本語で回答</td></tr>
+</tbody>
+</table>
+</section>
+
+<!-- ========== まとめ ========== -->
+<section class="page-break">
+<h2>まとめ｜AI活用で現場はこう変わる</h2>
+
+<div class="summary-box">
+<h3>5つの活用例と効果</h3>
+<table class="summary-table">
+<thead><tr><th>#</th><th>活用例</th><th>主な効果</th><th>削減</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>介護記録の作成</td><td>音声→自動記録</td><td class="num">約75%</td></tr>
+<tr><td class="num">2</td><td>ケアプランの自動作成</td><td>訪問当日に完成</td><td class="num">約75%</td></tr>
+<tr><td class="num">3</td><td>シフト表の自動作成</td><td>最適配置を提案</td><td class="num">約70%</td></tr>
+<tr><td class="num">4</td><td>送迎表の自動作成</td><td>最適ルート計算</td><td class="num">約80%</td></tr>
+<tr><td class="num">5</td><td>NotebookLMで24時間研修</td><td>質問→即回答</td><td class="num">準備ゼロ</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>ホリエモンAI学校 介護校の特徴</h3>
+<div class="feature-grid">
+<div class="feature-item">
+<h4>受講者の95%がAI未経験</h4>
+<p>PC操作ができれば受講可能。介護現場を知る講師が、現場の言葉で丁寧に指導します。</p>
+</div>
+<div class="feature-item">
+<h4>240以上の動画講義</h4>
+<p>一般的なAI研修ではなく、介護・在宅医療の現場で実際に使える内容だけを厳選しています。</p>
+</div>
+<div class="feature-item">
+<h4>チャット＆月1回の伴走MTG</h4>
+<p>わからないことはいつでもチャットで質問可能。毎月のミーティングで業務改善をサポート。</p>
+</div>
+<div class="feature-item">
+<h4>助成金で実質 月5,833円/人〜</h4>
+<p>人材開発支援助成金を活用すれば受講料の最大75%をカバー。申請もサポートします。</p>
+</div>
+</div>
+</section>
+
+<!-- ========== CTA ========== -->
+<section class="cta-section">
+<h2>まずは無料ウェビナーにご参加ください</h2>
+<p>所要時間：約60分（オンライン開催）/ 参加費：無料</p>
+<p>本資料でご紹介したAI活用のデモ実演をご覧いただけます。</p>
+<br>
+<a class="cta-btn" href="#">ウェビナーに申し込む（無料）</a>
+<a class="cta-btn cta-btn-sub" href="#">資料を無料ダウンロード</a>
+</section>
+
+<div class="footer">
+<p><strong>ホリエモンAI学校 介護校</strong></p>
+<p>fc.horiemon.ai/kaigo</p>
+</div>
+
+</div><!-- /.container -->
+
+</body>
+</html>
