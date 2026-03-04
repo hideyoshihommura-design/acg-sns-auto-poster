@@ -50,7 +50,9 @@ body {
   .page-break { page-break-before: always; }
   /* 活用例1は「はじめに」と同じページに流す（1ページ節約） */
   #usecase1 { page-break-before: auto; }
-  .cover { page-break-after: always; }
+  .cover { page-break-after: always; animation: none !important; }
+  .cover-circle { display: none; }
+  .cover-stats { backdrop-filter: none; }
   .no-print { display: none; }
   section { padding: .8rem 1.5rem; }
   /* 見出しの直後でページが切れないようにする */
@@ -105,8 +107,18 @@ section { padding: 2.5rem 0; }
 section + section { border-top: 1px solid var(--c-gray-border); }
 
 /* ========== Cover ========== */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+}
 .cover {
-  background: linear-gradient(135deg, #ff273c 0%, #0088ff 100%);
+  background: linear-gradient(135deg, #ff273c 0%, #cc0055 30%, #0055cc 65%, #0088ff 100%);
+  background-size: 200% 200%;
+  animation: gradientShift 8s ease infinite;
   color: #fff;
   padding: 6rem 2rem;
   text-align: center;
@@ -114,36 +126,95 @@ section + section { border-top: 1px solid var(--c-gray-border); }
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 }
-.cover-inner { max-width: 700px; }
+.cover-inner { max-width: 700px; position: relative; z-index: 1; }
+.cover-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,.07);
+  pointer-events: none;
+}
+.cover-circle--1 { width: 650px; height: 650px; top: -220px; right: -160px; animation: floatUp 9s ease-in-out infinite; }
+.cover-circle--2 { width: 380px; height: 380px; bottom: -100px; left: -90px; animation: floatUp 7s ease-in-out infinite reverse; }
+.cover-circle--3 { width: 180px; height: 180px; top: 35%; left: 4%; animation: floatUp 5s ease-in-out infinite; }
 .cover-label {
-  font-size: 1.6rem;
-  font-weight: 800;
-  letter-spacing: .1em;
-  color: #fff;
-  margin-bottom: 1.5rem;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  color: rgba(255,255,255,.85);
+  margin-bottom: 1.8rem;
+  padding: .4rem 1.4rem;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 30px;
+  background: rgba(255,255,255,.1);
+  backdrop-filter: blur(6px);
 }
 .cover h1 {
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 900;
-  line-height: 1.4;
-  margin-bottom: 1.5rem;
+  line-height: 1.35;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 20px rgba(0,0,0,.2);
 }
-.cover h1 span { color: #fbbf24; }
+.cover h1 span {
+  color: #fbbf24;
+  font-size: 1.4em;
+  text-shadow: 0 0 30px rgba(251,191,36,.6);
+  display: inline-block;
+}
 .cover-sub {
-  font-size: 1.1rem;
-  color: rgba(255,255,255,.7);
-  margin-bottom: 3rem;
-  line-height: 1.8;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,.8);
+  margin-bottom: 2.2rem;
+  line-height: 1.9;
+}
+.cover-stats {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin: 0 auto 2.2rem;
+  max-width: 540px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+.cover-stat {
+  flex: 1;
+  padding: 1.2rem 1rem;
+  text-align: center;
+}
+.cover-stat + .cover-stat { border-left: 1px solid rgba(255,255,255,.2); }
+.cover-stat-num {
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: #fbbf24;
+  line-height: 1.1;
+  text-shadow: 0 0 16px rgba(251,191,36,.4);
+}
+.cover-stat-label {
+  display: block;
+  font-size: .72rem;
+  color: rgba(255,255,255,.75);
+  margin-top: .3rem;
+  line-height: 1.4;
 }
 .cover-badge {
   display: inline-block;
-  padding: .5rem 1.5rem;
-  border: 2px solid rgba(255,255,255,.3);
+  padding: .6rem 2rem;
+  background: rgba(255,255,255,.15);
+  border: 2px solid rgba(255,255,255,.4);
   border-radius: 30px;
-  font-size: .9rem;
-  color: rgba(255,255,255,.9);
+  font-size: .95rem;
+  font-weight: 700;
+  color: #fff;
   letter-spacing: .05em;
+  backdrop-filter: blur(4px);
 }
 
 /* ========== Typography ========== */
@@ -532,10 +603,18 @@ p { margin-bottom: .8rem; }
 
 <!-- ========== 表紙 ========== -->
 <div class="cover">
+<div class="cover-circle cover-circle--1"></div>
+<div class="cover-circle cover-circle--2"></div>
+<div class="cover-circle cover-circle--3"></div>
 <div class="cover-inner">
 <p class="cover-label">ホリエモンAI学校 介護校</p>
 <h1>介護現場の「困った」を<br>AIで解決する<span>5</span>つの方法</h1>
 <p class="cover-sub">記録・ケアプラン・シフト・送迎・研修——<br>現場の書類業務をAIで自動化し、<br>スタッフが「ケア」に集中できる環境を作ります。</p>
+<div class="cover-stats">
+<div class="cover-stat"><span class="cover-stat-num">3〜4割</span><span class="cover-stat-label">書類業務を削減</span></div>
+<div class="cover-stat"><span class="cover-stat-num">95%</span><span class="cover-stat-label">がAI未経験からスタート</span></div>
+<div class="cover-stat"><span class="cover-stat-num">240+</span><span class="cover-stat-label">動画講義</span></div>
+</div>
 <span class="cover-badge">受講者の95%がAI未経験からスタート</span>
 </div>
 </div>
