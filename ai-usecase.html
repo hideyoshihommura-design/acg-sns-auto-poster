@@ -32,11 +32,11 @@ body {
 
 /* ========== Print ========== */
 @media print {
-  body { font-size: 10.5px; line-height: 1.7; }
+  body { font-size: 10px; line-height: 1.6; }
   .page-break { page-break-before: always; }
   .cover { page-break-after: always; }
   .no-print { display: none; }
-  section { padding: 1.2rem 2rem; }
+  section { padding: 1rem 1.5rem; }
   /* 見出しの直後でページが切れないようにする */
   h2, h3, h4, .usecase-title, .usecase-subtitle { page-break-after: avoid; }
   /* 表・プロンプト・カードが途中で切れないようにする */
@@ -45,14 +45,32 @@ body {
   .steps, .problems { page-break-inside: avoid; }
   /* Before/Afterを1カラムにして切れを防止 */
   .ba-grid { grid-template-columns: 1fr; }
-  /* まとめセクションのレイアウト調整 */
+  /* まとめセクションを1ページに収める */
   .feature-grid { grid-template-columns: 1fr 1fr; }
-  .summary-box { page-break-inside: avoid; }
+  .summary-box { page-break-inside: avoid; padding: 1rem; }
+  .summary-box h3 { margin: 0 0 .5rem; font-size: 1rem; }
+  .summary-table td, .summary-table th { padding: .3rem .5rem; font-size: .8rem; }
+  .feature-item { padding: .6rem .8rem; }
+  .feature-item h4 { font-size: .85rem; margin: 0 0 .2rem; }
+  .feature-item p { font-size: .8rem; }
+  .callout { padding: .6rem .8rem; margin: .8rem 0; font-size: .85rem; }
+  /* フッター */
+  .footer { padding: 1rem; }
   /* 余白を詰めて効率よく配置 */
   .container { padding: 0 1.5rem; }
-  .ba-box { padding: .8rem 1rem; font-size: .85rem; }
-  .prompt-box { font-size: .75rem; padding: .8rem 1rem; }
-  .steps li { font-size: .85rem; padding: .4rem .8rem .4rem 0; }
+  h2 { font-size: 1.3rem; margin-bottom: 1rem; }
+  h3 { margin: 1.2rem 0 .5rem; font-size: 1rem; }
+  .usecase-title { font-size: 1.3rem; }
+  .ba-box { padding: .6rem .8rem; font-size: .82rem; line-height: 1.6; }
+  .prompt-box { font-size: .72rem; padding: .6rem .8rem; line-height: 1.5; }
+  .steps li { font-size: .82rem; padding: .3rem .6rem .3rem 0; margin-bottom: .3rem; }
+  .steps li::before { font-size: .6rem; padding: .2rem .4rem; }
+  .effect-table { font-size: .82rem; }
+  .effect-table th, .effect-table td { padding: .4rem .5rem; }
+  .problems { padding: .8rem 1rem; }
+  .problems li { font-size: .82rem; margin-bottom: .2rem; }
+  .scene-card { padding: .8rem 1rem; margin: .5rem 0; }
+  .tool-intro { padding: 1rem; }
 }
 
 /* ========== Layout ========== */
