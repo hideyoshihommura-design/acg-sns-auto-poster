@@ -122,6 +122,12 @@ def build_prompt(
 5. 売り込みにならず、読者にとって有益な情報・視点・共感を提供する形にする
 6. ホリエモンAI学校介護校のアカウントとして自然な情報発信のトーンを維持する
 
+【出力の注意事項】
+- 必ず日本語のみで書くこと（中国語・韓国語・英語を混入しない）
+- 同じ内容・表現を繰り返さない
+- 価格や数字は正確に記載する（「無料」と有料金額を同時に書かない）
+- 自然な日本語の文体で書くこと
+
 投稿文のみを出力してください（説明文や前置きは不要です）。"""
 
     return prompt
@@ -168,11 +174,15 @@ def generate_posts(
 
         try:
             response = client.chat.completions.create(
-                model="llama-3.3-70b-versatile",
+                model="qwen/qwen3-32b",
                 messages=[{"role": "user", "content": prompt}],
                 max_tokens=1024,
+                reasoning_effort="none",  # 思考プロセスの出力を無効化
             )
             content = response.choices[0].message.content
+            # <think>...</think> ブロックが残っている場合は除去
+            import re as _re
+            content = _re.sub(r"<think>.*?</think>", "", content, flags=_re.DOTALL).strip()
             time.sleep(3)  # レート制限対策
         except Exception as e:
             content = f"生成エラー: {e}"
