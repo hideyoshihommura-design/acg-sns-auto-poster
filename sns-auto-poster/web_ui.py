@@ -3,11 +3,36 @@ Web UIモジュール
 生成した投稿文を確認・コピーできるFlaskベースのダッシュボード
 """
 
+import functools
 import os
 
-from flask import Flask, jsonify, render_template_string, request
+from flask import Flask, Response, jsonify, render_template_string, request
 
 from storage import load_history, load_today
+
+
+def _check_auth(username: str, password: str) -> bool:
+    """環境変数で設定されたユーザー名・パスワードと照合する"""
+    expected_user = os.getenv("DASHBOARD_USER", "admin")
+    expected_pass = os.getenv("DASHBOARD_PASSWORD", "")
+    if not expected_pass:
+        return True  # パスワード未設定時はオープンアクセス
+    return username == expected_user and password == expected_pass
+
+
+def _require_auth(f):
+    """HTTP Basic Auth デコレータ"""
+    @functools.wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not _check_auth(auth.username, auth.password):
+            return Response(
+                "認証が必要です",
+                401,
+                {"WWW-Authenticate": 'Basic realm="SNS Dashboard"'},
+            )
+        return f(*args, **kwargs)
+    return decorated
 
 
 DASHBOARD_HTML = """
@@ -490,26 +515,74 @@ DASHBOARD_HTML = """
 """
 
 
+def _run_daily_generation():
+    """毎日の投稿生成バッチ処理（APSchedulerから呼び出し）"""
+    import os
+    from dotenv import load_dotenv
+    from generator import generate_posts
+    from storage import save_posts
+    from trends import fetch_trending_topics
+
+    load_dotenv()
+    theme = os.getenv("SNS_THEME", "AIを活用したビジネス効率化")
+    business_name = os.getenv("BUSINESS_NAME", "あなたのサービス")
+
+    try:
+        trending_data = fetch_trending_topics(theme=theme)
+        posts = generate_posts(
+            theme=theme,
+            business_name=business_name,
+            trending_data=trending_data,
+        )
+        save_posts(
+            posts=posts,
+            trending_data=trending_data,
+            theme=theme,
+            business_name=business_name,
+        )
+        print("[Scheduler] 投稿生成完了")
+    except Exception as e:
+        print(f"[Scheduler] 生成エラー: {e}")
+
+
 def create_app() -> Flask:
     app = Flask(__name__)
 
+    # APSchedulerで毎日9:00（JST=UTC+9）に自動生成
+    try:
+        from apscheduler.schedulers.background import BackgroundScheduler
+        scheduler = BackgroundScheduler(timezone="Asia/Tokyo")
+        schedule_time = os.getenv("SCHEDULE_TIME", "09:00")
+        hour, minute = map(int, schedule_time.split(":"))
+        scheduler.add_job(_run_daily_generation, "cron", hour=hour, minute=minute)
+        scheduler.start()
+        print(f"[Scheduler] 毎日 {schedule_time} に自動生成を設定しました")
+    except ImportError:
+        print("[Scheduler] APSchedulerが見つかりません。自動生成は無効です。")
+    except Exception as e:
+        print(f"[Scheduler] スケジューラー起動エラー: {e}")
+
     @app.route("/")
+    @_require_auth
     def index():
         return render_template_string(DASHBOARD_HTML)
 
     @app.route("/api/today")
+    @_require_auth
     def api_today():
         from storage import load_today
         data = load_today()
         return jsonify(data or {})
 
     @app.route("/api/history")
+    @_require_auth
     def api_history():
         from storage import load_history
         history = load_history(days=30)
         return jsonify(history)
 
     @app.route("/api/generate", methods=["POST"])
+    @_require_auth
     def api_generate():
         import os
         from dotenv import load_dotenv
