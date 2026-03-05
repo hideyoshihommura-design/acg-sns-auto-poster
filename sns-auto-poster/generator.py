@@ -1,9 +1,11 @@
 """
 SNS投稿文生成モジュール
-Claude APIを使って各SNSプラットフォーム向けの投稿文を生成する
+Google Gemini APIを使って各SNSプラットフォーム向けの投稿文を生成する
 """
 
-import anthropic
+import os
+import time
+from groq import Groq
 from datetime import date
 from typing import Optional
 
@@ -148,7 +150,7 @@ def generate_posts(
     Returns:
         {platform: {"platform_name": str, "content": str}, ...}
     """
-    client = anthropic.Anthropic()
+    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
     target_platforms = platforms or list(SNS_SPECS.keys())
     results = {}
 
@@ -170,12 +172,13 @@ def generate_posts(
         )
 
         try:
-            message = client.messages.create(
-                model="claude-sonnet-4-6",
-                max_tokens=1024,
+            response = client.chat.completions.create(
+                model="llama-3.3-70b-versatile",
                 messages=[{"role": "user", "content": prompt}],
+                max_tokens=1024,
             )
-            content = message.content[0].text
+            content = response.choices[0].message.content
+            time.sleep(3)  # レート制限対策
         except Exception as e:
             content = f"生成エラー: {e}"
 
