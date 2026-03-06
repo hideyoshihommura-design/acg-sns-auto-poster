@@ -5,7 +5,8 @@
 
 import re
 import feedparser
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from email.utils import parsedate_to_datetime
 from typing import Optional
 
 
@@ -55,6 +56,35 @@ GENAI_KEYWORDS = [
 ]
 
 
+def _parse_published(entry) -> datetime | None:
+    """feedparserエントリから公開日時をタイムゾーン付きで取得する"""
+    # feedparserがパース済みの場合
+    if hasattr(entry, "published_parsed") and entry.published_parsed:
+        try:
+            import calendar
+            ts = calendar.timegm(entry.published_parsed)
+            return datetime.fromtimestamp(ts, tz=timezone.utc)
+        except Exception:
+            pass
+    # 生の文字列からパース
+    raw = entry.get("published", "") or entry.get("updated", "")
+    if raw:
+        try:
+            return parsedate_to_datetime(raw)
+        except Exception:
+            pass
+    return None
+
+
+def _is_recent(entry, days: int = 7) -> bool:
+    """記事が直近 days 日以内かどうかを判定する（日付不明な場合は通す）"""
+    pub = _parse_published(entry)
+    if pub is None:
+        return True  # 日付不明は除外しない
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days)
+    return pub >= cutoff
+
+
 def _clean_html(text: str) -> str:
     """HTMLタグを除去してテキストを整形する"""
     text = re.sub(r"<[^>]+>", "", text)
@@ -75,21 +105,24 @@ def _score_article(title: str, summary: str) -> int:
     return score
 
 
-def fetch_kaigo_news(max_items: int = 8) -> list[dict]:
-    """介護専門フィードからニュースを取得する"""
+def fetch_kaigo_news(max_items: int = 8, recent_days: int = 7) -> list[dict]:
+    """介護専門フィードから直近 recent_days 日以内のニュースを取得する"""
     articles = []
     for source_name, feed_url in KAIGO_FEEDS.items():
         try:
             feed = feedparser.parse(feed_url)
             for entry in feed.entries[:max_items]:
+                if not _is_recent(entry, days=recent_days):
+                    continue
                 title = entry.get("title", "")
                 summary = _clean_html(entry.get("summary", entry.get("description", "")))
                 if title:
+                    pub = _parse_published(entry)
                     articles.append({
                         "title": title,
                         "summary": summary,
                         "source": source_name,
-                        "published": entry.get("published", datetime.now().isoformat()),
+                        "published": pub.isoformat() if pub else datetime.now(timezone.utc).isoformat(),
                         "score": _score_article(title, summary),
                         "category": "介護",
                     })
@@ -98,23 +131,26 @@ def fetch_kaigo_news(max_items: int = 8) -> list[dict]:
     return articles
 
 
-def fetch_genai_news(max_items: int = 8) -> list[dict]:
-    """生成AI専門フィードからニュースを取得し、業務活用関連に絞る"""
+def fetch_genai_news(max_items: int = 8, recent_days: int = 7) -> list[dict]:
+    """生成AI専門フィードから直近 recent_days 日以内の業務活用関連記事を取得する"""
     articles = []
     for source_name, feed_url in GENAI_FEEDS.items():
         try:
             feed = feedparser.parse(feed_url)
             for entry in feed.entries[:max_items]:
+                if not _is_recent(entry, days=recent_days):
+                    continue
                 title = entry.get("title", "")
                 summary = _clean_html(entry.get("summary", entry.get("description", "")))
                 score = _score_article(title, summary)
                 # 生成AI関連キーワードが含まれる記事のみ採用
                 if title and any(kw in title + summary for kw in GENAI_KEYWORDS):
+                    pub = _parse_published(entry)
                     articles.append({
                         "title": title,
                         "summary": summary,
                         "source": source_name,
-                        "published": entry.get("published", datetime.now().isoformat()),
+                        "published": pub.isoformat() if pub else datetime.now(timezone.utc).isoformat(),
                         "score": score,
                         "category": "生成AI",
                     })
