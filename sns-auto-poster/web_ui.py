@@ -282,6 +282,7 @@ DASHBOARD_HTML = """
 
         <div class="tabs">
             <button class="tab-btn active" onclick="switchTab('today')">今日の投稿</button>
+            <button class="tab-btn" onclick="switchTab('wordpress')">WordPress記事</button>
             <button class="tab-btn" onclick="switchTab('trends')">トレンド情報</button>
             <button class="tab-btn" onclick="switchTab('history')">過去の投稿</button>
         </div>
@@ -298,6 +299,27 @@ DASHBOARD_HTML = """
                 <div style="font-size:3rem">✍️</div>
                 <p>まだ今日の投稿が生成されていません</p>
                 <p>「今すぐ生成」ボタンを押すと生成が始まります</p>
+            </div>
+        </div>
+
+        <!-- WordPress記事タブ -->
+        <div class="tab-content" id="tab-wordpress">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+                <div style="font-size:0.9rem; color:#64748b;">WordPressの新着記事を取得してSNS投稿文を生成・投稿できます</div>
+                <div style="display:flex; gap:10px;">
+                    <button class="generate-btn" style="background:#10b981; color:white; font-size:0.85rem; padding:8px 18px;" onclick="checkWordpress()">
+                        新着記事を確認
+                    </button>
+                    <button class="generate-btn" style="background:#3b82f6; color:white; font-size:0.85rem; padding:8px 18px;" onclick="processNewArticles()">
+                        新着を全て投稿
+                    </button>
+                </div>
+            </div>
+            <div id="wp-articles-list">
+                <div class="empty-state">
+                    <div style="font-size:3rem">📰</div>
+                    <p>「新着記事を確認」ボタンを押してください</p>
+                </div>
             </div>
         </div>
 
@@ -332,13 +354,179 @@ DASHBOARD_HTML = """
 
         function switchTab(tab) {
             document.querySelectorAll(".tab-btn").forEach((btn, i) => {
-                btn.classList.toggle("active", ["today", "trends", "history"][i] === tab);
+                btn.classList.toggle("active", ["today", "wordpress", "trends", "history"][i] === tab);
             });
             document.querySelectorAll(".tab-content").forEach((el, i) => {
-                el.classList.toggle("active", ["tab-today", "tab-trends", "tab-history"][i] === `tab-${tab}`);
+                el.classList.toggle("active", ["tab-today", "tab-wordpress", "tab-trends", "tab-history"][i] === `tab-${tab}`);
             });
             if (tab === "history") loadHistory();
             if (tab === "trends") loadTrends();
+            if (tab === "wordpress") checkWordpress();
+        }
+
+        // --- WordPress記事関連 ---
+
+        async function checkWordpress() {
+            const container = document.getElementById("wp-articles-list");
+            container.innerHTML = '<div class="loading show"><div class="spinner"></div><div>WordPress新着記事を確認中...</div></div>';
+            try {
+                const res = await fetch("/api/wordpress/articles");
+                const data = await res.json();
+                renderWordpressArticles(data);
+            } catch (e) {
+                container.innerHTML = '<div class="empty-state"><p>取得エラー: ' + escapeHtml(e.message) + '</p></div>';
+            }
+        }
+
+        function renderWordpressArticles(data) {
+            const container = document.getElementById("wp-articles-list");
+            const articles = data.articles || [];
+            const siteConfigured = data.site_configured;
+
+            if (!siteConfigured) {
+                container.innerHTML = `<div class="empty-state">
+                    <div style="font-size:2rem">⚙️</div>
+                    <p style="margin-top:12px;font-weight:600;">WordPress URLが未設定です</p>
+                    <p style="margin-top:8px;font-size:0.85rem;color:#94a3b8;">
+                        .env ファイルに <code>WP_SITE_URL=https://yoursite.com</code> を設定してください
+                    </p>
+                </div>`;
+                return;
+            }
+
+            if (!data.api_available) {
+                container.innerHTML = `<div class="empty-state">
+                    <div style="font-size:2rem">⚠️</div>
+                    <p style="margin-top:12px;font-weight:600;">WordPress REST APIにアクセスできません</p>
+                    <p style="margin-top:8px;font-size:0.85rem;color:#94a3b8;">
+                        WordPress管理画面 → 設定 → パーマリンク設定 を保存し直してAPIを有効化してください
+                    </p>
+                </div>`;
+                return;
+            }
+
+            if (articles.length === 0) {
+                container.innerHTML = '<div class="empty-state"><div style="font-size:2rem">✅</div><p style="margin-top:12px;">新着未投稿記事はありません</p></div>';
+                return;
+            }
+
+            container.innerHTML = articles.map(a => {
+                const pubDate = a.published ? new Date(a.published).toLocaleString("ja-JP") : "";
+                const imgHtml = a.featured_image_url
+                    ? `<img src="${escapeHtml(a.featured_image_url)}" style="width:80px;height:60px;object-fit:cover;border-radius:6px;flex-shrink:0;" onerror="this.style.display='none'">`
+                    : `<div style="width:80px;height:60px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#94a3b8;font-size:1.4rem;flex-shrink:0;">📷</div>`;
+                return `
+                <div class="post-card" style="margin-bottom:16px;">
+                    <div class="card-body" style="display:flex;gap:16px;align-items:flex-start;">
+                        ${imgHtml}
+                        <div style="flex:1;min-width:0;">
+                            <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">${escapeHtml(a.title)}</div>
+                            <div style="font-size:0.82rem;color:#94a3b8;margin-bottom:8px;">${pubDate}</div>
+                            <div style="font-size:0.88rem;color:#64748b;line-height:1.5;">${escapeHtml(a.excerpt || a.content_preview || "")}</div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="copy-btn" style="border-color:#667eea;color:#667eea;"
+                            onclick="generateFromArticle(${a.id}, '${escapeHtml(a.title).replace(/'/g, "\\'")}', this)">
+                            投稿文を生成して投稿
+                        </button>
+                        <span style="font-size:0.78rem;color:#94a3b8;margin-left:auto;">${a.featured_image_url ? "📷 画像あり" : "📷 画像なし（Instagram除く）"}</span>
+                    </div>
+                </div>`;
+            }).join("");
+        }
+
+        async function generateFromArticle(articleId, articleTitle, btn) {
+            btn.disabled = true;
+            btn.textContent = "生成・投稿中...";
+            try {
+                const res = await fetch("/api/wordpress/process-one", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({article_id: articleId}),
+                });
+                const data = await res.json();
+                if (data.error) {
+                    alert("エラー: " + data.error);
+                    btn.disabled = false;
+                    btn.textContent = "投稿文を生成して投稿";
+                } else {
+                    btn.textContent = "✅ 投稿完了";
+                    btn.style.background = "#10b981";
+                    btn.style.color = "white";
+                    btn.style.borderColor = "#10b981";
+                    // 結果表示
+                    const results = data.post_results || {};
+                    const lines = Object.entries(results).map(([p, r]) =>
+                        `${p}: ${r.success ? "✅成功" : "❌" + r.error}`
+                    );
+                    if (lines.length > 0) {
+                        const msg = document.createElement("div");
+                        msg.style.cssText = "font-size:0.78rem;color:#64748b;margin-top:8px;";
+                        msg.textContent = lines.join("  /  ");
+                        btn.parentElement.appendChild(msg);
+                    }
+                }
+            } catch (e) {
+                alert("通信エラー: " + e.message);
+                btn.disabled = false;
+                btn.textContent = "投稿文を生成して投稿";
+            }
+        }
+
+        async function processNewArticles() {
+            if (!confirm("未投稿の新着記事を全て生成・投稿します。よろしいですか？")) return;
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = "処理中...";
+            try {
+                const res = await fetch("/api/wordpress/process-all", {method: "POST"});
+                const data = await res.json();
+                if (data.error) {
+                    alert("エラー: " + data.error);
+                } else {
+                    alert(`処理完了: ${data.processed}件の記事を処理しました`);
+                    checkWordpress();
+                }
+            } catch (e) {
+                alert("通信エラー: " + e.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "新着を全て投稿";
+            }
+        }
+
+        // --- SNS投稿ボタン（今日の投稿タブ） ---
+
+        async function postToPlatform(platform, btn) {
+            if (!confirm(`${platform.toUpperCase()} に投稿します。よろしいですか？`)) return;
+            btn.disabled = true;
+            btn.textContent = "投稿中...";
+            try {
+                const res = await fetch("/api/post", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({platform}),
+                });
+                const data = await res.json();
+                const result = data[platform] || data;
+                if (result.success) {
+                    btn.textContent = "✅ 投稿済み";
+                    btn.style.background = "#10b981";
+                    btn.style.color = "white";
+                    btn.style.borderColor = "#10b981";
+                } else {
+                    btn.textContent = "❌ 失敗";
+                    btn.style.borderColor = "#ef4444";
+                    btn.style.color = "#ef4444";
+                    alert("投稿エラー: " + (result.error || "不明なエラー"));
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                alert("通信エラー: " + e.message);
+                btn.disabled = false;
+                btn.textContent = "SNS投稿する";
+            }
         }
 
         function copyToClipboard(text, btn) {
@@ -389,6 +577,10 @@ DASHBOARD_HTML = """
                     <div class="card-footer">
                         <button class="copy-btn" onclick="copyToClipboard(document.getElementById('content-${platform}').textContent, this)">
                             コピー
+                        </button>
+                        <button class="copy-btn" style="border-color:#10b981; color:#10b981;" id="post-btn-${platform}"
+                            onclick="postToPlatform('${platform}', this)">
+                            SNS投稿する
                         </button>
                     </div>
                 `;
@@ -655,5 +847,201 @@ def create_app() -> Flask:
             return jsonify(load_today() or {})
         except Exception as e:
             return jsonify({"error": str(e)}), 500
+
+    @app.route("/api/post", methods=["POST"])
+    @_require_auth
+    def api_post():
+        """今日生成済みの投稿文を指定プラットフォームに投稿する"""
+        from poster import post_to_x, post_to_facebook, post_to_instagram
+        from storage import load_today
+
+        data = request.get_json() or {}
+        platform = data.get("platform")
+
+        today_data = load_today()
+        if not today_data or not today_data.get("posts"):
+            return jsonify({"error": "今日の投稿文がありません。先に生成してください。"}), 400
+
+        posts = today_data["posts"]
+
+        if platform == "x":
+            content = posts.get("x", {}).get("content", "")
+            if not content:
+                return jsonify({"error": "X用の投稿文がありません"}), 400
+            result = post_to_x(content)
+        elif platform == "facebook":
+            content = posts.get("facebook", {}).get("content", "")
+            if not content:
+                return jsonify({"error": "Facebook用の投稿文がありません"}), 400
+            result = post_to_facebook(content)
+        elif platform == "instagram":
+            content = posts.get("instagram", {}).get("content", "")
+            if not content:
+                return jsonify({"error": "Instagram用の投稿文がありません"}), 400
+            image_url = today_data.get("wordpress_image_url")
+            result = post_to_instagram(content, image_url=image_url)
+        else:
+            return jsonify({"error": f"未対応のプラットフォーム: {platform}"}), 400
+
+        return jsonify({platform: result})
+
+    @app.route("/api/wordpress/articles")
+    @_require_auth
+    def api_wordpress_articles():
+        """WordPress新着未投稿記事の一覧を返す"""
+        from wordpress import get_new_articles, check_api_available
+
+        site_url = os.getenv("WP_SITE_URL", "")
+        if not site_url:
+            return jsonify({"site_configured": False, "api_available": False, "articles": []})
+
+        api_available = check_api_available(site_url)
+        if not api_available:
+            return jsonify({"site_configured": True, "api_available": False, "articles": []})
+
+        articles = get_new_articles(
+            site_url=site_url,
+            category_slug=os.getenv("WP_NEWS_CATEGORY_SLUG") or None,
+            recent_hours=int(os.getenv("WP_CHECK_HOURS", "48")),
+        )
+        return jsonify({"site_configured": True, "api_available": True, "articles": articles})
+
+    @app.route("/api/wordpress/process-one", methods=["POST"])
+    @_require_auth
+    def api_wordpress_process_one():
+        """指定した記事IDの投稿文を生成してSNSに投稿する"""
+        from wordpress import fetch_recent_articles, save_posted_id
+        from generator import generate_posts
+        from poster import post_all
+        from trends import fetch_trending_topics
+
+        data = request.get_json() or {}
+        article_id = data.get("article_id")
+        if not article_id:
+            return jsonify({"error": "article_id が指定されていません"}), 400
+
+        site_url = os.getenv("WP_SITE_URL", "")
+        if not site_url:
+            return jsonify({"error": "WP_SITE_URL が設定されていません"}), 400
+
+        # 記事を取得
+        articles = fetch_recent_articles(
+            site_url=site_url,
+            recent_hours=72,  # 少し広めに
+            max_items=20,
+            wp_username=os.getenv("WP_USERNAME") or None,
+            wp_app_password=os.getenv("WP_APP_PASSWORD") or None,
+        )
+        article = next((a for a in articles if a["id"] == article_id), None)
+        if not article:
+            return jsonify({"error": f"記事ID {article_id} が見つかりません"}), 404
+
+        try:
+            # トレンド取得 + 投稿文生成（WordPress記事情報を追加コンテキストとして渡す）
+            theme = os.getenv("SNS_THEME", "AIを活用したビジネス効率化")
+            business_name = os.getenv("BUSINESS_NAME", "あなたのサービス")
+            trending_data = fetch_trending_topics(theme=theme)
+
+            # WordPress記事がある日はその記事だけで生成（外部ニュースは使わない）
+            trending_data["news_articles"] = [{
+                "title": article["title"],
+                "summary": article["excerpt"] or article["content_preview"],
+                "source": "自社サイトNEWS",
+                "score": 100,
+                "category": "自社",
+            }]
+            trending_data["google_trends"] = []
+            trending_data["wp_article_url"] = article["url"]
+            trending_data["wp_article_title"] = article["title"]
+
+            posts = generate_posts(
+                theme=theme,
+                business_name=business_name,
+                trending_data=trending_data,
+            )
+
+            # SNSに投稿
+            image_url = article.get("featured_image_url")
+            post_results = post_all(posts, image_url=image_url)
+
+            # 少なくとも1つ成功したら投稿済みとして記録
+            any_success = any(r.get("success") for r in post_results.values())
+            if any_success:
+                save_posted_id(article_id)
+
+            return jsonify({
+                "article_id": article_id,
+                "article_title": article["title"],
+                "post_results": post_results,
+            })
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+
+    @app.route("/api/wordpress/process-all", methods=["POST"])
+    @_require_auth
+    def api_wordpress_process_all():
+        """未投稿の新着記事を全て処理する（Cloud Schedulerからも呼ばれる）"""
+        from wordpress import get_new_articles, save_posted_id
+        from generator import generate_posts
+        from poster import post_all
+        from trends import fetch_trending_topics
+
+        site_url = os.getenv("WP_SITE_URL", "")
+        if not site_url:
+            return jsonify({"error": "WP_SITE_URL が設定されていません"}), 400
+
+        articles = get_new_articles(
+            site_url=site_url,
+            category_slug=os.getenv("WP_NEWS_CATEGORY_SLUG") or None,
+            recent_hours=int(os.getenv("WP_CHECK_HOURS", "48")),
+        )
+
+        processed = 0
+        results = []
+
+        # トレンドは一度だけ取得
+        theme = os.getenv("SNS_THEME", "AIを活用したビジネス効率化")
+        business_name = os.getenv("BUSINESS_NAME", "あなたのサービス")
+
+        try:
+            base_trending = fetch_trending_topics(theme=theme)
+        except Exception:
+            base_trending = {"google_trends": [], "news_articles": []}
+
+        for article in articles[:5]:  # 一度に最大5件
+            try:
+                # WordPress記事がある日はその記事だけで生成（外部ニュースは使わない）
+                trending_data = {
+                    "google_trends": [],
+                    "news_articles": [{
+                        "title": article["title"],
+                        "summary": article["excerpt"] or article["content_preview"],
+                        "source": "自社サイトNEWS",
+                        "score": 100,
+                        "category": "自社",
+                    }],
+                }
+
+                posts = generate_posts(
+                    theme=theme,
+                    business_name=business_name,
+                    trending_data=trending_data,
+                )
+                post_results = post_all(posts, image_url=article.get("featured_image_url"))
+
+                any_success = any(r.get("success") for r in post_results.values())
+                if any_success:
+                    save_posted_id(article["id"])
+                    processed += 1
+
+                results.append({
+                    "article_id": article["id"],
+                    "article_title": article["title"],
+                    "post_results": post_results,
+                })
+            except Exception as e:
+                results.append({"article_id": article["id"], "error": str(e)})
+
+        return jsonify({"processed": processed, "total_new": len(articles), "results": results})
 
     return app

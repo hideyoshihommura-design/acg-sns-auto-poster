@@ -5,7 +5,6 @@ Google Gemini APIを使って各SNSプラットフォーム向けの投稿文を
 
 import os
 import time
-from groq import Groq
 from datetime import date
 from typing import Optional
 
@@ -67,13 +66,15 @@ SNS_SPECS = {
 ① 冒頭1行：今日の生成AI・AIツールの最新ニュース・新機能を「へえ、こんなことできるの」と感じさせる一文（絵文字1個OK）
 ② 本文2〜4行：そのAIを介護現場で使うと「この業務が楽になる」という具体的なイメージを1つだけ展開
 ③ まとめ1行：ホリエモンAI学校介護校への自然なつながり（押しつけない）
-④ ハッシュタグ：2〜3個のみ（#生成AI #介護AI #業務効率化 など）
+④ LP URL： https://fc.horiemon.ai/kaigo
+⑤ ハッシュタグ：5〜7個（必ず生成すること）
+   例：#生成AI #介護AI #介護DX #業務効率化 #ChatGPT #介護職 #AIリスキリング
 
 【注意】
 - 200〜280字に収める（毎日読んでもらうため短くテンポよく）
 - 箇条書きは使わない。会話調の文体で
 - 「介護の悩み」から始めず、必ず「AIニュース・AI技術」から書き始める
-- 末尾にLP URLを必ず記載する： https://fc.horiemon.ai/kaigo
+- ハッシュタグは本文・URLの後に必ず記載する（省略禁止）
 """,
     },
     "instagram": {
@@ -110,13 +111,15 @@ SNS_SPECS = {
    - 段落2：介護現場でこのAIを活用するとどんな業務・場面が変わるか（具体的に）
    - 段落3：ホリエモンAI学校介護校の紹介（1段落のみ・さりげなく）
 ③ 締め1行：「あなたの事業所でも試してみませんか？」など読者への問いかけ
+④ 「▶ 詳細はこちら：https://fc.horiemon.ai/kaigo」
+⑤ ハッシュタグ：5〜8個（必ず生成すること）
+   例：#生成AI #介護AI #介護DX #業務効率化 #ChatGPT #介護経営 #AIリスキリング #介護職
 
 【注意】
 - 350〜500字（Facebookは長文より「ちょうど読める」長さが反応率高い）
 - 「介護の悩み」から始めず、必ず「AIニュース・新技術の紹介」から書き始める
 - AIの固有名詞（ツール名・サービス名）を必ず1つ入れる
-- ハッシュタグは3〜5個のみ
-- 締めの一行の直後に「▶ 詳細はこちら：https://fc.horiemon.ai/kaigo」を必ず入れる
+- ハッシュタグは詳細URLの後に必ず記載する（省略禁止）
 """,
     },
 }
@@ -207,7 +210,17 @@ def generate_posts(
     Returns:
         {platform: {"platform_name": str, "content": str}, ...}
     """
-    client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+    import vertexai
+    from vertexai.generative_models import GenerativeModel, GenerationConfig
+
+    project_id = os.getenv("GCP_PROJECT_ID")
+    location = os.getenv("VERTEX_LOCATION", "asia-northeast1")
+    model_name = os.getenv("VERTEX_MODEL", "gemini-2.0-flash-001")
+
+    vertexai.init(project=project_id, location=location)
+    model = GenerativeModel(model_name)
+    generation_config = GenerationConfig(max_output_tokens=1024, temperature=0.7)
+
     target_platforms = platforms or list(SNS_SPECS.keys())
     results = {}
 
@@ -229,17 +242,9 @@ def generate_posts(
         )
 
         try:
-            response = client.chat.completions.create(
-                model="qwen/qwen3-32b",
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=1024,
-                reasoning_effort="none",  # 思考プロセスの出力を無効化
-            )
-            content = response.choices[0].message.content
-            # <think>...</think> ブロックが残っている場合は除去
-            import re as _re
-            content = _re.sub(r"<think>.*?</think>", "", content, flags=_re.DOTALL).strip()
-            time.sleep(3)  # レート制限対策
+            response = model.generate_content(prompt, generation_config=generation_config)
+            content = response.text.strip()
+            time.sleep(1)  # レート制限対策
         except Exception as e:
             content = f"生成エラー: {e}"
 

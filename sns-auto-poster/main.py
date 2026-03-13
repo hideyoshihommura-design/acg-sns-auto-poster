@@ -102,9 +102,9 @@ def main():
     args = parser.parse_args()
 
     # APIキーの確認
-    if not os.getenv("GROQ_API_KEY"):
-        print("エラー: GROQ_API_KEY が設定されていません。")
-        print(".env ファイルを作成して GROQ_API_KEY を設定してください。")
+    if not os.getenv("GCP_PROJECT_ID"):
+        print("エラー: GCP_PROJECT_ID が設定されていません。")
+        print(".env ファイルを作成して GCP_PROJECT_ID を設定してください。")
         sys.exit(1)
 
     if args.now:
