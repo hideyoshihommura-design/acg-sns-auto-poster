@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI生成 - SNS投稿管理</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body { background: #f8f9fa; }
+    .sidebar { background: #1a1a2e; min-height: 100vh; padding: 20px 0; }
+    .sidebar a { color: #ccc; text-decoration: none; display: block; padding: 10px 20px; }
+    .sidebar a:hover, .sidebar a.active { color: #fff; background: #16213e; }
+    .sidebar .brand { color: #fff; font-size: 1.1rem; font-weight: bold; padding: 10px 20px 20px; }
+    #preview-area { display: none; }
+  </style>
+</head>
+<body>
+<div class="d-flex">
+  <div class="sidebar" style="width: 220px; flex-shrink: 0;">
+    <div class="brand"><i class="bi bi-broadcast"></i> SNS投稿管理</div>
+    <a href="/"><i class="bi bi-speedometer2"></i> ダッシュボード</a>
+    <a href="/schedule"><i class="bi bi-calendar3"></i> スケジュール管理</a>
+    <a href="/history"><i class="bi bi-clock-history"></i> 投稿履歴</a>
+    <a href="/generate" class="active"><i class="bi bi-robot"></i> AI生成</a>
+    <a href="/errors"><i class="bi bi-exclamation-triangle"></i> エラーログ</a>
+    <a href="/system"><i class="bi bi-gear"></i> システム設定</a>
+  </div>
+
+  <div class="flex-grow-1 p-4">
+    <h2 class="mb-4">AI生成コンテンツ</h2>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header"><b>素材入力</b></div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">プラットフォーム</label>
+              <select id="platform" class="form-select">
+                <option value="twitter">Twitter/X</option>
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">テーマ・補足情報</label>
+              <input type="text" id="topic" class="form-control" placeholder="例：新サービスのお知らせ">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">素材テキスト</label>
+              <textarea id="material_text" class="form-control" rows="8"
+                placeholder="記事本文、プレスリリース、商品説明など貼り付けてください"></textarea>
+            </div>
+            <button class="btn btn-primary w-100" onclick="generateContent()">
+              <i class="bi bi-robot"></i> AI生成
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6" id="preview-area">
+        <div class="card">
+          <div class="card-header"><b>生成プレビュー</b></div>
+          <div class="card-body">
+            <div id="generated-content" class="border rounded p-3 mb-3 bg-white"
+              style="min-height: 150px; white-space: pre-wrap;"></div>
+            <div id="generated-image" class="mb-3"></div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-success flex-grow-1" onclick="approvePost()">
+                <i class="bi bi-check-circle"></i> 承認・即時投稿
+              </button>
+              <button class="btn btn-outline-primary" onclick="schedulePost()">
+                <i class="bi bi-calendar-plus"></i> スケジュール登録
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+let generatedData = null;
+
+async function generateContent() {
+  const platform = document.getElementById("platform").value;
+  const topic = document.getElementById("topic").value;
+  const material_text = document.getElementById("material_text").value;
+
+  if (!material_text) {
+    alert("素材テキストを入力してください");
+    return;
+  }
+
+  const btn = document.querySelector("button.btn-primary");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> 生成中...';
+
+  const formData = new FormData();
+  formData.append("platform", platform);
+  formData.append("topic", topic);
+  formData.append("material_text", material_text);
+
+  try {
+    const res = await fetch("/generate/preview", { method: "POST", body: formData });
+    const data = await res.json();
+    generatedData = data;
+
+    document.getElementById("generated-content").textContent = data.content || JSON.stringify(data);
+    document.getElementById("preview-area").style.display = "block";
+  } catch (e) {
+    alert("生成に失敗しました: " + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="bi bi-robot"></i> AI生成';
+  }
+}
+
+function approvePost() {
+  alert("投稿しました！（実装中）");
+}
+
+function schedulePost() {
+  window.location.href = "/schedule";
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
