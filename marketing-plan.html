@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ホリエモンAI学校 介護校 デジタルマーケティング計画</title>
+<style>
+/* ========== Reset & Base ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--c-bg:#f5f6fa;--c-surface:#fff;--c-text:#1a1a2e;--c-text-sub:#555;
+--c-primary:#2563eb;--c-primary-light:#dbeafe;
+--c-accent:#f59e0b;--c-accent-light:#fef3c7;
+--c-success:#16a34a;--c-success-light:#dcfce7;
+--c-danger:#dc2626;--c-danger-light:#fee2e2;
+--c-info:#0891b2;--c-info-light:#cffafe;
+--c-border:#e2e8f0;
+--sidebar-w:240px;
+--radius:8px;
+}
+html{scroll-behavior:smooth;font-size:15px}
+body{font-family:"Noto Sans JP","Hiragino Sans",sans-serif;color:var(--c-text);background:var(--c-bg);line-height:1.7}
+
+/* ========== Sidebar ========== */
+#sidebar{position:fixed;top:0;left:0;width:var(--sidebar-w);height:100vh;background:#1e293b;color:#cbd5e1;overflow-y:auto;z-index:100;padding:1.2rem 0}
+.nav-header{font-size:.75rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#94a3b8;padding:0 1.2rem 1rem;border-bottom:1px solid #334155}
+#sidebar ul{list-style:none;margin-top:.8rem}
+#sidebar li a{display:block;padding:.55rem 1.2rem;font-size:.82rem;color:#94a3b8;text-decoration:none;border-left:3px solid transparent;transition:.15s}
+#sidebar li a:hover,#sidebar li a.active{color:#fff;background:#334155;border-left-color:var(--c-primary)}
+
+/* ========== Main Content ========== */
+#content{margin-left:var(--sidebar-w);padding:0 0 4rem}
+section{padding:2.5rem 3rem}
+section:nth-child(even){background:#fff}
+
+/* ========== Hero ========== */
+.hero{background:linear-gradient(135deg,#1e293b 0%,#334155 100%);color:#fff;padding:4rem 3rem;margin:0}
+.hero-inner{max-width:900px}
+.hero-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--c-accent);margin-bottom:.5rem;font-weight:600}
+.hero h1{font-size:2rem;font-weight:800;line-height:1.35;margin-bottom:1rem}
+.hero-sub{font-size:1rem;color:#94a3b8;margin-bottom:1.5rem}
+.hero-badges{display:flex;flex-wrap:wrap;gap:.5rem}
+.badge{display:inline-block;padding:.35rem .75rem;background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);border-radius:20px;font-size:.75rem;color:var(--c-accent);font-weight:600}
+
+/* ========== Typography ========== */
+h2{font-size:1.5rem;font-weight:800;margin-bottom:1.8rem;padding-bottom:.6rem;border-bottom:2px solid var(--c-border)}
+.section-num{color:var(--c-primary);margin-right:.5rem;font-size:1.1rem}
+h3{font-size:1.1rem;font-weight:700;margin:1.8rem 0 .8rem;color:var(--c-text)}
+h4{font-size:.95rem;font-weight:700;margin:1.2rem 0 .5rem;color:var(--c-text)}
+p{margin-bottom:.7rem}
+ul,ol{margin:0 0 .7rem 1.2rem}
+li{margin-bottom:.3rem}
+blockquote{border-left:3px solid var(--c-primary);padding:.5rem 1rem;background:var(--c-primary-light);margin:.5rem 0;font-style:italic;font-size:.95rem;border-radius:0 var(--radius) var(--radius) 0}
+strong{font-weight:700}
+
+/* ========== Cards ========== */
+.card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.2rem 1.5rem;margin-bottom:1.2rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+
+/* ========== Tables ========== */
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;margin:.5rem 0;font-size:.85rem}
+thead th{background:#f1f5f9;font-weight:700;text-align:left;padding:.6rem .8rem;border-bottom:2px solid var(--c-border);white-space:nowrap}
+tbody td,tbody th{padding:.55rem .8rem;border-bottom:1px solid var(--c-border);text-align:left}
+tbody th{font-weight:600;background:#f8fafc;width:160px}
+tbody tr:hover{background:#f8fafc}
+.row-total td,.row-total th{font-weight:700;background:#f1f5f9;border-top:2px solid var(--c-border)}
+.row-highlight td{font-weight:700;background:var(--c-primary-light)}
+.cell-danger{color:var(--c-danger);font-weight:700}
+.cell-success{color:var(--c-success)}
+.note{font-size:.8rem;color:var(--c-text-sub);margin-top:.5rem}
+
+/* ========== Tags ========== */
+.tag{display:inline-block;padding:.15rem .5rem;border-radius:4px;font-size:.78rem;font-weight:600}
+.tag-positive{background:var(--c-success-light);color:var(--c-success)}
+.tag-negative{background:var(--c-danger-light);color:var(--c-danger)}
+.tag-neutral{background:var(--c-accent-light);color:#92400e}
+
+/* ========== Priority tags ========== */
+.priority{font-size:.7rem;padding:.2rem .6rem;border-radius:12px;margin-left:.5rem;font-weight:600;vertical-align:middle}
+.priority-high{background:var(--c-danger-light);color:var(--c-danger)}
+.priority-mid{background:var(--c-accent-light);color:#92400e}
+.priority-long{background:var(--c-info-light);color:var(--c-info)}
+.priority-sub{background:#f1f5f9;color:#64748b}
+
+/* ========== Callouts ========== */
+.callout{padding:1rem 1.2rem;border-radius:var(--radius);margin:.8rem 0;font-size:.88rem;border-left:4px solid}
+.callout-warning{background:var(--c-accent-light);border-color:var(--c-accent)}
+.callout-danger{background:var(--c-danger-light);border-color:var(--c-danger)}
+.callout-success{background:var(--c-success-light);border-color:var(--c-success)}
+.callout-info{background:var(--c-info-light);border-color:var(--c-info)}
+
+/* ========== Metrics ========== */
+.metrics-row{display:flex;gap:1.5rem;margin:1rem 0}
+.metric{text-align:center;flex:1;padding:1rem;background:#f8fafc;border-radius:var(--radius);border:1px solid var(--c-border)}
+.metric-value{display:block;font-size:1.4rem;font-weight:800;color:var(--c-primary)}
+.metric-label{display:block;font-size:.75rem;color:var(--c-text-sub);margin-top:.2rem}
+
+/* ========== Revenue Model ========== */
+.revenue-flow{text-align:center}
+.revenue-box{padding:.8rem 1.2rem;border-radius:var(--radius);margin:.4rem auto;max-width:400px;font-weight:600}
+.revenue-box.total{background:var(--c-primary-light);border:2px solid var(--c-primary);font-size:1rem}
+.revenue-split{display:flex;gap:1rem;justify-content:center;margin-top:.8rem}
+.revenue-box.school{background:var(--c-success-light);border:1px solid var(--c-success);flex:1;max-width:280px}
+.revenue-box.hq{background:#f1f5f9;border:1px solid var(--c-border);flex:1;max-width:280px;color:var(--c-text-sub)}
+
+/* ========== Highlight Card ========== */
+.highlight-card{background:var(--c-primary-light);border-color:var(--c-primary)}
+
+/* ========== Funnel Comparison ========== */
+.funnel-comparison{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.funnel-col{text-align:center}
+.funnel-col h4{margin-bottom:1rem;color:var(--c-primary)}
+.funnel-step{background:#f1f5f9;padding:.6rem;border-radius:var(--radius);margin:.3rem 0;font-size:.88rem}
+.funnel-arrow{color:var(--c-primary);font-size:.85rem;margin:.2rem 0}
+.funnel-result{background:var(--c-success-light);padding:.8rem;border-radius:var(--radius);margin-top:.5rem;font-size:.85rem}
+.profit{color:var(--c-success)}
+
+/* ========== Scenario ========== */
+.scenario-tabs{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.scenario{padding:1rem;border-radius:var(--radius)}
+.scenario h5{margin-bottom:.5rem;font-size:.9rem}
+.pessimistic{background:var(--c-danger-light);border:1px solid #fca5a5}
+.optimistic{background:var(--c-success-light);border:1px solid #86efac}
+
+/* ========== Phase Steps ========== */
+.phase-steps{display:flex;flex-direction:column;gap:.8rem;margin:1rem 0}
+.phase-step{background:#f8fafc;border:1px solid var(--c-border);border-radius:var(--radius);padding:1rem 1.2rem}
+.phase-step-header{font-weight:700;color:var(--c-primary);margin-bottom:.5rem;font-size:.95rem}
+
+/* ========== Persona ========== */
+.persona-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
+.persona-card{position:relative;padding-top:2.5rem}
+.persona-header{position:absolute;top:0;left:0;right:0;padding:.4rem 1rem;font-size:.75rem;font-weight:700;color:#fff;border-radius:var(--radius) var(--radius) 0 0;letter-spacing:.05em}
+.persona-a{background:#6366f1}
+.persona-b{background:#0891b2}
+.persona-c{background:#9333ea}
+.persona-card h4{margin-top:0;font-size:.95rem}
+
+/* ========== Journey ========== */
+.journey-flow{display:flex;align-items:stretch;gap:0;overflow-x:auto}
+.journey-stage{flex:1;min-width:160px;text-align:center;padding:1rem}
+.journey-stage-label{font-weight:700;font-size:.85rem;color:var(--c-primary);margin-bottom:.5rem;padding:.3rem;background:var(--c-primary-light);border-radius:var(--radius)}
+.journey-stage-content{font-size:.8rem;color:var(--c-text-sub);line-height:1.6}
+.journey-arrow{display:flex;align-items:center;font-size:1.5rem;color:var(--c-primary);padding:0 .3rem}
+
+/* ========== Campaign Grid ========== */
+.campaign-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:.8rem 0}
+.campaign-card{background:#f8fafc;border:1px solid var(--c-border);border-radius:var(--radius);padding:.8rem 1rem;font-size:.83rem}
+.campaign-header{font-weight:700;color:var(--c-primary);margin-bottom:.4rem;font-size:.88rem}
+
+/* ========== Keywords ========== */
+.keyword-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin:.5rem 0}
+.keyword{display:inline-block;padding:.25rem .6rem;background:var(--c-primary-light);color:var(--c-primary);border-radius:4px;font-size:.8rem;font-weight:600}
+.keyword.secondary{background:#f1f5f9;color:var(--c-text-sub)}
+
+/* ========== Email Sequences ========== */
+.email-sequences{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+.sequence{background:#f8fafc;border:1px solid var(--c-border);border-radius:var(--radius);padding:1rem}
+.sequence h4{font-size:.85rem;margin-top:0}
+
+/* ========== DM Contents ========== */
+.dm-contents{display:flex;flex-direction:column;gap:.6rem;margin:.8rem 0}
+.dm-item{display:flex;gap:.8rem;align-items:flex-start;padding:.6rem;background:#f8fafc;border-radius:var(--radius)}
+.dm-num{display:flex;align-items:center;justify-content:center;width:28px;height:28px;background:var(--c-primary);color:#fff;border-radius:50%;font-size:.75rem;font-weight:700;flex-shrink:0}
+.dm-item p{font-size:.83rem;color:var(--c-text-sub);margin:0}
+
+/* ========== Flow Diagram ========== */
+.flow-diagram{margin:1rem 0}
+.flow-row{display:flex;align-items:center;gap:.4rem;margin:.5rem 0;flex-wrap:wrap}
+.flow-box{padding:.5rem .8rem;background:var(--c-primary-light);border:1px solid #93c5fd;border-radius:var(--radius);font-size:.82rem;font-weight:600}
+.flow-arrow{color:var(--c-primary);font-weight:700}
+
+/* ========== SNS Grid ========== */
+.sns-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+/* ========== Budget Plans ========== */
+.budget-plans{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.2rem;align-items:start}
+.budget-card{position:relative}
+.budget-header{font-weight:700;font-size:1rem;padding:.6rem 0;margin-bottom:.8rem;border-bottom:2px solid var(--c-border)}
+.budget-a{color:#6366f1}
+.budget-b{color:var(--c-primary)}
+.budget-c{color:#9333ea}
+.recommended-budget{border:2px solid var(--c-primary);box-shadow:0 4px 12px rgba(37,99,235,.15)}
+.budget-expect{margin-top:.8rem;padding:.8rem;background:#f8fafc;border-radius:var(--radius);font-size:.85rem}
+.budget-expect div{margin:.3rem 0}
+.budget-tag{font-size:.75rem;background:var(--c-primary-light);color:var(--c-primary);padding:.2rem .5rem;border-radius:4px;margin-left:.5rem;font-weight:600}
+
+/* ========== Roadmap ========== */
+.roadmap{position:relative;padding-left:2rem}
+.roadmap::before{content:'';position:absolute;left:.8rem;top:0;bottom:0;width:3px;background:var(--c-primary-light)}
+.roadmap-phase{position:relative;margin-left:1rem}
+.phase-label{position:absolute;left:-3.2rem;top:1rem;background:var(--c-primary);color:#fff;padding:.2rem .5rem;border-radius:4px;font-size:.7rem;font-weight:700;white-space:nowrap}
+.phase-purpose{color:var(--c-primary);font-weight:600;margin-bottom:.8rem}
+.checklist{list-style:none;margin-left:0}
+.checklist li{padding:.3rem 0 .3rem 1.5rem;position:relative;font-size:.88rem}
+.checklist li::before{content:'';position:absolute;left:0;top:.6rem;width:14px;height:14px;border:2px solid var(--c-border);border-radius:3px;background:#fff}
+
+/* ========== Metrics Columns ========== */
+.metrics-columns{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+
+/* ========== Appeal Grid ========== */
+.appeal-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.appeal-card h4{color:var(--c-primary);margin-top:0}
+
+/* ========== Plan Comparison ========== */
+.plan-comparison{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;background:transparent;border:none;box-shadow:none;padding:0}
+.plan-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);overflow:hidden}
+.plan-card.recommended{border:2px solid var(--c-primary);box-shadow:0 4px 12px rgba(37,99,235,.12)}
+.plan-header{padding:.6rem 1rem;font-weight:700;font-size:.9rem;color:#fff}
+.plan-a{background:#6366f1}
+.plan-b{background:var(--c-primary)}
+.plan-c{background:#9333ea}
+.plan-body{padding:1rem;font-size:.85rem}
+
+/* ========== Footer ========== */
+.footer-note{text-align:center;padding:2rem;color:var(--c-text-sub);font-size:.8rem;border-top:1px solid var(--c-border);margin-top:2rem}
+
+/* ========== Responsive ========== */
+/* ========== Back to Top ========== */
+.back-to-top{position:fixed;bottom:2rem;right:2rem;width:48px;height:48px;border-radius:50%;background:var(--c-primary);color:#fff;border:none;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);opacity:0;visibility:hidden;transition:.25s;z-index:200}
+.back-to-top.visible{opacity:1;visibility:visible}
+.back-to-top:hover{background:#1d4ed8;transform:translateY(-2px)}
+
+@media(max-width:1024px){
+#sidebar{display:none}
+#content{margin-left:0}
+section{padding:2rem 1.5rem}
+.hero{padding:2.5rem 1.5rem}
+.hero h1{font-size:1.5rem}
+.persona-grid,.budget-plans,.plan-comparison,.scenario-tabs,.funnel-comparison,.email-sequences,.sns-grid,.metrics-columns,.campaign-grid{grid-template-columns:1fr}
+.appeal-grid{grid-template-columns:1fr}
+.revenue-split{flex-direction:column;align-items:center}
+.journey-flow{flex-direction:column}
+.journey-arrow{transform:rotate(90deg);padding:.3rem 0}
+}
+
+</style>
+</head>
+<body>
+
+<!-- サイドナビ -->
+<nav id="sidebar">
+<div class="nav-header">Marketing Plan</div>
+<ul>
+<li><a href="#section1" class="active">1. 現状整理</a></li>
+<li><a href="#section1-5">1.5 ユニットエコノミクス</a></li>
+<li><a href="#section2">2. ターゲットペルソナ</a></li>
+<li><a href="#section3">3. カスタマージャーニー</a></li>
+<li><a href="#section4">4. チャネル戦略</a></li>
+<li><a href="#section5">5. 予算案</a></li>
+<li><a href="#section6">6. ロードマップ</a></li>
+<li><a href="#section7">7. 効果測定</a></li>
+<li><a href="#section8">8. 訴求ポイント</a></li>
+<li><a href="#section9">9. リスクと対策</a></li>
+<li><a href="#section10">10. 補足ツール</a></li>
+</ul>
+</nav>
+
+<!-- メインコンテンツ -->
+<main id="content">
+
+<!-- ヒーロー -->
+<header class="hero">
+<div class="hero-inner">
+<p class="hero-label">Digital Marketing Plan 2026</p>
+<h1>ホリエモンAI学校 介護校<br>デジタルマーケティング計画</h1>
+<p class="hero-sub">介護事業所向けAI研修の法人顧客を獲得するための包括的マーケティング戦略</p>
+<div class="hero-badges">
+<span class="badge">法人向けAI研修 No.1（4冠）</span>
+<span class="badge">助成金75%OFF</span>
+<span class="badge">堀江貴文プロデュース</span>
+</div>
+</div>
+</header>
+
+<!-- セクション1: 現状整理 -->
+<section id="section1">
+<h2><span class="section-num">01</span>現状整理</h2>
+<div class="card">
+<table>
+<tbody>
+<tr><th>商品</th><td>介護事業所向けAI研修（法人プラン）</td></tr>
+<tr><th>単価</th><td>31万円/人/年（税別）、助成金適用で実質7万円/人</td></tr>
+<tr><th>介護校の取り分</th><td>受講料の50%（= 15.5万円/人/年）</td></tr>
+<tr><th>ターゲット</th><td>介護事業所の法人（施設長・管理者・経営者）</td></tr>
+<tr><th>既存チャネル</th><td>LP（fc.horiemon.ai/kaigo）のみ</td></tr>
+<tr><th>KPI</th><td>ウェビナー申込み数 / 資料請求数</td></tr>
+<tr><th>強み</th><td>堀江貴文プロデュース、法人向け生成AI研修No.1（4冠）、助成金75%OFF、240講座以上</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- セクション1.5: ユニットエコノミクス -->
+<section id="section1-5">
+<h2><span class="section-num">1.5</span>ユニットエコノミクス（収益構造）</h2>
+
+<h3>基本収益モデル</h3>
+<div class="card revenue-model">
+<div class="revenue-flow">
+<div class="revenue-box total">受講料 31万円/人/年（税別）</div>
+<div class="revenue-split">
+<div class="revenue-box school">介護校の取り分: 50% = <strong>15.5万円</strong>/人</div>
+<div class="revenue-box hq">本部の取り分: 50% = 15.5万円/人</div>
+</div>
+</div>
+</div>
+
+<h3>1法人あたりの収益シミュレーション</h3>
+<div class="card">
+<table>
+<thead><tr><th>受講人数</th><th>受講料合計</th><th>介護校売上（50%）</th><th>許容CPA上限</th></tr></thead>
+<tbody>
+<tr><td>2名</td><td>62万円</td><td>31万円</td><td>10万円</td></tr>
+<tr><td>4名</td><td>124万円</td><td>62万円</td><td>20万円</td></tr>
+<tr><td>6名</td><td>186万円</td><td>93万円</td><td>30万円</td></tr>
+<tr><td>10名</td><td>310万円</td><td>155万円</td><td>50万円</td></tr>
+</tbody>
+</table>
+<p class="note">※許容CPA上限 = 介護校売上の約1/3（粗利確保のため）</p>
+</div>
+
+<h3>マーケティング投資の損益分岐</h3>
+<div class="card highlight-card">
+<p><strong>1契約あたりの平均受講人数を4名と仮定</strong>した場合:</p>
+<div class="metrics-row">
+<div class="metric"><span class="metric-value">62万円</span><span class="metric-label">介護校売上/法人</span></div>
+<div class="metric"><span class="metric-value">約20万円</span><span class="metric-label">許容CPA/法人</span></div>
+</div>
+</div>
+
+<h3>重要な指標</h3>
+<div class="card">
+<table>
+<thead><tr><th>指標</th><th>目安</th></tr></thead>
+<tbody>
+<tr><td>目標CPA（リード獲得単価）</td><td>5,000〜15,000円/件</td></tr>
+<tr><td>目標CPA（法人契約単価）</td><td>10〜20万円/件</td></tr>
+<tr><td>リード→契約 転換率</td><td>5-10%（初期は3-5%を想定）</td></tr>
+<tr><td>LTV（1年契約・4名の場合）</td><td>62万円（介護校取り分）</td></tr>
+</tbody>
+</table>
+<p class="note">※LTVは1年契約ベースで算出。新規事業で継続率の実績データがなく、助成金の2年目適用も不確定なため、保守的に1年で計算。2年目以降の継続はボーナスとして扱う。</p>
+</div>
+
+<h3>チャネル別リード獲得見込み（現実的CPA前提）</h3>
+<div class="card">
+<p class="note">前提: 1法人あたり平均4名受講、介護校取り分 = 62万円/法人 / CPA: 10,000〜15,000円</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th>チャネル</th><th>プランA（月40万）</th><th>プランB（月85万）</th><th>プランC（月120万）</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>12-18件</td><td>23-35件</td><td>27-40件</td></tr>
+<tr><td>Google広告</td><td>5-7件</td><td>12-15件</td><td>17-21件</td></tr>
+<tr><td>LINE広告</td><td>-</td><td>3-5件</td><td>4-6件</td></tr>
+<tr><td>LinkedIn広告</td><td>-</td><td>2-3件</td><td>5件</td></tr>
+<tr><td>郵便DM</td><td>月平均2-3件</td><td>5件</td><td>10件</td></tr>
+<tr><td>オーガニック</td><td>3-5件</td><td>5-10件</td><td>8-15件</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td><strong>22-33件</strong></td><td><strong>50-73件</strong></td><td><strong>71-97件</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="note">※LINE広告CPA想定: 8,000-12,000円。テスト枠として運用し、良好であれば拡大検討<br>※CPA上振れ時（15,000円）は下限値、CPA良好時（10,000円）は上限値</p>
+</div>
+
+<h3>安定期ファネル（4ヶ月目以降）</h3>
+<div class="card">
+<p class="note">CPA改善・オーガニック流入増により、リード数は初期の1.3-1.5倍に拡大を見込む。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th></th><th>プランA（月40万）</th><th>プランB（月85万）</th><th>プランC（月120万）</th></tr></thead>
+<tbody>
+<tr><td>有効リード数</td><td>30-45件</td><td>65-95件</td><td>90-125件</td></tr>
+<tr><td>商談数（商談化率20%）</td><td>6-9件</td><td>13-19件</td><td>18-25件</td></tr>
+<tr class="row-highlight"><td><strong>月間成約見込み（成約率30%）</strong></td><td><strong>2-3件</strong></td><td><strong>4-6件</strong></td><td><strong>5-8件</strong></td></tr>
+<tr><td>介護校月間売上</td><td>124-186万円</td><td>248-372万円</td><td>310-496万円</td></tr>
+<tr><td>広告費</td><td>40万円</td><td>85万円</td><td>120万円</td></tr>
+<tr class="row-highlight"><td><strong>粗利</strong></td><td><strong>84-146万円</strong></td><td><strong>163-287万円</strong></td><td><strong>190-376万円</strong></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<h3>立ち上げ初期ファネル（1-3ヶ月目）</h3>
+<div class="card">
+<div class="callout callout-warning">
+<p>立ち上げ初期は以下の理由で各転換率が下振れする:</p>
+<ul>
+<li>介護事業所の導入事例がまだ少なく、信頼構築に時間がかかる</li>
+<li>介護事業所の意思決定は合議制が多く、リードタイムが長い（1-3ヶ月）</li>
+<li>助成金申請の準備期間が必要で、即決しにくい</li>
+<li>広告のターゲティングが最適化されておらず、CPAが高い</li>
+</ul>
+</div>
+<div class="table-scroll">
+<table>
+<thead><tr><th></th><th>プランA（月40万）</th><th>プランB（月85万）</th><th>プランC（月120万）</th></tr></thead>
+<tbody>
+<tr><td>有効リード数</td><td>22-33件</td><td>50-73件</td><td>71-97件</td></tr>
+<tr><td>商談数（商談化率15%）</td><td>3-5件</td><td>8-11件</td><td>11-15件</td></tr>
+<tr class="row-highlight"><td><strong>月間成約見込み（成約率20%）</strong></td><td><strong>1件</strong></td><td><strong>2件</strong></td><td><strong>2-3件</strong></td></tr>
+<tr><td>介護校月間売上</td><td>62万円</td><td>124万円</td><td>124-186万円</td></tr>
+<tr><td>広告費</td><td>40万円</td><td>85万円</td><td>120万円</td></tr>
+<tr class="row-highlight"><td><strong>粗利</strong></td><td><strong>22万円</strong></td><td><strong>39万円</strong></td><td><strong>4-66万円</strong></td></tr>
+</tbody>
+</table>
+</div>
+<div class="callout callout-danger">
+<strong>注意:</strong> 初期1-3ヶ月はどのプランも利益が薄いか、プランB・Cでは赤字の可能性がある。これは立ち上げ期の広告最適化コスト・学習コストとして織り込む必要がある。
+</div>
+</div>
+
+<h3>商談→成約の転換率の根拠</h3>
+<div class="card">
+<table>
+<thead><tr><th>要因</th><th>成約率への影響</th></tr></thead>
+<tbody>
+<tr><td>助成金で実質負担が大幅に下がる</td><td><span class="tag tag-positive">プラス（価格障壁が低い）</span></td></tr>
+<tr><td>堀江貴文ブランド・No.1実績</td><td><span class="tag tag-positive">プラス（信頼性が高い）</span></td></tr>
+<tr><td>合議制の意思決定（理事会・経営会議）</td><td><span class="tag tag-negative">マイナス（即決しにくい）</span></td></tr>
+<tr><td>助成金申請に社労士面談が必要</td><td><span class="tag tag-negative">マイナス（ステップが増える）</span></td></tr>
+<tr><td>AI研修自体が新しい概念</td><td><span class="tag tag-negative">マイナス（必要性の理解にばらつき）</span></td></tr>
+</tbody>
+</table>
+<p>上記を踏まえ、<strong>安定期30%、初期20%</strong>と想定する。</p>
+</div>
+
+<h3>リード→商談の転換率の根拠</h3>
+<div class="card">
+<table>
+<thead><tr><th>リード種別</th><th>商談化率</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>ウェビナー参加者</td><td>15-25%</td><td>内容を聞いた上での判断、温度感が高い</td></tr>
+<tr><td>ウェビナー申込み未参加</td><td>5-10%</td><td>興味はあるが、録画視聴からの商談化は低い</td></tr>
+<tr><td>資料請求</td><td>10-20%</td><td>情報収集段階、フォローメール次第</td></tr>
+<tr><td>DM返信（FAX/ハガキ）</td><td>20-30%</td><td>自らアクションを起こしており、意欲が高い</td></tr>
+</tbody>
+</table>
+<p>加重平均でリード全体→商談の転換率は<strong>安定期20%、初期15%</strong>と想定する。</p>
+</div>
+
+<h3>商談対応の体制要件</h3>
+<div class="card">
+<ul>
+<li>1商談あたり初回Web会議30分 + フォロー1-2回で合計1.5-2時間</li>
+<li>プランBの安定期（月12-18件）で月24-36時間の商談対応が発生</li>
+<li>助成金の社労士面談の調整も別途発生</li>
+<li>現在の営業体制で対応可能か確認が必要</li>
+</ul>
+</div>
+
+<h3>ファネル全体の整合性チェック（プランB）</h3>
+<div class="card">
+<div class="funnel-comparison">
+<div class="funnel-col">
+<h4>初期（1-3ヶ月目）</h4>
+<div class="funnel-step">見込みリード <strong>50-73件</strong>/月</div>
+<div class="funnel-arrow">&#9660; 商談化率15%</div>
+<div class="funnel-step">商談数 <strong>8-11件</strong>/月</div>
+<div class="funnel-arrow">&#9660; 成約率20%</div>
+<div class="funnel-step">成約数 <strong>2件</strong>/月</div>
+<div class="funnel-result">
+<div>介護校売上 <strong>124万円</strong></div>
+<div>広告費85万円との差 <strong class="profit">39万円</strong></div>
+</div>
+</div>
+<div class="funnel-col">
+<h4>安定期（4ヶ月目以降）</h4>
+<div class="funnel-step">見込みリード <strong>65-95件</strong>/月</div>
+<div class="funnel-arrow">&#9660; 商談化率20%</div>
+<div class="funnel-step">商談数 <strong>13-19件</strong>/月</div>
+<div class="funnel-arrow">&#9660; 成約率30%</div>
+<div class="funnel-step">成約数 <strong>4-6件</strong>/月</div>
+<div class="funnel-result">
+<div>介護校売上 <strong>248-372万円</strong></div>
+<div>広告費85万円との差 <strong class="profit">163-287万円</strong></div>
+</div>
+</div>
+</div>
+<div class="callout callout-success">
+<strong>LINE広告の追加により、初期の赤字リスクが解消された。</strong> 初期でも月2件の成約で粗利39万円を確保できる見込み。安定期は月4-6件の成約で粗利163-287万円と安定した収益構造になる。
+</div>
+</div>
+
+<h3>流入→リード転換の分解分析（LP CVRモデル）</h3>
+<div class="card">
+<div class="callout callout-info">
+<strong>基本モデル:</strong><br>
+広告予算 &divide; CPC（クリック単価） = LP訪問数<br>
+LP訪問数 &times; CVR（転換率） = リード数（ウェビナー申込み or 資料請求）
+</div>
+
+<h4>チャネル別CPC・CVR想定</h4>
+<table>
+<thead><tr><th>チャネル</th><th>CPC想定</th><th>LP CVR想定</th><th>根拠</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>300-600円</td><td>3-5%</td><td>介護業界は競合が少なくCPC低い。ターゲットが狭く配信量に限界あり</td></tr>
+<tr><td>Google検索広告</td><td>500-800円</td><td>4-7%</td><td>検索意図が高くCVR良好。月間検索ボリュームが限られる</td></tr>
+<tr><td>LINE広告</td><td>200-400円</td><td>2-3%</td><td>CPCは安いがB2B意図が低くCVR控えめ</td></tr>
+<tr><td>LinkedIn広告</td><td>800-1,500円</td><td>3-5%</td><td>CPCは高いがターゲット精度が高くCVRも良い</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h4>プランB（月85万円）の流入→リード分解</h4>
+<div class="scenario-tabs">
+<div class="scenario pessimistic">
+<h5>悲観シナリオ（CPC上振れ &times; CVR下振れ）</h5>
+<div class="table-scroll">
+<table>
+<thead><tr><th>チャネル</th><th>予算</th><th>CPC</th><th>訪問数</th><th>CVR</th><th>リード数</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>35万円</td><td>600円</td><td>583</td><td>3%</td><td>17件</td></tr>
+<tr><td>Google広告</td><td>18万円</td><td>800円</td><td>225</td><td>4%</td><td>9件</td></tr>
+<tr><td>LINE広告</td><td>4万円</td><td>400円</td><td>100</td><td>2%</td><td>2件</td></tr>
+<tr><td>LinkedIn広告</td><td>5万円</td><td>1,500円</td><td>33</td><td>3%</td><td>1件</td></tr>
+<tr><td>DM・オーガニック</td><td>-</td><td>-</td><td>-</td><td>-</td><td>7件</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td></td><td></td><td><strong>941</strong></td><td></td><td><strong>36件</strong></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="scenario optimistic">
+<h5>楽観シナリオ（CPC良好 &times; CVR上振れ）</h5>
+<div class="table-scroll">
+<table>
+<thead><tr><th>チャネル</th><th>予算</th><th>CPC</th><th>訪問数</th><th>CVR</th><th>リード数</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>35万円</td><td>300円</td><td>1,167</td><td>5%</td><td>58件</td></tr>
+<tr><td>Google広告</td><td>18万円</td><td>500円</td><td>360</td><td>7%</td><td>25件</td></tr>
+<tr><td>LINE広告</td><td>4万円</td><td>200円</td><td>200</td><td>3%</td><td>6件</td></tr>
+<tr><td>LinkedIn広告</td><td>5万円</td><td>800円</td><td>63</td><td>5%</td><td>3件</td></tr>
+<tr><td>DM・オーガニック</td><td>-</td><td>-</td><td>-</td><td>-</td><td>15件</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td></td><td></td><td><strong>1,790</strong></td><td></td><td><strong>107件</strong></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+<div class="card">
+<h4>分析からの示唆</h4>
+<ul>
+<li><strong>悲観シナリオでは36件/月</strong> &mdash; チャネル別CPA前提の下限値（50件）を下回る可能性がある。立ち上げ初月に一時的にこの水準になるリスクはある</li>
+<li><strong>LP CVRが最も重要なレバー。</strong> CVRが3%→5%に改善するだけでリード数は1.67倍になる</li>
+<li><strong>LP CVRの目標値: 4%以上を安定的に維持する</strong> &mdash; これを下回る場合はLP改善を最優先で実施する</li>
+</ul>
+</div>
+
+<div class="card">
+<h4>LP CVR改善のための条件</h4>
+<table>
+<thead><tr><th>施策</th><th>CVRへの影響</th><th>実施難度</th></tr></thead>
+<tbody>
+<tr><td>ファーストビューの介護特化メッセージ</td><td><span class="tag tag-positive">高（離脱率の低下）</span></td><td>低</td></tr>
+<tr><td>ウェビナー申込みフォームの簡略化（3項目以内）</td><td><span class="tag tag-positive">高（フォーム完了率の向上）</span></td><td>低</td></tr>
+<tr><td>助成金シミュレーターの設置</td><td><span class="tag tag-neutral">中（滞在時間の延長・CV追加）</span></td><td>中</td></tr>
+<tr><td>導入事例の追加（社名入り）</td><td><span class="tag tag-neutral">中（信頼性の向上）</span></td><td>中</td></tr>
+<tr><td>モバイル最適化</td><td><span class="tag tag-positive">高（モバイルCVRの底上げ）</span></td><td>低</td></tr>
+<tr><td>ページ読み込み速度の改善（3秒以内）</td><td><span class="tag tag-neutral">中（離脱防止）</span></td><td>低〜中</td></tr>
+</tbody>
+</table>
+<p><strong>LP CVRの計測と改善はフェーズ1（基盤構築）で着手し、フェーズ3（最適化期）でヒートマップ分析を含めた本格改善を行う。</strong> 広告費を投入する前にLP CVRが最低3%を確保できていることを確認すべきである。</p>
+</div>
+
+<h3>予算と流入数の整合性評価</h3>
+<div class="card">
+<div class="callout callout-danger">
+<strong>結論: 現実シナリオでは成立するが、マージンは薄い</strong>
+</div>
+<p>プランB（月85万円）のデジタル広告予算は実質62万円。この予算で必要リード数を確保できるかを検証する。</p>
+<div class="table-scroll">
+<table>
+<thead><tr><th></th><th>必要リード数</th><th>悲観シナリオ</th><th>現実シナリオ</th><th>楽観シナリオ</th></tr></thead>
+<tbody>
+<tr><td>初期（1-3ヶ月）</td><td>50-73件</td><td class="cell-danger"><strong>36件（不足）</strong></td><td class="cell-success">60-65件（成立）</td><td class="cell-success">107件（余裕）</td></tr>
+<tr><td>安定期（4ヶ月〜）</td><td>65-95件</td><td class="cell-danger">47件（不足）</td><td class="cell-success">78-85件（成立）</td><td class="cell-success">140件（余裕）</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h4>予算が成立する3つの条件</h4>
+<p>以下を<strong>同時に</strong>満たす必要がある:</p>
+<table>
+<thead><tr><th>条件</th><th>基準値</th><th>達成確度</th></tr></thead>
+<tbody>
+<tr><td>LP CVRが4%以上</td><td>改善前は未達の可能性が高い。介護法人向けに最適化後であれば達成可能</td><td><strong>LP改善が前提</strong></td></tr>
+<tr><td>Facebook広告のCPCが500円以下</td><td>介護業界は広告競合が少なく可能性は高いが、配信開始まで不明</td><td>中〜高</td></tr>
+<tr><td>広告外リード月7件以上</td><td>SEO・紹介チャネルが育つまで3-6ヶ月かかる</td><td>初期は低い</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="card">
+<h4>対策: 段階的な予算投入（推奨）</h4>
+<div class="callout callout-info">
+悲観シナリオのリスクを回避するため、<strong>85万円を初月から投入せず、段階的に引き上げる</strong>運用を推奨する。
+</div>
+<div class="phase-steps">
+<div class="phase-step">
+<div class="phase-step-header">1ヶ月目 検証フェーズ: 月40-50万円</div>
+<ul>
+<li>LP改修を最優先で完了させる</li>
+<li>Facebook・Google広告を少額（各10-15万円）でテスト出稿</li>
+<li>CPC・CVRの実数値を取得</li>
+<li>目的: 85万円投入の判断材料を得る</li>
+</ul>
+</div>
+<div class="phase-step">
+<div class="phase-step-header">2ヶ月目 判断フェーズ</div>
+<ul>
+<li>LP CVRが4%以上 → 85万円に引き上げ</li>
+<li>LP CVRが3-4% → LP追加改善しつつ60万円で継続</li>
+<li>LP CVRが3%未満 → 広告は最小限に抑え、LP改善に集中</li>
+</ul>
+</div>
+<div class="phase-step">
+<div class="phase-step-header">3ヶ月目以降 本格投入フェーズ</div>
+<ul>
+<li>CPC・CVRの実績データに基づき85万円を配分</li>
+</ul>
+</div>
+</div>
+<p><strong>初月の慎重な投資で、その後の6ヶ月分の投資判断の精度が上がる。</strong></p>
+</div>
+
+<div class="card">
+<h4>初月の予算配分案（検証フェーズ: 月45万円）</h4>
+<table>
+<thead><tr><th>項目</th><th>月額</th><th>目的</th></tr></thead>
+<tbody>
+<tr><td>LP改修費用</td><td>10万円</td><td>介護法人向けCTA・ファーストビュー改修</td></tr>
+<tr><td>Facebook広告（テスト）</td><td>12万円</td><td>CPC・CVRの実数値取得</td></tr>
+<tr><td>Google広告（テスト）</td><td>8万円</td><td>検索広告のCPC・CVR取得</td></tr>
+<tr><td>ウェビナーツール</td><td>2万円</td><td>第1回ウェビナー開催</td></tr>
+<tr><td>メール配信ツール</td><td>1万円</td><td>シーケンス構築</td></tr>
+<tr><td>コンテンツ制作</td><td>5万円</td><td>資料請求PDF・DM制作</td></tr>
+<tr><td>DM制作・リスト準備</td><td>7万円</td><td>2ヶ月目の送付に向けた準備</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td><strong>約45万円</strong></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>リード数を底上げする施策（広告費に依存しない）</h3>
+<div class="card">
+<table>
+<thead><tr><th>施策</th><th>効果</th><th>コスト</th></tr></thead>
+<tbody>
+<tr><td>ウェビナー参加者への3日以内の個別フォロー</td><td>商談化率15%→25%に改善。必要リード数が4割減</td><td>人件費のみ</td></tr>
+<tr><td>助成金ガイドPDFの無料ダウンロード設置</td><td>LP訪問者の追加CVポイント。月5-10件のリード追加見込み</td><td>初回制作費のみ</td></tr>
+<tr><td>介護業界団体・社労士事務所からの紹介チャネル構築</td><td>広告費ゼロの高品質リード。月3-5件見込み</td><td>営業工数</td></tr>
+<tr><td>ウェビナーを月3回に増やす</td><td>リード母数の拡大。月10-15件の追加見込み</td><td>Zoom費用のみ</td></tr>
+</tbody>
+</table>
+<div class="callout callout-success">
+<strong>特にウェビナー参加者への個別フォロー強化は必須。</strong> これにより商談化率が改善すれば、リード数が少なくても商談数を確保できる。
+</div>
+</div>
+
+<h3>プラン選択の判断基準</h3>
+<div class="card plan-comparison">
+<div class="plan-card">
+<div class="plan-header plan-a">プランA（月40万円）</div>
+<div class="plan-body">
+<p>初期は月1件の成約で粗利22万円程度。赤字にはならないがリスク余裕が少ない。リード数が22-33件と少なく、ファネルのどこかが下振れすると成約ゼロの月が出る可能性がある。<strong>最小限の投資で市場の反応を検証したい場合に適する。</strong></p>
+</div>
+</div>
+<div class="plan-card recommended">
+<div class="plan-header plan-b">プランB（月85万円）【推奨】</div>
+<div class="plan-body">
+<p>初期1-3ヶ月は赤字の可能性があるが、4ヶ月目以降は月4-5件の成約で粗利163-225万円。6ヶ月累計で十分に回収できる。<strong>初月は検証フェーズとして45万円で開始し、LP CVRの実数値を確認してから85万円に引き上げる段階的投入を推奨する。</strong></p>
+</div>
+</div>
+<div class="plan-card">
+<div class="plan-header plan-c">プランC（月120万円）</div>
+<div class="plan-body">
+<p>リード数67-91件で最も安定するが、初期の赤字幅も大きい。<strong>安定期に入ってからプランBから移行する拡大プランとして位置づけるのが合理的。</strong></p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- セクション2: ターゲットペルソナ -->
+<section id="section2">
+<h2><span class="section-num">02</span>ターゲットペルソナ</h2>
+<div class="persona-grid">
+<div class="card persona-card">
+<div class="persona-header persona-a">ペルソナA</div>
+<h4>中小規模介護事業所の経営者・施設長</h4>
+<p><strong>属性:</strong> 40-60代、1-3拠点運営、従業員10-50名</p>
+<p><strong>課題:</strong> 慢性的な人手不足、記録業務の負担、ICT化の遅れ</p>
+<p><strong>心理:</strong> 「AI」という言葉に漠然とした興味はあるが、何から始めればよいかわからない</p>
+<p><strong>情報収集:</strong> 介護業界メディア、介護展示会、同業者の口コミ、Facebook</p>
+</div>
+<div class="card persona-card">
+<div class="persona-header persona-b">ペルソナB</div>
+<h4>中堅〜大手介護法人のDX推進担当・管理職</h4>
+<p><strong>属性:</strong> 30-50代、複数拠点、従業員50-300名</p>
+<p><strong>課題:</strong> 全社的なDX推進の圧力、現場職員のITリテラシー格差、研修コスト</p>
+<p><strong>心理:</strong> DX推進の実績を出したいが、介護現場に合った研修が見つからない</p>
+<p><strong>情報収集:</strong> LinkedIn、業界専門誌、Googleでのリサーチ、ウェビナー</p>
+</div>
+<div class="card persona-card">
+<div class="persona-header persona-c">ペルソナC</div>
+<h4>社会福祉法人・医療法人の理事長・本部長</h4>
+<p><strong>属性:</strong> 50-70代、大規模法人、従業員300名以上</p>
+<p><strong>課題:</strong> 組織全体のデジタル化、助成金の有効活用、人材育成の体系化</p>
+<p><strong>心理:</strong> 投資対効果を重視、信頼できるブランドかどうかが判断基準</p>
+<p><strong>情報収集:</strong> 紹介、業界団体、展示会、トップセミナー</p>
+</div>
+</div>
+</section>
+
+<!-- セクション3: カスタマージャーニー -->
+<section id="section3">
+<h2><span class="section-num">03</span>カスタマージャーニーとファネル設計</h2>
+<div class="card">
+<div class="journey-flow">
+<div class="journey-stage">
+<div class="journey-stage-label">認知（知る）</div>
+<div class="journey-stage-content">広告/SNS/SEO<br>↓<br>LP流入・記事閲覧</div>
+</div>
+<div class="journey-arrow">&rarr;</div>
+<div class="journey-stage">
+<div class="journey-stage-label">興味・関心（調べる）</div>
+<div class="journey-stage-content">ウェビナー/記事<br>↓<br>LINE登録・ウェビナー申込み</div>
+</div>
+<div class="journey-arrow">&rarr;</div>
+<div class="journey-stage">
+<div class="journey-stage-label">検討（比較・相談）</div>
+<div class="journey-stage-content">資料請求/面談<br>↓<br>Web会議予約・資料DL</div>
+</div>
+<div class="journey-arrow">&rarr;</div>
+<div class="journey-stage">
+<div class="journey-stage-label">行動（申込み）</div>
+<div class="journey-stage-content">契約<br>↓<br>法人プラン成約</div>
+</div>
+</div>
+</div>
+
+<h3>ファネル別KPI目標（月間・立ち上げ3ヶ月後目安）</h3>
+<div class="card">
+<table>
+<thead><tr><th>ファネル</th><th>指標</th><th>目標値</th></tr></thead>
+<tbody>
+<tr><td>認知</td><td>LP訪問数</td><td>3,000 PV/月</td></tr>
+<tr><td>興味</td><td>ウェビナー申込み</td><td>50件/月</td></tr>
+<tr><td>興味</td><td>LINE登録</td><td>100件/月</td></tr>
+<tr><td>検討</td><td>資料請求</td><td>30件/月</td></tr>
+<tr><td>検討</td><td>Web会議予約</td><td>15件/月</td></tr>
+<tr><td>行動</td><td>法人契約</td><td>3-5件/月</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- セクション4〜10は別ファイルから読み込み -->
+<!-- セクション4: チャネル戦略 -->
+<section id="section4">
+<h2><span class="section-num">04</span>チャネル戦略（優先度順）</h2>
+
+<!-- 4-1 ウェビナー -->
+<div class="channel-block">
+<h3>4-1. ウェビナー施策 <span class="priority priority-high">最優先</span></h3>
+<div class="card">
+<p>KPIの中核であるウェビナーを集客エンジンの中心に据える。</p>
+<h4>ウェビナー企画案</h4>
+<table>
+<thead><tr><th>#</th><th>テーマ</th><th>対象ペルソナ</th><th>形式</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>「介護現場のAI活用最前線 - 記録業務を半分にする方法」</td><td>A・B</td><td>講義+デモ（60分）</td></tr>
+<tr><td>2</td><td>「助成金で実質7万円 - 介護事業所のAI研修導入ガイド」</td><td>A・C</td><td>講義+Q&A（45分）</td></tr>
+<tr><td>3</td><td>「人手不足を解消するAI×介護DXの実践事例」</td><td>B・C</td><td>パネル（60分）</td></tr>
+<tr><td>4</td><td>「ChatGPTで介護記録を効率化 - 実演ワークショップ」</td><td>A・B</td><td>ハンズオン（90分）</td></tr>
+</tbody>
+</table>
+
+<h4>運用設計</h4>
+<ul>
+<li><strong>頻度:</strong> 月2回（第2・第4木曜 14:00〜）</li>
+<li><strong>ツール:</strong> Zoom Webinar</li>
+<li><strong>フォローアップ:</strong> 参加者に録画送付 → 3日後に資料請求/面談CTAメール → 1週間後にケーススタディ送付</li>
+<li><strong>不参加者:</strong> 録画アーカイブへの誘導メール → 次回ウェビナー案内</li>
+</ul>
+
+<h4>ウェビナー集客チャネル</h4>
+<ul>
+<li>LP上にウェビナー申込みセクション追加</li>
+<li>Facebook広告（介護関連のターゲティング）</li>
+<li>メールリスト（獲得した見込み客への案内）</li>
+<li>介護業界メディアへのイベント掲載</li>
+<li>協力団体・パートナーからの紹介</li>
+</ul>
+</div>
+</div>
+
+<!-- 4-2 LP改善 -->
+<div class="channel-block">
+<h3>4-2. LP改善・CRO <span class="priority priority-high">高優先</span></h3>
+<div class="card">
+<p>現在のLPは個人プラン寄りの構成。介護法人向けに最適化する。</p>
+
+<h4>1. ファーストビュー改修</h4>
+<ul>
+<li>「介護事業所のAI人材育成」を明確に打ち出す</li>
+<li>「助成金で実質月5,833円/人〜」を目立たせる</li>
+<li>CTAを「ウェビナーに参加する」「資料をダウンロード」に変更</li>
+</ul>
+
+<h4>2. 介護業界特化コンテンツの追加</h4>
+<ul>
+<li>介護現場でのAI活用事例（記録業務、シフト作成、家族対応文書等）</li>
+<li>介護事業所の導入事例・インタビュー</li>
+<li>助成金シミュレーター（人数を入れると実質負担額が表示される）</li>
+</ul>
+
+<h4>3. CTA構造の見直し</h4>
+<ul>
+<li><strong>主CTA:</strong> ウェビナー申込み</li>
+<li><strong>副CTA:</strong> 資料ダウンロード（メールアドレス取得）</li>
+<li><strong>第三CTA:</strong> 無料相談予約（Google Calendar）</li>
+</ul>
+
+<h4>4. 信頼性要素の強化</h4>
+<ul>
+<li>法人向けNo.1の4冠バッジを目立つ位置に</li>
+<li>介護事業所の導入社数・受講者数の実績表示</li>
+<li>厚生労働省の助成金制度への言及で公的な裏付け</li>
+</ul>
+</div>
+</div>
+
+<!-- 4-3 Facebook -->
+<div class="channel-block">
+<h3>4-3. Facebook/Meta広告 <span class="priority priority-high">高優先</span></h3>
+<div class="card">
+<p>介護業界の意思決定者はFacebookの利用率が高い。</p>
+
+<h4>キャンペーン構成</h4>
+<div class="campaign-grid">
+<div class="campaign-card">
+<div class="campaign-header">キャンペーン1: ウェビナー集客</div>
+<p><strong>目的:</strong> コンバージョン</p>
+<p><strong>ターゲティング:</strong> 介護施設管理者、介護福祉関連の興味関心、経営者層40-65歳</p>
+<p><strong>フォーマット:</strong> 動画広告（30秒）+ カルーセル広告</p>
+<p><strong>訴求軸:</strong> 「介護現場のAI活用で年間2,400万円の業務効率化」</p>
+<p><strong>予算配分:</strong> 全体の40%</p>
+</div>
+<div class="campaign-card">
+<div class="campaign-header">キャンペーン2: 資料請求</div>
+<p><strong>目的:</strong> リード獲得</p>
+<p><strong>ターゲティング:</strong> キャンペーン1と同様 + 類似オーディエンス</p>
+<p><strong>フォーマット:</strong> Facebookリード広告（フォーム内蔵）</p>
+<p><strong>訴求軸:</strong> 「助成金75%OFFで導入できるAI研修の全容」</p>
+<p><strong>予算配分:</strong> 全体の30%</p>
+</div>
+<div class="campaign-card">
+<div class="campaign-header">キャンペーン3: リターゲティング</div>
+<p><strong>目的:</strong> 再訪問促進</p>
+<p><strong>ターゲティング:</strong> LP訪問者、ウェビナーページ訪問者</p>
+<p><strong>フォーマット:</strong> 静止画+テキスト</p>
+<p><strong>訴求軸:</strong> 次回ウェビナー日程、導入事例、期間限定特典</p>
+<p><strong>予算配分:</strong> 全体の15%</p>
+</div>
+<div class="campaign-card">
+<div class="campaign-header">キャンペーン4: 認知拡大</div>
+<p><strong>目的:</strong> リーチ</p>
+<p><strong>ターゲティング:</strong> 介護業界ブロードターゲット</p>
+<p><strong>フォーマット:</strong> 堀江貴文の動画コンテンツ</p>
+<p><strong>訴求軸:</strong> 「介護×AI」の未来像、業界変革メッセージ</p>
+<p><strong>予算配分:</strong> 全体の15%</p>
+</div>
+</div>
+
+<h4>広告クリエイティブの方向性</h4>
+<table>
+<thead><tr><th>パターン</th><th>ヘッドライン</th><th>訴求</th></tr></thead>
+<tbody>
+<tr><td>A（課題型）</td><td>「記録業務に1日2時間。AIなら半分に。」</td><td>業務効率化</td></tr>
+<tr><td>B（助成金型）</td><td>「AI研修が実質月5,833円/人。助成金活用法を解説」</td><td>コスト訴求</td></tr>
+<tr><td>C（権威型）</td><td>「法人向けAI研修No.1。介護校、開校。」</td><td>ブランド信頼</td></tr>
+<tr><td>D（危機感型）</td><td>「2025年、AI活用できない介護事業所は淘汰される」</td><td>緊急性</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- 4-4 LinkedIn -->
+<div class="channel-block">
+<h3>4-4. LinkedIn広告 <span class="priority priority-mid">中優先</span></h3>
+<div class="card">
+<p>ペルソナB・Cの中堅〜大手法人の意思決定者にリーチ。</p>
+<ul>
+<li><strong>ターゲティング:</strong> 医療・福祉業界、管理職以上、従業員50名以上</li>
+<li><strong>広告フォーマット:</strong> スポンサードコンテンツ（記事型）</li>
+<li><strong>訴求:</strong> DX推進・人材育成の文脈</li>
+<li><strong>予算:</strong> Facebook広告の20%程度でテスト開始</li>
+</ul>
+</div>
+</div>
+
+<!-- 4-5 LINE -->
+<div class="channel-block">
+<h3>4-5. LINE広告 <span class="priority priority-mid">中優先</span></h3>
+<div class="card">
+<p>テスト枠としての運用開始だが、介護業界は日常業務でLINEを使用している施設が多く、リーチの可能性がある。</p>
+
+<h4>配信設定</h4>
+<ul>
+<li><strong>配信面:</strong> LINE NEWS、タイムライン、LINE VOOM</li>
+<li><strong>ターゲティング:</strong> 年齢40-65歳、興味関心「介護」「福祉」「経営」「研修」、地域は初期テストでは首都圏+大阪に絞る</li>
+<li><strong>広告フォーマット:</strong> Card型（画像+テキスト）、Small Image型</li>
+</ul>
+
+<h4>キャンペーン構成</h4>
+<div class="campaign-grid">
+<div class="campaign-card">
+<div class="campaign-header">キャンペーン1: ウェビナー集客</div>
+<p><strong>訴求:</strong> 「介護×AI 無料ウェビナー開催中」</p>
+<p><strong>CTA:</strong> ウェビナー申込みページへ誘導</p>
+<p><strong>予算:</strong> 全体の60%</p>
+</div>
+<div class="campaign-card">
+<div class="campaign-header">キャンペーン2: 資料請求</div>
+<p><strong>訴求:</strong> 「助成金75%OFF 介護AI研修の資料を無料ダウンロード」</p>
+<p><strong>CTA:</strong> 資料請求ページへ誘導</p>
+<p><strong>予算:</strong> 全体の40%</p>
+</div>
+</div>
+
+<div class="callout callout-warning">
+<strong>注意点:</strong> B2Bターゲティングの精度がFacebook・LinkedInより低いため、リードの質にばらつきが出る可能性がある。CPA・リード質のモニタリングを2週間単位で実施し、Facebook広告との比較で継続判断を行う。
+</div>
+</div>
+</div>
+
+<!-- 4-7 Google -->
+<div class="channel-block">
+<h3>4-7. Google広告 <span class="priority priority-mid">中優先</span></h3>
+<div class="card">
+<p>検索意図の高いキーワードを押さえる。</p>
+
+<h4>高意図キーワード（指名検索・競合検索）</h4>
+<div class="keyword-tags">
+<span class="keyword">介護 AI研修</span>
+<span class="keyword">介護事業所 DX研修</span>
+<span class="keyword">介護 生成AI 研修</span>
+<span class="keyword">介護 ChatGPT 活用</span>
+<span class="keyword">介護 業務効率化 AI</span>
+<span class="keyword">人材開発支援助成金 AI研修</span>
+<span class="keyword">リスキリング 助成金 介護</span>
+</div>
+
+<h4>中意図キーワード（課題検索）</h4>
+<div class="keyword-tags">
+<span class="keyword secondary">介護記録 効率化</span>
+<span class="keyword secondary">介護 人手不足 対策</span>
+<span class="keyword secondary">介護 ICT化 補助金</span>
+<span class="keyword secondary">介護事業所 コスト削減</span>
+</div>
+
+<h4>ディスプレイ広告</h4>
+<p>介護業界メディア（介護ニュース、ケアマネジメントオンライン等）へのプレースメント配信</p>
+</div>
+</div>
+
+<!-- 4-8 SEO -->
+<div class="channel-block">
+<h3>4-8. SEOコンテンツ戦略 <span class="priority priority-long">中長期</span></h3>
+<div class="card">
+<p>介護×AIの情報ニーズに応えるコンテンツで検索流入を構築。</p>
+<table>
+<thead><tr><th>記事テーマ</th><th>狙うキーワード</th><th>検索意図</th></tr></thead>
+<tbody>
+<tr><td>介護現場でのChatGPT活用法10選</td><td>介護 ChatGPT 活用</td><td>情報収集</td></tr>
+<tr><td>人材開発支援助成金でAI研修を導入する方法</td><td>介護 助成金 AI研修</td><td>制度理解</td></tr>
+<tr><td>介護記録をAIで自動化する具体的手順</td><td>介護記録 AI 自動化</td><td>課題解決</td></tr>
+<tr><td>介護事業所のDX成功事例5選</td><td>介護 DX 事例</td><td>検討・比較</td></tr>
+<tr><td>2026年版 介護業界のAI活用トレンド</td><td>介護 AI トレンド 2026</td><td>情報収集</td></tr>
+<tr><td>介護施設のシフト作成をAIに任せる方法</td><td>介護 シフト AI</td><td>課題解決</td></tr>
+</tbody>
+</table>
+<ul>
+<li>公開頻度: 月2-4記事</li>
+<li>各記事末尾にウェビナーCTA・資料請求CTAを設置</li>
+<li>LP内にブログ/コラムセクションを新設、またはサブドメインで運用</li>
+</ul>
+</div>
+</div>
+
+<!-- 4-9 メール -->
+<div class="channel-block">
+<h3>4-9. メールマーケティング <span class="priority priority-mid">中優先</span></h3>
+<div class="card">
+<p>獲得したリードを育成してWeb会議予約・契約へ導く。</p>
+
+<div class="email-sequences">
+<div class="sequence">
+<h4>シーケンスA: ウェビナー参加者向け（5通）</h4>
+<ol>
+<li><strong>当日:</strong> 録画リンク + お礼</li>
+<li><strong>3日後:</strong> 介護現場のAI活用事例PDF</li>
+<li><strong>7日後:</strong> 助成金活用の具体的ステップ解説</li>
+<li><strong>14日後:</strong> 導入企業インタビュー動画</li>
+<li><strong>21日後:</strong> 無料相談のご案内（期間限定特典付き）</li>
+</ol>
+</div>
+<div class="sequence">
+<h4>シーケンスB: 資料請求者向け（4通）</h4>
+<ol>
+<li><strong>即時:</strong> 資料PDF送付 + ウェビナー案内</li>
+<li><strong>5日後:</strong> 助成金シミュレーション結果の案内</li>
+<li><strong>10日後:</strong> よくある質問への回答集</li>
+<li><strong>15日後:</strong> Web会議予約のご案内</li>
+</ol>
+</div>
+<div class="sequence">
+<h4>シーケンスC: 月次ニュースレター</h4>
+<ul>
+<li>介護×AI最新ニュースの紹介</li>
+<li>受講者の成果報告</li>
+<li>次回ウェビナーの案内</li>
+<li>助成金制度の最新情報</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 4-10 メディア -->
+<div class="channel-block">
+<h3>4-10. 業界メディア・パートナー連携 <span class="priority priority-long">中長期</span></h3>
+<div class="card">
+<h4>介護業界メディアへの露出</h4>
+<ul>
+<li><strong>記事掲載/タイアップ:</strong> 介護ニュースJoint、ケアマネジメントオンライン、介護のほんね等</li>
+<li><strong>プレスリリース:</strong> 介護校開校、導入事例、ウェビナー開催の告知</li>
+<li><strong>専門家寄稿:</strong> 「介護×AI」テーマの連載コラム</li>
+</ul>
+
+<h4>パートナー連携</h4>
+<ul>
+<li>介護ソフトベンダー（カイポケ、ほのぼの等）との共同ウェビナー</li>
+<li>社会保険労務士事務所（助成金申請の連携先）からの紹介</li>
+<li>介護業界の協会・団体への研修プログラム提案</li>
+</ul>
+</div>
+</div>
+
+<!-- 4-11 郵便DM -->
+<div class="channel-block">
+<h3>4-11. 郵便DM <span class="priority priority-high">高優先</span></h3>
+<div class="card">
+<p>介護事業所は日常業務がオフライン中心であり、施設長・管理者は現場にいることが多い。郵便DMは「手元に残る」「回覧される」という特性があり、デジタル広告が届きにくい層への有力なアプローチ手段となる。</p>
+
+<h4>送付対象リストの構築</h4>
+<table>
+<thead><tr><th>リストソース</th><th>特徴</th></tr></thead>
+<tbody>
+<tr><td>WAM NET（福祉医療機構）</td><td>全国の介護事業所が網羅、施設種別で絞込み可能</td></tr>
+<tr><td>介護サービス情報公表システム</td><td>厚生労働省管轄、事業所名・所在地・管理者名が公開</td></tr>
+<tr><td>法人リスト購入（帝国データバンク等）</td><td>業種コード「介護」で抽出、決裁者名付き</td></tr>
+<tr><td>展示会・ウェビナー参加者リスト</td><td>接点のある見込み客への追撃DM</td></tr>
+</tbody>
+</table>
+<ul>
+<li><strong>初回送付規模:</strong> 1,000〜3,000通（地域またはエリアを絞ってテスト）</li>
+<li><strong>ターゲット絞込み:</strong> 従業員10名以上の法人（助成金活用メリットが大きい層）</li>
+</ul>
+
+<h4>DM構成案（封筒 A4サイズの中身）</h4>
+<div class="dm-contents">
+<div class="dm-item">
+<span class="dm-num">1</span>
+<div>
+<strong>挨拶状（A4 1枚）</strong>
+<p>施設長・管理者宛の名前入り / 「介護現場のAI活用で年間○○時間の業務削減」という問題提起 / ウェビナーへの招待</p>
+</div>
+</div>
+<div class="dm-item">
+<span class="dm-num">2</span>
+<div>
+<strong>介護校パンフレット（A4 三つ折りまたは4P）</strong>
+<p>介護現場のAI活用事例 / カリキュラム概要 / No.1実績・堀江貴文プロデュースの信頼性 / 受講者の声</p>
+</div>
+</div>
+<div class="dm-item">
+<span class="dm-num">3</span>
+<div>
+<strong>助成金ガイドチラシ（A4 1枚）</strong>
+<p>「受講料の最大75%が助成金対象」を大きく表示 / 人数別の実質負担額シミュレーション表 / 助成金の対象条件フローチャート</p>
+</div>
+</div>
+<div class="dm-item">
+<span class="dm-num">4</span>
+<div>
+<strong>ウェビナー招待チラシ（A5 1枚）</strong>
+<p>次回ウェビナーの日時・テーマ / QRコード → ウェビナー申込みページ（UTM付き） / 「参加無料」を強調</p>
+</div>
+</div>
+<div class="dm-item">
+<span class="dm-num">5</span>
+<div>
+<strong>返信用ハガキまたはFAX用紙</strong>
+<p>資料請求 / ウェビナー申込み / 無料相談希望をチェック式で / FAX返信は介護業界ではまだ有効な手段</p>
+</div>
+</div>
+</div>
+
+<h4>DM送付パターン</h4>
+<table>
+<thead><tr><th>パターン</th><th>タイミング</th><th>目的</th></tr></thead>
+<tbody>
+<tr><td>新規開拓DM</td><td>月1回（リスト入替）</td><td>新規リード獲得</td></tr>
+<tr><td>ウェビナー告知DM</td><td>ウェビナー2週間前</td><td>申込み促進</td></tr>
+<tr><td>フォローDM</td><td>Web会議後1週間</td><td>検討中の法人への後押し</td></tr>
+<tr><td>季節DM</td><td>4月（新年度予算）/ 10月（下期予算）</td><td>予算確保のタイミングに合わせた訴求</td></tr>
+</tbody>
+</table>
+
+<h4>効果測定</h4>
+<ul>
+<li>QRコードにUTMパラメータを付与し、DMからのLP流入を計測</li>
+<li>返信ハガキ/FAXの返送率をトラッキング</li>
+<li>DM送付リストとCRM上の商談を紐づけて成約率を計測</li>
+<li><strong>目標反応率:</strong> 0.5〜1.5%（DM業界平均は0.5〜1.0%、助成金訴求で上振れを期待）</li>
+</ul>
+
+<h4>コスト試算（1,000通送付の場合）</h4>
+<table>
+<thead><tr><th>項目</th><th>単価</th><th>合計</th></tr></thead>
+<tbody>
+<tr><td>印刷（封筒+中身4点）</td><td>約80円/通</td><td>80,000円</td></tr>
+<tr><td>郵送料（定形外）</td><td>約120円/通</td><td>120,000円</td></tr>
+<tr><td>リスト購入/整備</td><td>-</td><td>30,000円</td></tr>
+<tr><td>デザイン制作（初回）</td><td>-</td><td>50,000円</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td></td><td><strong>約28万円/回</strong></td></tr>
+</tbody>
+</table>
+<p class="note">※2回目以降はデザイン費不要で約23万円/回。反応率1%で10件のリード獲得の場合、リード単価は約2.3〜2.8万円。</p>
+
+<h4>デジタル施策との連動</h4>
+<div class="flow-diagram">
+<div class="flow-row">
+<div class="flow-box">DM到着</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">QRコードでLP訪問</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">ウェビナー申込み or 資料請求</div>
+</div>
+<div class="flow-row">
+<div class="flow-box">FAX/ハガキ返信</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">電話フォロー</div>
+<div class="flow-arrow">&rarr;</div>
+<div class="flow-box">Web会議予約 → 法人契約</div>
+</div>
+</div>
+<p>DMは単独施策ではなく、デジタル施策への入口として機能させる。特にDM到着後1週間以内にFacebookリターゲティング広告を重ねると、「紙でもWebでも見た」という複数接点効果で信頼感が高まる。</p>
+</div>
+</div>
+
+<!-- 4-12 SNS -->
+<div class="channel-block">
+<h3>4-12. SNS運用 <span class="priority priority-sub">補助的</span></h3>
+<div class="card">
+<div class="sns-grid">
+<div>
+<h4>Facebook（優先）</h4>
+<ul>
+<li>介護経営者コミュニティでの情報発信</li>
+<li>ウェビナーイベントページの作成</li>
+<li>導入事例・受講者の声の投稿</li>
+<li>週3回投稿</li>
+</ul>
+</div>
+<div>
+<h4>X（Twitter）（補助）</h4>
+<ul>
+<li>堀江貴文本人のアカウントからの情報拡散が最大のレバレッジ</li>
+<li>AI学校公式アカウントからの介護×AI関連情報の発信</li>
+<li>ウェビナー告知</li>
+</ul>
+</div>
+<div>
+<h4>YouTube（中長期）</h4>
+<ul>
+<li>ウェビナーのダイジェスト版（5-10分）</li>
+<li>「介護×AI 3分講座」シリーズ</li>
+<li>導入事例インタビュー動画</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- セクション5: 予算案 -->
+<section id="section5">
+<h2><span class="section-num">05</span>予算案（3プラン提示）</h2>
+
+<div class="budget-plans">
+<div class="card budget-card">
+<div class="budget-header budget-a">プランA: スタート型（月30万円）</div>
+<table>
+<thead><tr><th>項目</th><th>月額</th><th>予算比率</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>18万円</td><td>60%</td></tr>
+<tr><td>Google広告</td><td>8万円</td><td>27%</td></tr>
+<tr><td>スタジオレンタル（ウェビナー撮影）</td><td>3万円</td><td>10%</td></tr>
+<tr><td>メール配信ツール</td><td>1万円</td><td>3%</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td><strong>約30万円</strong></td><td>100%</td></tr>
+</tbody>
+</table>
+<p class="note">※郵便DMは隔月送付とし、送付月は約12万円/回（500通）が別途発生<br>※DM初回デザイン制作費（約5万円）は初月のみ別途発生<br>※LP制作・改修、コンテンツ制作は自社対応のため予算計上なし</p>
+<div class="budget-expect">
+<div>期待リード数: <strong>22-33件/月</strong></div>
+<div>期待成約数: <strong>初期1件/月 → 安定期2-3件/月</strong></div>
+</div>
+</div>
+
+<div class="card budget-card recommended-budget">
+<div class="budget-header budget-b">プランB: 成長型（月75万円）【推奨】</div>
+<table>
+<thead><tr><th>項目</th><th>月額</th><th>予算比率</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>35万円</td><td>47%</td></tr>
+<tr><td>Google広告</td><td>18万円</td><td>24%</td></tr>
+<tr><td>LINE広告</td><td>4万円</td><td>5%</td></tr>
+<tr><td>LinkedIn広告</td><td>5万円</td><td>7%</td></tr>
+<tr><td>郵便DM（月1回・500通）</td><td>10万円</td><td>13%</td></tr>
+<tr><td>スタジオレンタル（ウェビナー撮影）</td><td>2万円</td><td>3%</td></tr>
+<tr><td>メール配信ツール</td><td>1万円</td><td>1%</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td><strong>約75万円</strong></td><td>100%</td></tr>
+</tbody>
+</table>
+<p class="note">※LINE広告はテスト枠として運用。CPA実績が良好であればFacebook広告から予算を移行して拡大を検討<br>※LP制作・改修、コンテンツ制作は自社対応のため予算計上なし</p>
+<div class="budget-expect">
+<div>期待リード数: <strong>50-73件/月</strong></div>
+<div>期待成約数: <strong>初期2件/月 → 安定期4-6件/月</strong></div>
+<div>初期3ヶ月の赤字リスク: <strong>最大約50万円（4ヶ月目以降の粗利で回収可能）</strong></div>
+</div>
+</div>
+
+<div class="card budget-card">
+<div class="budget-header budget-c">プランC: 加速型（月105万円）</div>
+<table>
+<thead><tr><th>項目</th><th>月額</th><th>予算比率</th></tr></thead>
+<tbody>
+<tr><td>Facebook広告</td><td>40万円</td><td>38%</td></tr>
+<tr><td>Google広告</td><td>25万円</td><td>24%</td></tr>
+<tr><td>LINE広告</td><td>5万円</td><td>5%</td></tr>
+<tr><td>LinkedIn広告</td><td>10万円</td><td>10%</td></tr>
+<tr><td>郵便DM（月1回・1,000通）</td><td>15万円</td><td>14%</td></tr>
+<tr><td>スタジオレンタル（ウェビナー撮影）</td><td>3万円</td><td>3%</td></tr>
+<tr><td>メール配信ツール</td><td>1万円</td><td>1%</td></tr>
+<tr><td>業界メディアタイアップ</td><td>6万円</td><td>5%</td></tr>
+<tr class="row-total"><td><strong>合計</strong></td><td><strong>約105万円</strong></td><td>100%</td></tr>
+</tbody>
+</table>
+<p class="note">※LP制作・改修、コンテンツ制作は自社対応のため予算計上なし</p>
+<div class="budget-expect">
+<div>期待リード数: <strong>71-97件/月</strong></div>
+<div>期待成約数: <strong>初期2-3件/月 → 安定期5-8件/月</strong></div>
+</div>
+</div>
+</div>
+
+<h3>予算配分の方針</h3>
+<div class="card">
+<ul>
+<li><strong>デジタル広告（Facebook + Google）に予算の60%以上を集中</strong> - CPAが計測可能で、効果の悪い施策を即座に停止・改善できる</li>
+<li><strong>DMは全体の13-15%に抑制</strong> - 送付数を絞り、デジタルが届きにくい層への補助チャネルとして運用</li>
+<li><strong>DMの送付数は少量から開始し、反応率が実証されてから拡大する</strong></li>
+</ul>
+</div>
+
+<h3>チャネル別予算の動的運用方針</h3>
+<div class="card">
+<p>上記の予算配分はあくまで初期設定であり、固定ではない。介護業界は意思決定者の年齢層が高く、デジタル広告のリーチが想定通りに機能するかは未検証。</p>
+
+<h4>ステップ1: 並行テスト（1-2ヶ月目）</h4>
+<ul>
+<li>デジタル広告（Facebook・Google）を主軸で出稿開始</li>
+<li>同時期にDM 500通のテスト送付を実施</li>
+<li>両チャネルのCPA（リード獲得単価）を計測・比較</li>
+</ul>
+
+<h4>ステップ2: CPA比較に基づく判断（3ヶ月目）</h4>
+<table>
+<thead><tr><th>結果パターン</th><th>判断</th></tr></thead>
+<tbody>
+<tr><td>デジタル広告のCPAが良好、DMの反応率が低い</td><td>現行配分を維持。DMは最小限に縮小</td></tr>
+<tr><td>デジタル広告のCPAが想定より高い、DMの反応率が良好</td><td><strong>DM予算を20-30%まで引き上げ、デジタル広告を縮小</strong></td></tr>
+<tr><td>両方とも良好</td><td>総予算を増額し、両チャネルを拡大</td></tr>
+<tr><td>両方とも不調</td><td>クリエイティブ・ターゲティングの見直しを優先</td></tr>
+</tbody>
+</table>
+
+<h4>ステップ3: 四半期ごとの再評価</h4>
+<ul>
+<li>3ヶ月ごとにチャネル別CPAとファネル転換率を比較レビュー</li>
+<li>効果の高いチャネルに予算を傾斜配分</li>
+<li>効果が出ないチャネルは停止も含めて判断</li>
+</ul>
+
+<div class="callout callout-info">
+<strong>重要: 「デジタルが正解」という前提を持たない。</strong> 介護業界の特殊性（現場中心の業務、高い平均年齢、FAX・郵便が現役のメディア）を考慮し、データで効果が実証されたチャネルに予算を集中させる柔軟な運用を行う。
+</div>
+</div>
+</section>
+
+<!-- セクション6: ロードマップ -->
+<section id="section6">
+<h2><span class="section-num">06</span>実行ロードマップ</h2>
+
+<div class="roadmap">
+<div class="card roadmap-phase">
+<div class="phase-label">Phase 1</div>
+<h3>基盤構築 + 検証（1ヶ月目）<span class="budget-tag">予算: 約30万円</span></h3>
+<p class="phase-purpose"><strong>目的:</strong> LP改修（自社対応）と少額テスト出稿で、CPC・CVRの実数値を取得する</p>
+<ul class="checklist">
+<li><strong>LP改修（最優先・自社対応）</strong> — 介護法人向けCTA・ファーストビュー改修・ウェビナー申込みセクション追加</li>
+<li>ウェビナー第1回の企画・告知ページ作成</li>
+<li>Facebook広告アカウント開設・ピクセル設置 → <strong>テスト出稿（12万円）開始</strong></li>
+<li>Google広告アカウント開設・コンバージョン設定 → <strong>テスト出稿（8万円）開始</strong></li>
+<li>メール配信ツール導入（MailChimp or SendGrid）</li>
+<li>資料請求用PDF作成（介護校パンフレット + 助成金ガイド）</li>
+<li>LINE公式アカウントの設定（自動応答フロー）</li>
+<li>DM用クリエイティブ制作（封筒・パンフレット・助成金チラシ・返信用紙）</li>
+<li>DM送付リストの構築（介護サービス情報公表システム等から抽出）</li>
+<li><strong>月末: CPC・LP CVR・リード数を集計し、2ヶ月目の予算判断を行う</strong></li>
+</ul>
+<div class="callout callout-info">
+<strong>判断基準（1ヶ月目末）:</strong><br>
+LP CVR 4%以上 → 2ヶ月目から75万円に引き上げ<br>
+LP CVR 3-4% → LP追加改善しつつ50万円で継続<br>
+LP CVR 3%未満 → 広告は最小限に抑え、LP改善に集中
+</div>
+</div>
+
+<div class="card roadmap-phase">
+<div class="phase-label">Phase 2</div>
+<h3>集客本格化（2-3ヶ月目）<span class="budget-tag">予算: 50-75万円</span></h3>
+<ul class="checklist">
+<li>ウェビナー月2回定期開催の開始</li>
+<li><strong>検証結果に基づきFacebook・Google広告を本格予算で出稿</strong></li>
+<li>LINE広告のテスト出稿開始（4万円）</li>
+<li><strong>第1回DM送付（500通テスト）→ 反応率を測定</strong></li>
+<li>メールシーケンスの稼働開始</li>
+<li>SEO記事の制作開始（月2記事）</li>
+<li>SNS運用開始（Facebook週3投稿）</li>
+<li>広告クリエイティブのA/Bテスト実施</li>
+</ul>
+</div>
+
+<div class="card roadmap-phase">
+<div class="phase-label">Phase 3</div>
+<h3>最適化（4-6ヶ月目）</h3>
+<ul class="checklist">
+<li>広告パフォーマンスの分析・最適化</li>
+<li><strong>DM反応率の分析 → クリエイティブ・リスト・エリアの改善</strong></li>
+<li><strong>DM送付の月次定期化（反応の良いエリア・セグメントに集中）</strong></li>
+<li>ウェビナーテーマのPDCA（参加率・満足度分析）</li>
+<li>LP CVRの改善（ヒートマップ分析）</li>
+<li>メールシーケンスの開封率・クリック率の改善</li>
+<li>導入事例コンテンツの制作・公開</li>
+<li>Google広告のディスプレイ配信開始</li>
+<li>リターゲティング広告の本格稼働</li>
+<li>DM到着タイミングに合わせたリターゲティング広告の連動</li>
+</ul>
+</div>
+
+<div class="card roadmap-phase">
+<div class="phase-label">Phase 4</div>
+<h3>拡大（7-12ヶ月目）</h3>
+<ul class="checklist">
+<li>LinkedIn広告の本格展開</li>
+<li><strong>DM送付規模の拡大（2,000〜3,000通/月）</strong></li>
+<li><strong>DM+電話フォローのセットオペレーション構築</strong></li>
+<li>業界メディアタイアップ記事の掲載</li>
+<li>パートナー連携（介護ソフトベンダー等）の開始</li>
+<li>バーチャルサミット（介護×AI）の開催</li>
+<li>YouTube動画コンテンツの本格制作</li>
+<li>SEO記事の本数拡大（月4記事）</li>
+<li>介護展示会（CareTEX等）への出展検討</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- セクション7: 効果測定 -->
+<section id="section7">
+<h2><span class="section-num">07</span>効果測定の仕組み</h2>
+
+<h3>トラッキング設定</h3>
+<div class="card">
+<table>
+<thead><tr><th>計測対象</th><th>ツール</th></tr></thead>
+<tbody>
+<tr><td>LP訪問・CVR</td><td>Google Analytics 4</td></tr>
+<tr><td>広告パフォーマンス</td><td>Facebook Ads Manager / Google Ads</td></tr>
+<tr><td>ウェビナー参加率</td><td>Zoom Analytics</td></tr>
+<tr><td>メール開封・クリック</td><td>メール配信ツール</td></tr>
+<tr><td>リード管理</td><td>CRM（HubSpot Free or Notion）</td></tr>
+<tr><td>UTMパラメータ管理</td><td>Google スプレッドシート</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="metrics-columns">
+<div class="card">
+<h3>週次確認指標</h3>
+<ul>
+<li>広告のCPA（リード単価）</li>
+<li>ウェビナー申込み数 / 参加率</li>
+<li>資料請求数</li>
+<li>LP訪問数 / CVR</li>
+</ul>
+</div>
+<div class="card">
+<h3>月次レビュー指標</h3>
+<ul>
+<li>チャネル別リード獲得数とCPA</li>
+<li>ウェビナー→面談→契約のファネル転換率</li>
+<li>広告ROAS（投資対効果）</li>
+<li>コンテンツ別の流入数・CV数</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- セクション8: 訴求ポイント -->
+<section id="section8">
+<h2><span class="section-num">08</span>介護校ならではの訴求ポイント整理</h2>
+<p>介護業界に刺さるメッセージングの軸：</p>
+
+<div class="appeal-grid">
+<div class="card appeal-card">
+<h4>訴求軸1: 人手不足の解決</h4>
+<blockquote>「人が増やせないなら、AIで業務を減らす」</blockquote>
+<ul>
+<li>記録業務の時間削減シミュレーション</li>
+<li>年間2,400万円の効率化効果（100名規模）</li>
+</ul>
+</div>
+<div class="card appeal-card">
+<h4>訴求軸2: 助成金による低コスト導入</h4>
+<blockquote>「助成金で75%OFF。実質月5,833円/人でAI人材を育成」</blockquote>
+<ul>
+<li>人材開発支援助成金の具体的な活用フロー</li>
+<li>社労士サポート込みの安心感</li>
+</ul>
+</div>
+<div class="card appeal-card">
+<h4>訴求軸3: 非エンジニアでも安心</h4>
+<blockquote>「PC操作ができれば大丈夫。受講者の95%がAI未経験者」</blockquote>
+<ul>
+<li>介護職員のITリテラシーに合わせた設計</li>
+<li>動画視聴+チャットサポートの伴走型</li>
+</ul>
+</div>
+<div class="card appeal-card">
+<h4>訴求軸4: 堀江貴文の権威性</h4>
+<blockquote>「法人向け生成AI研修No.1。堀江貴文プロデュース」</blockquote>
+<ul>
+<li>4冠の実績</li>
+<li>業界トップの信頼性</li>
+</ul>
+</div>
+<div class="card appeal-card">
+<h4>訴求軸5: 介護現場に特化</h4>
+<blockquote>「介護記録、ケアプラン、シフト作成...現場で即使えるAI活用法」</blockquote>
+<ul>
+<li>汎用的なAI研修ではなく、介護業務に直結した内容</li>
+<li>介護・在宅医療で実際に使用できる動画講義</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- セクション9: リスクと対策 -->
+<section id="section9">
+<h2><span class="section-num">09</span>リスクと対策</h2>
+<div class="card">
+<table>
+<thead><tr><th>リスク</th><th>対策</th></tr></thead>
+<tbody>
+<tr><td>介護業界のデジタル感度が低い</td><td>「AI」だけでなく「業務効率化」「人手不足対策」の文脈で訴求</td></tr>
+<tr><td>助成金制度の変更</td><td>最新情報を常にキャッチアップ、社労士と連携</td></tr>
+<tr><td>広告CPA高騰</td><td>複数チャネルの分散、オーガニック流入の強化</td></tr>
+<tr><td>ウェビナー参加率の低下</td><td>テーマの多様化、ハンズオン型の導入、録画アーカイブの活用</td></tr>
+<tr><td>競合の参入</td><td>介護特化コンテンツの蓄積、導入事例の充実で先行者優位を確保</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- セクション10: 補足ツール -->
+<section id="section10">
+<h2><span class="section-num">10</span>補足：助成金訴求を活かした無料ツール施策</h2>
+
+<h3>助成金シミュレーター（リード獲得ツール）</h3>
+<div class="card">
+<p>LP内に設置する簡易計算ツール：</p>
+<ul>
+<li><strong>入力:</strong> 受講人数、企業規模（中小/大企業）</li>
+<li><strong>出力:</strong> 受講料総額、助成金額、実質負担額、月額換算</li>
+<li><strong>CTA:</strong> 「詳しい助成金の相談はこちら」→ Web会議予約</li>
+</ul>
+<p>このツールは資料請求やウェビナー申込みと並ぶ第3のCVポイントとして機能し、助成金に興味のある高意図リードを獲得できる。</p>
+</div>
+
+<div class="footer-note">
+<p>作成日: 2026年2月3日</p>
+<p>本計画は初期案であり、実行開始後のデータに基づいて継続的に改善を行うことを前提としています。</p>
+</div>
+</section>
+
+
+
+</main>
+
+<button class="back-to-top" id="backToTop" aria-label="ページトップに戻る">&#9650;</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var links = document.querySelectorAll('#sidebar a');
+  var sections = [];
+
+  links.forEach(function (link) {
+    var id = link.getAttribute('href').replace('#', '');
+    var el = document.getElementById(id);
+    if (el) sections.push({ el: el, link: link });
+  });
+
+  if (!sections.length) return;
+
+  function onScroll() {
+    var scrollPos = window.scrollY + 120;
+    var current = sections[0];
+
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.offsetTop <= scrollPos) {
+        current = sections[i];
+      }
+    }
+
+    links.forEach(function (l) { l.classList.remove('active'); });
+    current.link.classList.add('active');
+  }
+
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  // Back to top button
+  var btn = document.getElementById('backToTop');
+  if (btn) {
+    window.addEventListener('scroll', function () {
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    });
+    btn.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+});
+</script>
+</body>
+</html>

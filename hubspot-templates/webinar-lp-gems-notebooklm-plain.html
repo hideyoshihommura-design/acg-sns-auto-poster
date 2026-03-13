@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>「自分専用AIアシスタント」を無料で作る方法 | Gems × NotebookLM完全活用ガイド</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========== Reset & Variables ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gradient:linear-gradient(135deg,#FF0080,#7928CA);
+  --accent:#FF0080;
+  --purple:#7928CA;
+  --dark:#1a202c;
+  --bg-gray:#f5f7fa;
+  --text:#333;
+  --text-sub:#666;
+  --text-muted:#999;
+  --border:#e2e8f0;
+  --radius:16px;
+  --green:#22c55e;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;line-height:1.7;margin:0}
+
+/* ========== Typography ========== */
+.text-huge{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;line-height:1.2;letter-spacing:-.02em}
+.text-large{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.3}
+.text-medium{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:700;line-height:1.4}
+.text-body{font-size:1rem;line-height:1.8;color:var(--text-sub)}
+.text-small{font-size:.875rem;color:var(--text-muted)}
+.text-accent{color:var(--accent)}
+.highlight{background:linear-gradient(transparent 60%,rgba(255,0,128,.15) 60%)}
+
+/* ========== Header ========== */
+.lp-header{background:rgba(26,32,44,.95);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(8px)}
+.lp-header-logo{color:#fff;font-size:.85rem;font-weight:700;text-decoration:none}
+.lp-header-cta{background:var(--gradient);color:#fff;padding:.5rem 1.25rem;border-radius:50px;font-size:.8rem;font-weight:700;text-decoration:none;transition:.2s}
+.lp-header-cta:hover{transform:translateY(-2px)}
+
+/* ========== Hero ========== */
+.lp-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 20px 100px;background:linear-gradient(135deg,#FF0080 0%,#a020c0 50%,#7928CA 100%);position:relative;overflow:hidden}
+.lp-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.18) 1px,transparent 1px);background-size:28px 28px;z-index:1;pointer-events:none}
+.hero-orb1{position:absolute;top:8%;left:3%;width:420px;height:420px;background:radial-gradient(circle,rgba(255,255,255,.18) 0%,transparent 65%);border-radius:50%;animation:floatA 9s ease-in-out infinite;pointer-events:none}
+.hero-orb2{position:absolute;bottom:5%;right:3%;width:320px;height:320px;background:radial-gradient(circle,rgba(255,255,255,.13) 0%,transparent 65%);border-radius:50%;animation:floatB 11s ease-in-out infinite;pointer-events:none}
+.hero-orb3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%);border-radius:50%;pointer-events:none}
+@keyframes floatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(25px,-18px) scale(1.08)}}
+@keyframes floatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-18px,25px) scale(1.06)}}
+.hero-content{position:relative;z-index:2;max-width:960px;text-align:center;color:#fff}
+.hero-eyebrow{font-size:1.15rem;font-weight:900;letter-spacing:.04em;color:#fff;margin-bottom:1.5rem;opacity:.95}
+.hero-badge{display:inline-flex;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap;justify-content:center}
+.hero-badge span{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.85);padding:.35rem 1rem;border-radius:50px;font-size:.72rem;font-weight:700;backdrop-filter:blur(6px)}
+.hero-title{margin-bottom:.75rem;text-shadow:0 4px 30px rgba(0,0,0,.2);font-size:clamp(1.5rem,4.5vw,3.8rem) !important;font-weight:900;line-height:1.1;letter-spacing:-.03em}
+.hero-divider{width:56px;height:3px;background:rgba(255,255,255,.5);margin:.25rem auto 1.5rem;border-radius:2px}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:2.5rem;line-height:1.9;text-shadow:0 2px 10px rgba(0,0,0,.12)}
+.hero-target{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2rem}
+.hero-target span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.9);padding:.4rem 1rem;border-radius:50px;font-size:.8rem}
+.hero-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.hero-cta .cta-btn{display:inline-flex;align-items:center;gap:.6rem;background:#fff;color:var(--purple);padding:1.25rem 2.75rem;border-radius:50px;font-size:1.05rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.hero-cta .cta-btn::after{content:'→';font-size:1.05rem;transition:.3s}
+.hero-cta .cta-btn:hover{transform:translateY(-4px);box-shadow:0 22px 55px rgba(0,0,0,.3)}
+.hero-cta .cta-btn:hover::after{transform:translateX(4px)}
+.hero-note{font-size:.75rem;color:rgba(255,255,255,.55)}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(255,255,255,.5);font-size:.65rem;letter-spacing:.08em;animation:scrollBounce 2.2s ease-in-out infinite;z-index:2;text-decoration:none}
+.hero-scroll::after{content:'';display:block;width:1px;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent)}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ========== Section ========== */
+.section{padding:100px 20px}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-title{margin-bottom:.5rem}
+.section-lead{font-size:1rem;color:var(--text-muted)}
+.bg-gray{background:var(--bg-gray)}
+.bg-dark{background:var(--dark);color:#fff}
+.bg-gradient{background:var(--gradient)}
+
+/* ========== Problem ========== */
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.problem-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.05);border-left:4px solid #ef4444;transition:.2s}
+.problem-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.problem-card p{font-size:.9rem;color:var(--text-sub);margin:0}
+
+/* ========== Update ========== */
+.update-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:30px}
+.update-card{background:#fff;border-radius:var(--radius);padding:1.75rem;box-shadow:0 4px 20px rgba(0,0,0,.05);border-top:3px solid var(--accent);transition:.2s}
+.update-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.update-label{display:inline-block;background:var(--gradient);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .7rem;border-radius:50px;margin-bottom:.75rem;letter-spacing:.05em}
+.update-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.update-card p{font-size:.85rem;color:var(--text-sub);margin:0}
+
+/* ========== What is ========== */
+.whatis-container{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:stretch}
+.whatis-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.whatis-card h3{font-size:1.2rem;font-weight:700;margin-bottom:1rem}
+.whatis-card p{font-size:.95rem;color:var(--text-sub);margin-bottom:1rem}
+.whatis-card ul{list-style:none;padding:0}
+.whatis-card ul li{padding:.4rem 0;font-size:.9rem;display:flex;align-items:flex-start;gap:.5rem}
+.whatis-card ul li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.1rem}
+.gems-example{background:var(--bg-gray);border-radius:12px;padding:1.25rem;font-size:.85rem;margin-top:1rem;font-family:monospace;line-height:1.8;white-space:pre-wrap}
+.synergy-box{background:linear-gradient(135deg,rgba(255,0,128,.08),rgba(121,40,202,.08));border:2px solid var(--accent);border-radius:var(--radius);padding:2rem;margin-top:30px}
+.synergy-box h3{font-size:1.3rem;font-weight:700;margin-bottom:1rem;text-align:center}
+.synergy-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.synergy-item{background:#fff;border-radius:10px;padding:.875rem 1rem;font-size:.875rem;font-weight:600;display:flex;align-items:center;gap:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.synergy-item span{font-size:1.1rem}
+
+/* ========== Agenda ========== */
+.agenda-list{max-width:700px;margin:0 auto;display:grid;gap:12px}
+.agenda-item{background:#fff;border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;align-items:center;gap:1.25rem}
+.agenda-part{background:var(--gradient);color:#fff;border-radius:50px;font-size:.7rem;font-weight:700;padding:.3rem .8rem;white-space:nowrap;flex-shrink:0}
+.agenda-time{font-size:.8rem;color:var(--text-muted);flex-shrink:0;min-width:40px}
+.agenda-text{font-size:.95rem;font-weight:700;flex:1}
+
+/* ========== Use Cases ========== */
+.usecase-grid{display:grid;gap:30px}
+.usecase-card{background:#fff;border-radius:var(--radius);padding:2.5rem;box-shadow:0 4px 20px rgba(0,0,0,.05);display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start}
+.usecase-num{font-size:3rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.usecase-content h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.usecase-content .usecase-challenge{font-size:.85rem;color:#ef4444;font-weight:700;margin-bottom:.5rem}
+.usecase-content .usecase-solution{font-size:.9rem;color:var(--text-sub);margin-bottom:1rem}
+.usecase-demo{background:var(--bg-gray);border-radius:12px;padding:1.25rem;font-size:.9rem}
+.usecase-demo .demo-q{color:var(--accent);font-weight:700;margin-bottom:.5rem}
+.usecase-demo .demo-a{color:var(--text);line-height:1.8}
+
+/* ========== Benefits ========== */
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.benefit-card{background:#fff;border-radius:var(--radius);padding:2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.05);transition:.2s}
+.benefit-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.benefit-icon{font-size:2.5rem;margin-bottom:1rem}
+.benefit-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.benefit-card p{font-size:.85rem;color:var(--text-sub);margin:0}
+
+/* ========== Comparison Table ========== */
+.comparison-table{width:100%;border-collapse:collapse;border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.comparison-table th{padding:1rem 1.5rem;font-size:.9rem;font-weight:700}
+.comparison-table th:first-child{background:#f1f5f9;color:var(--text-sub)}
+.comparison-table th:last-child{background:var(--gradient);color:#fff}
+.comparison-table td{padding:1rem 1.5rem;font-size:.9rem;border-top:1px solid var(--border)}
+.comparison-table td:first-child{background:#fff;color:#ef4444}
+.comparison-table td:last-child{background:#f0fdf4;color:#166534;font-weight:600}
+.comparison-table tr:nth-child(even) td:first-child{background:#fafafa}
+
+/* ========== Summary Points ========== */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;max-width:800px;margin:0 auto}
+.summary-card{background:#fff;border-radius:var(--radius);padding:1.5rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.summary-num{font-size:2rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.summary-card p{font-size:.85rem;color:var(--text-sub);margin:0;line-height:1.6}
+
+/* ========== Steps ========== */
+.steps-container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step-card{text-align:center;position:relative}
+.step-card::after{content:'→';position:absolute;right:-15px;top:30px;font-size:1.5rem;color:var(--border)}
+.step-card:last-child::after{display:none}
+.step-num{width:60px;height:60px;background:var(--gradient);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900;margin:0 auto 1rem}
+.step-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.step-card p{font-size:.8rem;color:var(--text-sub)}
+
+/* ========== Event Details ========== */
+.details-box{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.05);max-width:700px;margin:0 auto}
+.details-header{background:var(--dark);color:#fff;padding:1rem 1.5rem;font-weight:700;font-size:1.1rem}
+.details-row{display:flex;padding:1rem 1.5rem;border-bottom:1px solid var(--border)}
+.details-row:last-child{border-bottom:none}
+.details-label{width:120px;font-weight:700;flex-shrink:0;font-size:.9rem}
+.details-value{flex:1;font-size:.95rem;color:var(--text-sub)}
+.details-value .price{color:var(--green);font-weight:900;font-size:1.3rem}
+
+/* ========== Form ========== */
+.form-section{background:var(--gradient);padding:100px 20px;text-align:center;position:relative}
+.form-section .section-title{color:#fff}
+.form-section .section-lead{color:rgba(255,255,255,.8)}
+.form-wrapper{max-width:500px;margin:0 auto;background:#fff;border-radius:var(--radius);padding:2.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.form-note{color:rgba(255,255,255,.6);font-size:.75rem;margin-top:1.5rem}
+
+/* ========== FAQ ========== */
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{margin-bottom:1rem;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.faq-q{padding:1.25rem 1.5rem;font-weight:700;font-size:1rem;position:relative;padding-left:3.5rem}
+.faq-q::before{content:'Q';position:absolute;left:1.25rem;top:50%;transform:translateY(-50%);width:28px;height:28px;background:var(--gradient);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.faq-a{padding:0 1.5rem 1.25rem 3.5rem;font-size:.9rem;color:var(--text-sub)}
+
+/* ========== CTA Block ========== */
+.cta-block{text-align:center;padding:60px 20px}
+.cta-btn-large{display:inline-block;background:var(--gradient);color:#fff;padding:1.25rem 3rem;border-radius:50px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 10px 40px rgba(255,0,128,.3)}
+.cta-btn-large:hover{transform:translateY(-4px);box-shadow:0 15px 50px rgba(255,0,128,.4)}
+.cta-note{display:block;margin-top:.75rem;font-size:.8rem;color:var(--text-muted)}
+
+/* ========== Speaker ========== */
+.speaker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;max-width:800px;margin:0 auto}
+.speaker-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;text-align:center}
+.speaker-photo{width:120px;height:120px;border-radius:50%;background:var(--bg-gray);border:3px solid var(--border);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--text-muted);overflow:hidden}
+.speaker-photo img{width:100%;height:100%;object-fit:cover}
+.speaker-name{font-size:1.2rem;font-weight:900;color:var(--dark);margin-bottom:.25rem}
+.speaker-title{font-size:.85rem;color:var(--purple);font-weight:700;margin-bottom:.75rem}
+.speaker-bio{font-size:.875rem;color:var(--text-sub);line-height:1.8;text-align:left}
+
+/* ========== Footer CTA ========== */
+.footer-cta{background:var(--dark);color:#fff;padding:80px 20px;text-align:center}
+.footer-cta .text-large{margin-bottom:1rem}
+.footer-cta .text-body{color:rgba(255,255,255,.6);margin-bottom:2rem}
+
+/* ========== Footer ========== */
+.lp-footer{background:#0f0c29;color:rgba(255,255,255,.4);padding:1.5rem;text-align:center;font-size:.75rem}
+.lp-footer a{color:rgba(255,255,255,.5);text-decoration:none}
+.lp-footer a:hover{color:#fff}
+
+/* ========== Responsive ========== */
+@media(max-width:768px){
+  .section{padding:60px 15px}
+  .hero-content{padding:0 10px}
+  .whatis-container{grid-template-columns:1fr}
+  .benefit-grid{grid-template-columns:1fr}
+  .steps-container{grid-template-columns:1fr;gap:30px}
+  .step-card::after{display:none}
+  .usecase-card{grid-template-columns:1fr;text-align:center}
+  .details-row{flex-direction:column;gap:.3rem}
+  .details-label{width:auto}
+  .lp-header{padding:.6rem 1rem}
+  .comparison-table th,.comparison-table td{padding:.75rem 1rem;font-size:.8rem}
+  .summary-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<header class="lp-header">
+  <a href="https://fc.horiemon.ai/kaigo" class="lp-header-logo">ホリエモンAI学校 介護校</a>
+  <a href="#form" class="lp-header-cta">無料で参加 &gt;</a>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="lp-hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">ホリエモンAI学校介護校</p>
+    <div class="hero-badge">
+      <span>✦ 参加無料</span>
+      <span>🎥 Zoom開催</span>
+      <span>🖥 ライブデモあり</span>
+    </div>
+    <h1 class="text-huge hero-title">「自分専用AIアシスタント」<br>を無料で作る方法</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Gems × NotebookLM連携で業務効率が劇的に変わる<br>生成AI 実践ウェビナー</p>
+    <div class="hero-target">
+      <span>生成AIを業務活用したい方</span>
+      <span>社内ナレッジ活用に課題を感じている方</span>
+      <span>DX推進担当者</span>
+      <span>経営者・管理職</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#form" class="cta-btn">無料ウェビナーに申し込む</a>
+      <p class="hero-note">※ お申し込み30秒</p>
+    </div>
+  </div>
+  <a href="#about" class="hero-scroll">SCROLL</a>
+</section>
+
+<!-- ========== 問題提起 ========== -->
+<section class="section bg-gray" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">こんな<span class="highlight">課題</span>ありませんか？</h2>
+      <p class="section-lead">生成AI活用の現状と「3つの壁」</p>
+    </div>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">🔁</div>
+        <h3>毎回同じ説明をしている</h3>
+        <p>ChatGPTやGeminiを使うたびに長い説明を入力し直す手間が続いている</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">📂</div>
+        <h3>社内資料をAIに読ませても精度がバラつく</h3>
+        <p>マニュアルや議事録をAIに渡しても、回答のブレや漏れが多く業務に使いにくい</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">😟</div>
+        <h3>ハルシネーション（嘘）への不安</h3>
+        <p>AIが事実と異なる回答をする「ハルシネーション」が怖くて業務に使いきれていない</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 2026年最新アップデート ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">なぜ今<span class="highlight">Gems × NotebookLM</span>なのか</h2>
+      <p class="section-lead">2026年2月の最新アップデートで、できることが劇的に広がった</p>
+    </div>
+    <div class="update-grid">
+      <div class="update-card">
+        <div class="update-label">2025年12月〜</div>
+        <h3>Gems × NotebookLM連携</h3>
+        <p>「役割」×「知識ベース」を組み合わせた専用AIが作れるようになった</p>
+      </div>
+      <div class="update-card">
+        <div class="update-label">NEW</div>
+        <h3>Gemini 3搭載</h3>
+        <p>100万トークン（約70万文字）の大容量コンテキストで、大量資料も一括処理</p>
+      </div>
+      <div class="update-card">
+        <div class="update-label">NEW</div>
+        <h3>Studioパネル刷新</h3>
+        <p>Audio Overview（ポッドキャスト風音声）・Video Overviews（動画サマリー）のカスタマイズが可能に</p>
+      </div>
+      <div class="update-card">
+        <div class="update-label">NEW</div>
+        <h3>スライド自動生成</h3>
+        <p>資料から自動でプレゼン資料を生成し、PPTXでエクスポートできる</p>
+      </div>
+      <div class="update-card">
+        <div class="update-label">NEW</div>
+        <h3>データテーブル機能</h3>
+        <p>複数の資料から情報を構造化し、比較表や一覧を自動作成できる</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Gems × NotebookLMとは ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title"><span class="highlight">Gems × NotebookLM</span>とは？</h2>
+      <p class="section-lead">Googleが提供する2つの無料AIツールを組み合わせた最強の活用法</p>
+    </div>
+    <div class="whatis-container">
+      <div class="whatis-card">
+        <h3>📘 NotebookLM（ノートブックLM）</h3>
+        <p>「あなたの資料だけを知っているAI」。アップロードした資料のみを参照して回答するため、ハルシネーションを防ぎ、出典（ページ・箇所）を明示してくれる。</p>
+        <ul>
+          <li>Googleが提供する完全無料のAIツール</li>
+          <li>PDF・Googleドキュメント・スライドに対応</li>
+          <li>ウェブサイトURL・YouTube動画もソースに追加可能</li>
+          <li>テキストファイル・コピペにも対応</li>
+          <li>Audio Overview（ポッドキャスト風音声）生成</li>
+          <li>Video Overviews（動画サマリー）生成</li>
+          <li>スライド自動生成（PPTX出力対応）</li>
+          <li>データテーブルで複数資料を構造化</li>
+        </ul>
+      </div>
+      <div class="whatis-card">
+        <h3>💎 Gems（ジェムズ）</h3>
+        <p>「自分専用のGemini」を作る機能。Geminiに役割と指示を一度設定すれば、毎回プロンプトを書かなくてOK。URLで共有してチーム全員で使える。</p>
+        <ul>
+          <li>Geminiに「役割」と「指示」を設定</li>
+          <li>毎回プロンプトを打たなくてOK</li>
+          <li>URLを共有するだけでチーム展開</li>
+          <li>知識（Knowledge）にNotebookLMを追加可能</li>
+        </ul>
+        <div class="gems-example">名前: 営業提案アドバイザー
+役割: あなたは当社の営業担当をサポートするAIです
+指示:
+- 顧客のニーズを整理してから提案内容を考えてください
+- 競合との差別化ポイントを必ず含めてください
+- 提案書のドラフトを作成してください</div>
+      </div>
+    </div>
+    <div class="synergy-box">
+      <h3>🔗「役割」×「知識ベース」= 最強の専用AIアシスタント</h3>
+      <div class="synergy-list">
+        <div class="synergy-item"><span>👥</span>社内規定を理解した人事アシスタント</div>
+        <div class="synergy-item"><span>💼</span>商品知識を持った営業サポートAI</div>
+        <div class="synergy-item"><span>📋</span>過去の議事録を把握したプロジェクトAI</div>
+        <div class="synergy-item"><span>🎧</span>マニュアルに基づくカスタマーサポートAI</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ウェビナーアジェンダ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">ウェビナーの<span class="highlight">内容・流れ</span></h2>
+      <p class="section-lead">60分で「今日から使える知識」を体系的に習得できます</p>
+    </div>
+    <div class="agenda-list">
+      <div class="agenda-item">
+        <span class="agenda-part">第1部</span>
+        <span class="agenda-time">10分</span>
+        <span class="agenda-text">なぜ今「Gems × NotebookLM」なのか — 生成AI活用の現状と2026年最新アップデート</span>
+      </div>
+      <div class="agenda-item">
+        <span class="agenda-part">第2部</span>
+        <span class="agenda-time">15分</span>
+        <span class="agenda-text">NotebookLMとGemsの基本 — 仕組みと連携の威力を徹底解説</span>
+      </div>
+      <div class="agenda-item">
+        <span class="agenda-part">第3部</span>
+        <span class="agenda-time">15分</span>
+        <span class="agenda-text">ビジネス活用事例4選 — 社内ヘルプデスク・営業・プロジェクト管理・研修</span>
+      </div>
+      <div class="agenda-item">
+        <span class="agenda-part">第4部</span>
+        <span class="agenda-time">10分</span>
+        <span class="agenda-text">実演ライブデモ — 実際の画面を見ながらスライド生成・Audio Overview・連携デモ</span>
+      </div>
+      <div class="agenda-item">
+        <span class="agenda-part">第5部</span>
+        <span class="agenda-time">5分</span>
+        <span class="agenda-text">今日から始める導入ステップ — 4ステップで今日中に使える環境を構築</span>
+      </div>
+      <div class="agenda-item">
+        <span class="agenda-part">第6部</span>
+        <span class="agenda-time">5分</span>
+        <span class="agenda-text">Q&amp;A — 参加者からの質問にリアルタイムで回答</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== ビジネス活用事例 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">ビジネス<span class="highlight">活用事例</span></h2>
+      <p class="section-lead">ウェビナーでは実際にデモをお見せします</p>
+    </div>
+    <div class="usecase-grid">
+      <div class="usecase-card">
+        <div class="usecase-num">01</div>
+        <div class="usecase-content">
+          <h3>現場が気軽に聞ける「AI上司」Gem</h3>
+          <p class="usecase-challenge">課題：新人スタッフが上司に聞きづらく、判断に迷って業務が止まる</p>
+          <p class="usecase-solution">就業規則・シフトルール・よくある対応事例をNotebookLMに登録し、Gemsで「いつでも答えてくれる頼れる上司AI」を作成。夜勤中でも深夜でも即答できる環境に。</p>
+          <div class="usecase-demo">
+            <div class="demo-q">👤「利用者さんが食事を拒否しています。どう対応すればいいですか？」</div>
+            <div class="demo-a">🤖「まず無理強いせず、理由を確認しましょう。体調不良・気分・食事の見た目が原因のことが多いです。声かけの例や対応フローはマニュアルp.12に記載があります。（出典：ケア対応マニュアル）」</div>
+          </div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-num">02</div>
+        <div class="usecase-content">
+          <h3>理念・介助法Gem</h3>
+          <p class="usecase-challenge">課題：理念や介助の考え方が浸透しにくく、スタッフによって対応にばらつきが出る</p>
+          <p class="usecase-solution">法人理念・ケア方針・介助手順書をNotebookLMに登録し、Gemsで「理念と介助法を伝えるAI研修担当」を作成。いつでも・何度でも学べる環境を構築。</p>
+          <div class="usecase-demo">
+            <div class="demo-q">👤「うちの法人が大切にしているケアの考え方を教えてください」</div>
+            <div class="demo-a">🤖「当法人は『その人らしさを支える介護』を理念としています。具体的には①自己決定の尊重②生活リズムの維持③家族との連携の3点を重視しています。（出典：法人理念・ケア方針 p.3）」</div>
+          </div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-num">03</div>
+        <div class="usecase-content">
+          <h3>緊急時対応Gem</h3>
+          <p class="usecase-challenge">課題：緊急時に手順書を探す時間がなく、パニックになってしまう</p>
+          <p class="usecase-solution">緊急時対応マニュアル・連絡先一覧・BCP（事業継続計画）をNotebookLMに登録し、Gemsで「緊急時に冷静に答えるAI」を作成。咄嗟の場面でも正確な手順を即座に確認できる。</p>
+          <div class="usecase-demo">
+            <div class="demo-q">👤「利用者さんが転倒して頭を打っています。今すぐ何をすればいいですか？」</div>
+            <div class="demo-a">🤖「①意識・呼吸を確認②動かさずに119番通報③施設長・家族へ連絡④状況を記録。AEDは1Fナースステーション横にあります。（出典：緊急時対応マニュアル p.5）」</div>
+          </div>
+        </div>
+      </div>
+      <div class="usecase-card">
+        <div class="usecase-num">04</div>
+        <div class="usecase-content">
+          <h3>料金体系・英和訳Gem</h3>
+          <p class="usecase-challenge">課題：料金説明が複雑で家族への説明に時間がかかる。外国人利用者・スタッフへの対応も増えている</p>
+          <p class="usecase-solution">料金表・加算一覧・重要事項説明書をNotebookLMに登録し、Gemsで「料金説明＋英語対応AIアドバイザー」を作成。家族への説明も、外国語対応も即対応。</p>
+          <div class="usecase-demo">
+            <div class="demo-q">👤「特養の居住費と食費について、家族にわかりやすく説明する文章を作ってください」</div>
+            <div class="demo-a">🤖「居住費は第2段階で月額○○円、食費は月額○○円です。補足給付（低所得者向け軽減制度）の対象になれば大幅に減額できます。英語版の説明文も作成できます。（出典：料金表・重要事項説明書）」</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<div class="cta-block">
+  <a href="#form" class="cta-btn-large">無料ウェビナーに申し込む</a>
+  <span class="cta-note">お申し込みは30秒で完了</span>
+</div>
+
+<!-- ========== ベネフィット ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">このウェビナーで<span class="highlight">わかること</span></h2>
+    </div>
+    <div class="benefit-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon">🤖</div>
+        <h3>連携の仕組みがわかる</h3>
+        <p>Gems × NotebookLMの「役割×知識ベース」アーキテクチャをゼロから丁寧に解説</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎬</div>
+        <h3>ライブデモを見られる</h3>
+        <p>実際の資料を使った質問応答・スライド生成・Audio Overview生成を画面共有で実演</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🏢</div>
+        <h3>4つの業務活用事例</h3>
+        <p>社内ヘルプデスク・営業・プロジェクト管理・研修、すぐ使えるケースを具体的に紹介</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🚀</div>
+        <h3>2026年最新機能を先取り</h3>
+        <p>スライド自動生成（PPTX出力）・Video Overviews・データテーブルなど最新アップデートを解説</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">👣</div>
+        <h3>今日から始めるステップがわかる</h3>
+        <p>Googleアカウントがあればすぐ始められる。4ステップの導入手順を丁寧に説明</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">🎁</div>
+        <h3>参加特典3つプレゼント</h3>
+        <p>スライド資料PDF・Gems設定テンプレート集・NotebookLM活用チェックリストを全員に配布</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 比較表 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">Gems × NotebookLMで<span class="highlight">解決できること</span></h2>
+    </div>
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>従来の課題</th>
+          <th>Gems × NotebookLMで解決</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>毎回長いプロンプトを入力しなければならない</td>
+          <td>✅ 一度設定すればワンクリックで使える</td>
+        </tr>
+        <tr>
+          <td>AIが嘘をつく（ハルシネーション）が不安</td>
+          <td>✅ 資料に基づいた正確な回答・出典を明示</td>
+        </tr>
+        <tr>
+          <td>回答の根拠がわからない</td>
+          <td>✅ 出典（ページ・箇所）を自動で明示</td>
+        </tr>
+        <tr>
+          <td>社内ナレッジが活用されていない</td>
+          <td>✅ AIが24時間社内資料に基づいて回答</td>
+        </tr>
+        <tr>
+          <td>新人教育・引き継ぎに時間がかかる</td>
+          <td>✅ いつでも・誰でも質問できる環境が完成</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ========== 今日の要点まとめ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">今日の<span class="highlight">要点</span></h2>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-num">1</div>
+        <p><strong>NotebookLM</strong><br>あなたの資料だけを知っているAI</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num">2</div>
+        <p><strong>Gems</strong><br>自分専用のGeminiを作る機能</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num">3</div>
+        <p><strong>連携</strong><br>「役割」×「知識」で最強の専用AIが完成</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num">4</div>
+        <p><strong>無料</strong><br>Googleアカウントがあれば今日から始められる</p>
+      </div>
+      <div class="summary-card">
+        <div class="summary-num">5</div>
+        <p><strong>2026年最新機能</strong><br>スライド生成・動画サマリーでさらに進化</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 導入ステップ ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">今日から始める<span class="highlight">導入4ステップ</span></h2>
+    </div>
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>準備（5分）</h3>
+        <p>Googleアカウントを用意し、活用したい資料（PDF・ドキュメント等）を選定する</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>NotebookLM設定（10分）</h3>
+        <p>notebooklm.google.com で新規ノートブック作成 → 資料をアップロード → 動作確認</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Gems作成（5分）</h3>
+        <p>gemini.google.com の「Gemマネージャー」から新規Gem作成 → 「知識」にNotebookLMを追加</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>チームへ展開</h3>
+        <p>URLを共有するだけで全員が利用可能。Google Workspaceなら組織全体で管理できる</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 開催概要 ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">開催<span class="highlight">概要</span></h2>
+    </div>
+    <div class="details-box">
+      <div class="details-header">ウェビナー詳細</div>
+      <div class="details-row"><span class="details-label">テーマ</span><span class="details-value">「自分専用AIアシスタント」を無料で作る方法</span></div>
+      <div class="details-row"><span class="details-label">内容</span><span class="details-value">Gems × NotebookLM完全活用ガイド</span></div>
+      <div class="details-row"><span class="details-label">日時</span><span class="details-value">3月26日（木）13:00 - 14:00</span></div>
+      <div class="details-row"><span class="details-label">所要時間</span><span class="details-value">60分（質疑応答含む）</span></div>
+      <div class="details-row"><span class="details-label">形式</span><span class="details-value">Zoomウェビナー（オンライン）</span></div>
+      <div class="details-row"><span class="details-label">参加費</span><span class="details-value"><span class="price">無料</span></span></div>
+      <div class="details-row"><span class="details-label">対象</span><span class="details-value">生成AIを業務活用したい方・社内ナレッジ活用に課題を感じている方・DX推進担当者・経営者・管理職</span></div>
+      <div class="details-row"><span class="details-label">録画</span><span class="details-value">参加者全員に後日配信</span></div>
+      <div class="details-row"><span class="details-label">特典</span><span class="details-value">スライド資料PDF・Gems設定テンプレート集・NotebookLM活用チェックリスト</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 参加特典 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">参加者全員に<span class="highlight">特典3つ</span>プレゼント</h2>
+      <p class="section-lead">お申し込みいただいた方全員に、ウェビナー終了後に送付します</p>
+    </div>
+    <div class="benefit-grid" style="grid-template-columns:repeat(3,1fr)">
+      <div class="benefit-card">
+        <div class="benefit-icon">📄</div>
+        <h3>スライド資料（PDF）</h3>
+        <p>当日使用したスライドをそのままPDF形式でお届け。社内共有や振り返りに</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">💎</div>
+        <h3>Gems設定テンプレート集</h3>
+        <p>社内ヘルプデスク用・営業サポート用・プロジェクト管理用の3種類をすぐ使える形式で</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon">✅</div>
+        <h3>NotebookLM活用チェックリスト</h3>
+        <p>導入時に確認すべき項目を一覧化。設定ミスなくスムーズに始められる</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 登壇者 ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">登壇者<span class="highlight">紹介</span></h2>
+    </div>
+    <div class="speaker-grid">
+      <div class="speaker-card">
+        <div class="speaker-photo">👤</div>
+        <div class="speaker-name">お名前</div>
+        <div class="speaker-title">肩書き・所属</div>
+        <p class="speaker-bio">プロフィールテキストが入ります。経歴や専門領域、実績などを2〜3文でご記入ください。</p>
+      </div>
+      <div class="speaker-card">
+        <div class="speaker-photo">👤</div>
+        <div class="speaker-name">お名前</div>
+        <div class="speaker-title">肩書き・所属</div>
+        <p class="speaker-bio">プロフィールテキストが入ります。経歴や専門領域、実績などを2〜3文でご記入ください。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 申込みフォーム ========== -->
+<section class="form-section" id="form">
+  <div class="section-header">
+    <h2 class="text-large section-title">今すぐ<span style="background:linear-gradient(transparent 60%,rgba(255,255,255,.3) 60%)">申し込む</span></h2>
+    <p class="section-lead">3月26日（木）13:00〜 ウェビナー</p>
+  </div>
+  <div class="form-wrapper">
+    <!-- ▼▼▼ HubSpotフォームの埋め込みコードをここに貼り付けてください ▼▼▼ -->
+    <!-- HubSpot → マーケティング → フォーム → 対象フォームの「共有」→「埋め込みコード」をコピー -->
+
+    <!-- ▲▲▲ フォーム埋め込みコードここまで ▲▲▲ -->
+  </div>
+  <p class="form-note">※ 営業電話は一切いたしません</p>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">よくある<span class="highlight">質問</span></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">NotebookLMやGemsは無料で使えますか？</div>
+        <div class="faq-a">はい、NotebookLMもGemsも、Googleアカウントがあれば無料で利用できます。より高度な機能はGoogle Workspace有料プランで利用可能です。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">社内資料をアップロードしてセキュリティは大丈夫ですか？</div>
+        <div class="faq-a">NotebookLMはGoogleのエンタープライズセキュリティ基準に準拠しており、アップロードしたデータはAIの学習には使用されません。Google Workspaceをご利用の場合、組織の管理ポリシーを適用できます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">日本語に対応していますか？</div>
+        <div class="faq-a">はい、完全対応しています。Audio OverviewやVideo Overviewsも日本語で生成可能です。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">どのような資料形式に対応していますか？</div>
+        <div class="faq-a">PDF、Googleドキュメント・スライド・スプレッドシート、ウェブサイトURL、YouTube動画、テキストファイルなど多数に対応しています。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">当日参加できない場合はどうなりますか？</div>
+        <div class="faq-a">録画を後日配信します。お申し込みいただければ、参加特典（スライド資料・テンプレート集・チェックリスト）もお受け取りいただけます。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">スマートフォンでも使えますか？</div>
+        <div class="faq-a">はい。2026年1月からiOS/Androidアプリも提供開始されており、Video Overviewsのカスタマイズもスマホから可能です。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== フッターCTA ========== -->
+<section class="footer-cta">
+  <h2 class="text-large">社内ナレッジが<span class="text-accent">24時間</span><br>答えてくれる時代へ</h2>
+  <p class="text-body">参加無料・録画配信あり・特典3点プレゼント</p>
+  <a href="#form" class="cta-btn-large">無料ウェビナーに申し込む</a>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="lp-footer">
+  <p>© 2026 ホリエモンAI学校 介護校 ｜ <a href="https://fc.horiemon.ai/kaigo">ホーム</a> ｜ <a href="https://fc.horiemon.ai/kaigo/privacy">プライバシーポリシー</a></p>
+</footer>
+
+</body>
+</html>

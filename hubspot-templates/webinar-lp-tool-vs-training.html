@@ -1,0 +1,419 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: ウェビナーLP - AIツール vs 人材育成
+  screenshotPath: ../images/webinar-tool-vs-training-preview.png
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ content.html_title }}</title>
+{{ standard_header_includes }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========== Reset & Variables ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gradient:linear-gradient(135deg,#FF0080,#7928CA);
+  --accent:#FF0080;
+  --purple:#7928CA;
+  --dark:#1a202c;
+  --bg-gray:#f5f7fa;
+  --text:#333;
+  --text-sub:#666;
+  --text-muted:#999;
+  --border:#e2e8f0;
+  --radius:16px;
+  --success:#22c55e;
+  --danger:#ef4444;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;line-height:1.7;margin:0}
+
+/* ========== Typography ========== */
+.text-huge{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;line-height:1.2;letter-spacing:-.02em}
+.text-large{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.3}
+.text-medium{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:700;line-height:1.4}
+.text-body{font-size:1rem;line-height:1.8;color:var(--text-sub)}
+.text-small{font-size:.875rem;color:var(--text-muted)}
+.text-accent{color:var(--accent)}
+.text-success{color:var(--success)}
+.text-danger{color:var(--danger)}
+.highlight{background:linear-gradient(transparent 60%,rgba(255,0,128,.2) 60%)}
+
+/* ========== Header ========== */
+.lp-header{background:rgba(26,32,44,.95);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(8px)}
+.lp-header-logo{color:#fff;font-size:.85rem;font-weight:700;text-decoration:none}
+.lp-header-cta{background:var(--gradient);color:#fff;padding:.5rem 1.25rem;border-radius:50px;font-size:.8rem;font-weight:700;text-decoration:none;transition:.2s}
+.lp-header-cta:hover{transform:translateY(-2px)}
+
+/* ========== Hero ========== */
+.lp-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 20px 80px;background:var(--dark);position:relative;overflow:hidden}
+.lp-hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 30%,rgba(121,40,202,.2) 0%,transparent 40%),radial-gradient(circle at 70% 70%,rgba(255,0,128,.15) 0%,transparent 40%);animation:pulse 10s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.hero-content{position:relative;z-index:2;max-width:900px;text-align:center;color:#fff}
+.hero-badge{display:inline-flex;gap:.5rem;margin-bottom:2rem}
+.hero-badge span{background:rgba(255,0,128,.2);border:1px solid rgba(255,0,128,.5);color:#fff;padding:.4rem 1rem;border-radius:50px;font-size:.75rem;font-weight:700}
+.hero-title{margin-bottom:1.5rem}
+.hero-sub{font-size:1.1rem;color:rgba(255,255,255,.7);margin-bottom:2.5rem}
+.hero-cta .cta-btn{display:inline-block;background:var(--gradient);color:#fff;padding:1.25rem 3rem;border-radius:50px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 10px 40px rgba(255,0,128,.4)}
+.hero-cta .cta-btn:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(255,0,128,.5)}
+.hero-note{margin-top:1rem;font-size:.8rem;color:rgba(255,255,255,.5)}
+
+/* ========== Section ========== */
+.section{padding:100px 20px}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-title{margin-bottom:.5rem}
+.section-lead{font-size:1rem;color:var(--text-muted)}
+.bg-gray{background:var(--bg-gray)}
+.bg-dark{background:var(--dark);color:#fff}
+
+/* ========== Problem ========== */
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.problem-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.05);border-left:4px solid var(--danger);transition:.2s}
+.problem-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.problem-card p{font-size:.9rem;color:var(--text-sub);margin:0}
+
+/* ========== Comparison ========== */
+.compare-container{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch}
+.compare-card{background:#fff;border-radius:var(--radius);padding:2.5rem 2rem;text-align:center}
+.compare-card.bad{border:3px solid var(--danger)}
+.compare-card.good{border:3px solid var(--success);box-shadow:0 8px 30px rgba(34,197,94,.15)}
+.compare-label{font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem}
+.compare-card.bad .compare-label{color:var(--danger)}
+.compare-card.good .compare-label{color:var(--success)}
+.compare-price{font-size:2.5rem;font-weight:900;margin-bottom:1.5rem}
+.compare-card.bad .compare-price{color:var(--danger)}
+.compare-card.good .compare-price{color:var(--success)}
+.compare-list{text-align:left;list-style:none;padding:0}
+.compare-list li{padding:.6rem 0;font-size:.9rem;display:flex;align-items:center;gap:.6rem;border-bottom:1px solid var(--border)}
+.compare-list li:last-child{border-bottom:none}
+.compare-vs{display:flex;align-items:center;justify-content:center;padding:0 1rem;font-size:1.5rem;font-weight:900;color:var(--text-muted)}
+
+/* ========== Stats ========== */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;text-align:center}
+.stat-item .stat-number{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-item .stat-label{font-size:.9rem;color:var(--text-sub)}
+
+/* ========== Benefits ========== */
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+.benefit-card{background:#fff;border-radius:var(--radius);padding:2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.05);transition:.2s}
+.benefit-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.benefit-num{font-size:3rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.benefit-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.benefit-card p{font-size:.85rem;color:var(--text-sub);margin:0}
+
+/* ========== Testimonials ========== */
+.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.testimonial-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.testimonial-tag{display:inline-block;background:var(--gradient);color:#fff;padding:.25rem .75rem;border-radius:4px;font-size:.7rem;font-weight:700;margin-bottom:1rem}
+.testimonial-card blockquote{font-size:1rem;font-weight:500;line-height:1.8;margin:0 0 1rem}
+.testimonial-card cite{font-size:.8rem;color:var(--text-muted);font-style:normal}
+
+/* ========== Event Details ========== -->
+.details-box{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.05);max-width:700px;margin:0 auto}
+.details-header{background:var(--dark);color:#fff;padding:1rem 1.5rem;font-weight:700;font-size:1.1rem}
+.details-row{display:flex;padding:1rem 1.5rem;border-bottom:1px solid var(--border)}
+.details-row:last-child{border-bottom:none}
+.details-label{width:120px;font-weight:700;flex-shrink:0;font-size:.9rem}
+.details-value{flex:1;font-size:.95rem;color:var(--text-sub)}
+.details-value .price{color:var(--accent);font-weight:900;font-size:1.3rem}
+
+/* ========== Form ========== -->
+.form-section{background:var(--gradient);padding:100px 20px;text-align:center;position:relative}
+.form-section .section-title{color:#fff}
+.form-section .section-lead{color:rgba(255,255,255,.8)}
+.form-wrapper{max-width:500px;margin:0 auto;background:#fff;border-radius:var(--radius);padding:2.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.form-note{color:rgba(255,255,255,.6);font-size:.75rem;margin-top:1.5rem}
+
+/* ========== FAQ ========== -->
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{margin-bottom:1rem;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.faq-q{padding:1.25rem 1.5rem;font-weight:700;font-size:1rem;position:relative;padding-left:3.5rem}
+.faq-q::before{content:'Q';position:absolute;left:1.25rem;top:50%;transform:translateY(-50%);width:28px;height:28px;background:var(--gradient);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.faq-a{padding:0 1.5rem 1.25rem 3.5rem;font-size:.9rem;color:var(--text-sub)}
+
+/* ========== CTA Block ========== -->
+.cta-block{text-align:center;padding:60px 20px}
+.cta-btn-large{display:inline-block;background:var(--gradient);color:#fff;padding:1.25rem 3rem;border-radius:50px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 10px 40px rgba(255,0,128,.3)}
+.cta-btn-large:hover{transform:translateY(-4px);box-shadow:0 15px 50px rgba(255,0,128,.4)}
+.cta-note{display:block;margin-top:.75rem;font-size:.8rem;color:var(--text-muted)}
+
+/* ========== Footer CTA ========== -->
+.footer-cta{background:var(--dark);color:#fff;padding:80px 20px;text-align:center}
+.footer-cta .text-large{margin-bottom:1rem}
+.footer-cta .text-body{color:rgba(255,255,255,.6);margin-bottom:2rem}
+
+/* ========== Footer ========== -->
+.lp-footer{background:#0f0c29;color:rgba(255,255,255,.4);padding:1.5rem;text-align:center;font-size:.75rem}
+.lp-footer a{color:rgba(255,255,255,.5);text-decoration:none}
+.lp-footer a:hover{color:#fff}
+
+/* ========== Responsive ========== -->
+@media(max-width:768px){
+  .section{padding:60px 15px}
+  .hero-content{padding:0 10px}
+  .compare-container{grid-template-columns:1fr;gap:15px}
+  .compare-vs{padding:10px 0;transform:rotate(90deg)}
+  .stats-grid{grid-template-columns:1fr;gap:20px}
+  .benefit-grid{grid-template-columns:1fr}
+  .details-row{flex-direction:column;gap:.3rem}
+  .details-label{width:auto}
+  .lp-header{padding:.6rem 1rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<header class="lp-header">
+  <a href="https://fc.horiemon.ai/kaigo" class="lp-header-logo">ホリエモンAI学校 介護校</a>
+  <a href="#form" class="lp-header-cta">無料で参加 &gt;</a>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="lp-hero">
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>参加無料</span>
+      <span>Zoom開催</span>
+      <span>決裁者限定</span>
+    </div>
+    {% module "hero_title" path="@hubspot/rich_text", label="ヒーロータイトル",
+      html="<h1 class='text-huge hero-title'>AIツール<span class='text-accent'>購入</span><br>その投資、<br>本当に正しい？</h1>" %}
+    <p class="hero-sub">年間100万円のツール、誰も使っていませんか？</p>
+    <div class="hero-cta">
+      <a href="#form" class="cta-btn">無料ウェビナーに申し込む</a>
+    </div>
+    <p class="hero-note">※ 施設長・経営者・理事の方限定</p>
+  </div>
+</section>
+
+<!-- ========== 問題提起 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">こんな<span class="highlight">失敗</span>、していませんか？</h2>
+    </div>
+    {% module "problems" path="@hubspot/rich_text", label="問題カード",
+      html="<div class='problem-grid'>
+        <div class='problem-card'>
+          <div class='problem-icon'>💸</div>
+          <h3>高額ツールが「置物」に</h3>
+          <p>月額10万円、使っているのは1人だけ</p>
+        </div>
+        <div class='problem-card'>
+          <div class='problem-icon'>🔄</div>
+          <h3>また別のツールを探す</h3>
+          <p>サービス終了、乗り換えコスト発生</p>
+        </div>
+        <div class='problem-card'>
+          <div class='problem-icon'>📊</div>
+          <h3>成果が見えない</h3>
+          <p>「AI入れました」で終わっている</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 比較 ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">ツール購入 vs 人材育成</h2>
+      <p class="section-lead">どちらが費用対効果が高い？</p>
+    </div>
+    {% module "comparison" path="@hubspot/rich_text", label="比較",
+      html="<div class='compare-container'>
+        <div class='compare-card bad'>
+          <div class='compare-label'>AIツール購入</div>
+          <div class='compare-price'>年120万円〜</div>
+          <ul class='compare-list'>
+            <li><span class='text-danger'>×</span> 使える人がいないと意味がない</li>
+            <li><span class='text-danger'>×</span> サービス終了リスク</li>
+            <li><span class='text-danger'>×</span> 助成金の対象外</li>
+          </ul>
+        </div>
+        <div class='compare-vs'>VS</div>
+        <div class='compare-card good'>
+          <div class='compare-label'>人材育成</div>
+          <div class='compare-price'>実質7万円/人</div>
+          <ul class='compare-list'>
+            <li><span class='text-success'>◎</span> どんなAIも使いこなせる</li>
+            <li><span class='text-success'>◎</span> スキルは組織に残る</li>
+            <li><span class='text-success'>◎</span> 助成金で75%OFF</li>
+          </ul>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 数字で見る効果 ========== -->
+<section class="section bg-dark">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title" style="color:#fff">3年間の<span class="text-accent">投資効果</span></h2>
+    </div>
+    {% module "stats" path="@hubspot/rich_text", label="統計",
+      html="<div class='stats-grid'>
+        <div class='stat-item'>
+          <div class='stat-number'>-375万円</div>
+          <div class='stat-label' style='color:rgba(255,255,255,.6)'>コスト削減</div>
+        </div>
+        <div class='stat-item'>
+          <div class='stat-number'>720h</div>
+          <div class='stat-label' style='color:rgba(255,255,255,.6)'>年間削減時間</div>
+        </div>
+        <div class='stat-item'>
+          <div class='stat-number'>+289万円</div>
+          <div class='stat-label' style='color:rgba(255,255,255,.6)'>3年間ROI</div>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<div class="cta-block">
+  <a href="#form" class="cta-btn-large">無料ウェビナーに申し込む</a>
+  <span class="cta-note">お申し込みは30秒で完了</span>
+</div>
+
+<!-- ========== ベネフィット ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">このウェビナーで<span class="highlight">わかること</span></h2>
+    </div>
+    {% module "benefits" path="@hubspot/rich_text", label="ベネフィット",
+      html="<div class='benefit-grid'>
+        <div class='benefit-card'>
+          <div class='benefit-num'>01</div>
+          <h3>ROI完全比較</h3>
+          <p>ツール vs 人材育成<br>3年間の総コストを公開</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-num'>02</div>
+          <h3>実演デモ</h3>
+          <p>AI人材が介護現場で<br>何ができるか見せます</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-num'>03</div>
+          <h3>助成金活用法</h3>
+          <p>31万円→7万円にする<br>具体的な手順を解説</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 参加者の声 ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">参加者の<span class="highlight">声</span></h2>
+    </div>
+    {% module "testimonials" path="@hubspot/rich_text", label="参加者の声",
+      html="<div class='testimonial-grid'>
+        <div class='testimonial-card'>
+          <span class='testimonial-tag'>社会福祉法人 理事長</span>
+          <blockquote>「ツールに200万円使って効果なし。人を育てたら年間300万円削減できた。」</blockquote>
+          <cite>— 東京都</cite>
+        </div>
+        <div class='testimonial-card'>
+          <span class='testimonial-tag'>特養 施設長</span>
+          <blockquote>「ツール入れれば楽になると思っていた。でも結局使われなかった。正解は人材育成だった。」</blockquote>
+          <cite>— 埼玉県</cite>
+        </div>
+        <div class='testimonial-card'>
+          <span class='testimonial-tag'>グループホーム 経営者</span>
+          <blockquote>「助成金75%OFF、もっと早く知りたかった。」</blockquote>
+          <cite>— 千葉県</cite>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 開催概要 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">開催<span class="highlight">概要</span></h2>
+    </div>
+    <div class="details-box">
+      <div class="details-header">ウェビナー詳細</div>
+      {% module "event_details" path="@hubspot/rich_text", label="開催概要",
+        html="<div class='details-row'><span class='details-label'>テーマ</span><span class='details-value'>AIツール vs 人材育成、どっちが正解？</span></div>
+        <div class='details-row'><span class='details-label'>日時</span><span class='details-value'>2026年3月20日（金）14:00〜15:00</span></div>
+        <div class='details-row'><span class='details-label'>形式</span><span class='details-value'>Zoom（オンライン）</span></div>
+        <div class='details-row'><span class='details-label'>参加費</span><span class='details-value'><span class='price'>無料</span></span></div>
+        <div class='details-row'><span class='details-label'>対象</span><span class='details-value'>経営者・施設長・理事</span></div>
+        <div class='details-row'><span class='details-label'>録画</span><span class='details-value'>参加者全員に配信</span></div>" %}
+    </div>
+  </div>
+</section>
+
+<!-- ========== 申込みフォーム ========== -->
+<section class="form-section" id="form">
+  <div class="section-header">
+    <h2 class="text-large section-title">今すぐ<span style="background:linear-gradient(transparent 60%,rgba(255,255,255,.3) 60%)">申し込む</span></h2>
+    <p class="section-lead">先着100社限定</p>
+  </div>
+  <div class="form-wrapper">
+    {% module "webinar_form" path="@hubspot/form", label="ウェビナー申込みフォーム",
+      form={
+        "response_type": "inline",
+        "message": "お申し込みありがとうございます！<br>メールで詳細をお送りしました。"
+      } %}
+  </div>
+  <p class="form-note">※ 営業電話は一切いたしません</p>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">よくある<span class="highlight">質問</span></h2>
+    </div>
+    <div class="faq-list">
+      {% module "faq_content" path="@hubspot/rich_text", label="FAQ",
+        html="<div class='faq-item'>
+          <div class='faq-q'>本当に無料ですか？</div>
+          <div class='faq-a'>はい、完全無料です。営業電話もしません。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>AIツールをすでに導入済みですが、参加する意味はありますか？</div>
+          <div class='faq-a'>はい。ツールを活かすには「使える人」が必要です。人材育成の価値をお伝えします。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>当日参加できません。</div>
+          <div class='faq-a'>録画を配信します。お申し込みだけでもどうぞ。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>助成金は本当に使えますか？</div>
+          <div class='faq-a'>雇用保険加入の社員が対象。詳細はウェビナーで解説します。</div>
+        </div>" %}
+    </div>
+  </div>
+</section>
+
+<!-- ========== フッターCTA ========== -->
+<section class="footer-cta">
+  <h2 class="text-large">ツールより先に、<br><span class="text-accent">人</span>に投資しませんか？</h2>
+  <p class="text-body">参加無料・録画配信あり</p>
+  <a href="#form" class="cta-btn-large">無料ウェビナーに申し込む</a>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="lp-footer">
+  {% module "footer_text" path="@hubspot/rich_text", label="フッター",
+    html="<p>© 2026 ホリエモンAI学校 介護校 ｜ <a href='https://fc.horiemon.ai/kaigo'>ホーム</a> ｜ <a href='https://fc.horiemon.ai/kaigo/privacy'>プライバシーポリシー</a></p>" %}
+</footer>
+
+{{ standard_footer_includes }}
+</body>
+</html>

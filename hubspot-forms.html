@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HubSpotフォーム作成ガイド - 3種類のフォーム設計・設定手順</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.form-card{background:var(--c-surface);border:1px solid var(--c-border);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.form-card h3{margin-top:0}
+.form-badge{display:inline-block;padding:.3rem .8rem;border-radius:20px;font-size:.75rem;font-weight:700;margin-bottom:.8rem}
+.badge-webinar{background:#e0f7fa;color:#00838f}
+.badge-doc{background:#e8f5e9;color:#2e7d32}
+.badge-consult{background:#fff3e0;color:#e65100}
+.field-table{margin:.8rem 0}
+.field-table th{background:#f1f5f9;font-size:.82rem}
+.field-table td{font-size:.82rem;vertical-align:top}
+.field-required{color:var(--c-danger);font-weight:700}
+.field-optional{color:var(--c-text-sub);font-size:.75rem}
+.step-flow{display:flex;flex-direction:column;gap:.8rem;margin:1rem 0}
+.step-item{display:flex;gap:1rem;align-items:flex-start;padding:1rem;background:#f8fafc;border-radius:var(--radius);border-left:3px solid var(--c-primary)}
+.step-num{display:flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--c-primary);color:#fff;border-radius:50%;font-weight:700;font-size:.85rem;flex-shrink:0}
+.step-content{flex:1}
+.step-content h4{margin:0 0 .3rem;font-size:.9rem}
+.step-content p{font-size:.82rem;color:var(--c-text-sub);margin:0}
+.copy-block{background:#1e293b;color:#e2e8f0;padding:1rem 1.2rem;border-radius:var(--radius);margin:.6rem 0;font-family:"Courier New",monospace;font-size:.82rem;line-height:1.6;white-space:pre-wrap;position:relative}
+.copy-block::before{content:'コピーして使用';position:absolute;top:.4rem;right:.6rem;font-size:.65rem;background:var(--c-accent);color:#1e293b;padding:.1rem .5rem;border-radius:4px;font-weight:700;font-family:"Noto Sans JP",sans-serif}
+.email-preview{background:#fff;border:2px solid var(--c-border);border-radius:var(--radius);padding:1.5rem;margin:.8rem 0;font-size:.85rem}
+.email-preview .email-subject{font-weight:700;font-size:.95rem;margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1px solid var(--c-border)}
+.email-preview .email-body{line-height:1.8;color:var(--c-text)}
+.warn-box{background:#fef3c7;border:1px solid #fbbf24;border-radius:var(--radius);padding:.8rem 1rem;font-size:.85rem;margin:.8rem 0}
+.info-box{background:var(--c-info-light);border:1px solid #67e8f9;border-radius:var(--radius);padding:.8rem 1rem;font-size:.85rem;margin:.8rem 0}
+.success-box{background:var(--c-success-light);border:1px solid #86efac;border-radius:var(--radius);padding:.8rem 1rem;font-size:.85rem;margin:.8rem 0}
+.workflow-diagram{background:#f8fafc;border:1px solid var(--c-border);border-radius:var(--radius);padding:1.5rem;margin:1rem 0;font-family:"Courier New",monospace;font-size:.8rem;line-height:2;white-space:pre-wrap}
+.nav-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0}
+.nav-card{background:var(--c-surface);border:2px solid var(--c-border);border-radius:var(--radius);padding:1.2rem;text-align:center;cursor:pointer;transition:.15s}
+.nav-card:hover{border-color:var(--c-primary);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.nav-card h4{margin:0 0 .3rem;font-size:.9rem;color:var(--c-primary)}
+.nav-card p{margin:0;font-size:.78rem;color:var(--c-text-sub)}
+.embed-code{background:#1e293b;color:#a5f3fc;padding:1rem 1.2rem;border-radius:var(--radius);margin:.6rem 0;font-family:"Courier New",monospace;font-size:.78rem;line-height:1.6;overflow-x:auto;white-space:pre}
+.checklist-final{list-style:none;margin:0;padding:0}
+.checklist-final li{padding:.5rem .5rem .5rem 2rem;position:relative;font-size:.88rem;border-bottom:1px solid #f1f5f9}
+.checklist-final li::before{content:'☐';position:absolute;left:.3rem;top:.5rem;font-size:1rem}
+.comparison-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin:1rem 0}
+.comparison-col{text-align:center}
+.comparison-col h4{font-size:.85rem;margin-bottom:.5rem}
+.form-mock{background:#f8fafc;border:2px solid var(--c-border);border-radius:var(--radius);padding:1rem;text-align:left}
+.mock-field{margin:.5rem 0}
+.mock-label{font-size:.75rem;font-weight:600;color:var(--c-text);margin-bottom:.2rem}
+.mock-input{background:#fff;border:1px solid #d1d5db;border-radius:4px;padding:.4rem .6rem;font-size:.8rem;color:#9ca3af;width:100%;display:block}
+.mock-btn{display:block;width:100%;padding:.5rem;border:none;border-radius:4px;font-weight:700;font-size:.82rem;color:#fff;margin-top:.8rem;cursor:default}
+.btn-webinar{background:#0891b2}
+.btn-doc{background:#16a34a}
+.btn-consult{background:#ea580c}
+.property-mapping{display:grid;grid-template-columns:1fr auto 1fr;gap:.5rem;align-items:center;margin:.8rem 0}
+.prop-from,.prop-to{background:#f8fafc;border:1px solid var(--c-border);border-radius:var(--radius);padding:.4rem .8rem;font-size:.82rem}
+.prop-arrow{color:var(--c-primary);font-weight:700;text-align:center}
+</style>
+</head>
+<body>
+
+<!-- サイドナビ -->
+<nav id="sidebar">
+<div class="nav-header">HubSpotフォーム</div>
+<ul>
+<li><a href="#overview" class="active">概要・全体設計</a></li>
+<li><a href="#before">事前準備</a></li>
+<li><a href="#form1">① ウェビナー申込み</a></li>
+<li><a href="#form2">② 資料請求</a></li>
+<li><a href="#form3">③ 無料相談予約</a></li>
+<li><a href="#autoreply">自動返信メール設定</a></li>
+<li><a href="#workflow">ワークフロー設定</a></li>
+<li><a href="#embed">ペライチへの埋め込み</a></li>
+<li><a href="#hubspot-lp">HubSpot LP埋め込み</a></li>
+<li><a href="#tracking">UTM・トラッキング</a></li>
+<li><a href="#checklist">最終チェックリスト</a></li>
+<li style="margin-top:1rem"><a href="index.html" style="color:#f59e0b;font-weight:600">← マーケティング計画</a></li>
+<li><a href="tasks.html" style="color:#f59e0b;font-weight:600">タスク一覧 →</a></li>
+<li><a href="lp-guide.html" style="color:#f59e0b;font-weight:600">LP改修指示書 →</a></li>
+</ul>
+</nav>
+
+<!-- メインコンテンツ -->
+<div id="content">
+
+<!-- ヒーロー -->
+<div class="hero">
+<div class="hero-inner">
+<div class="hero-label">HubSpot Marketing Hub Professional</div>
+<h1>HubSpotフォーム作成<br>完全ガイド</h1>
+<p class="hero-sub">ウェビナー申込み・資料請求・無料相談予約の3種類のフォームを<br>HubSpotで作成し、CRM自動取り込み・ワークフロー連携まで設定する手順書</p>
+<div class="hero-badges">
+<span class="badge">フォーム3種類</span>
+<span class="badge">自動返信メール</span>
+<span class="badge">CRM連携</span>
+<span class="badge">ワークフロー自動化</span>
+<span class="badge">ペライチ埋め込み</span>
+</div>
+</div>
+</div>
+
+<!-- 概要 -->
+<section id="overview">
+<h2><span class="section-num">0</span>概要・全体設計</h2>
+
+<h3>3種類のフォームの役割</h3>
+
+<div class="nav-cards">
+<div class="nav-card" onclick="document.getElementById('form1').scrollIntoView({behavior:'smooth'})">
+<span class="form-badge badge-webinar">フォーム①</span>
+<h4>ウェビナー申込み</h4>
+<p>主CTA。温度感の高いリードを獲得。ウェビナー参加→商談化率15-25%</p>
+</div>
+<div class="nav-card" onclick="document.getElementById('form2').scrollIntoView({behavior:'smooth'})">
+<span class="form-badge badge-doc">フォーム②</span>
+<h4>資料請求</h4>
+<p>副CTA。情報収集段階のリードを広く獲得。フォーム項目を最小限にしてCVRを最大化</p>
+</div>
+<div class="nav-card" onclick="document.getElementById('form3').scrollIntoView({behavior:'smooth'})">
+<span class="form-badge badge-consult">フォーム③</span>
+<h4>無料相談予約</h4>
+<p>第三CTA。検討が進んだ高意図リード向け。情報を多く取得して商談に直結させる</p>
+</div>
+</div>
+
+<h3>フォーム設計のイメージ</h3>
+
+<div class="comparison-grid">
+<div class="comparison-col">
+<h4>① ウェビナー申込み</h4>
+<div class="form-mock">
+<div class="mock-field"><div class="mock-label">お名前 <span class="field-required">*</span></div><div class="mock-input">山田 太郎</div></div>
+<div class="mock-field"><div class="mock-label">メールアドレス <span class="field-required">*</span></div><div class="mock-input">yamada@example.co.jp</div></div>
+<div class="mock-field"><div class="mock-label">法人名 <span class="field-required">*</span></div><div class="mock-input">株式会社○○介護</div></div>
+<div class="mock-field"><div class="mock-label">参加希望日程 <span class="field-required">*</span></div><div class="mock-input">▼ 選択してください</div></div>
+<div class="mock-btn btn-webinar">無料ウェビナーに申し込む</div>
+</div>
+</div>
+<div class="comparison-col">
+<h4>② 資料請求</h4>
+<div class="form-mock">
+<div class="mock-field"><div class="mock-label">お名前 <span class="field-required">*</span></div><div class="mock-input">山田 太郎</div></div>
+<div class="mock-field"><div class="mock-label">メールアドレス <span class="field-required">*</span></div><div class="mock-input">yamada@example.co.jp</div></div>
+<div style="height:4.5rem"></div>
+<div class="mock-btn btn-doc">無料で資料をダウンロード</div>
+</div>
+</div>
+<div class="comparison-col">
+<h4>③ 無料相談予約</h4>
+<div class="form-mock">
+<div class="mock-field"><div class="mock-label">お名前 <span class="field-required">*</span></div><div class="mock-input">山田 太郎</div></div>
+<div class="mock-field"><div class="mock-label">メールアドレス <span class="field-required">*</span></div><div class="mock-input">yamada@example.co.jp</div></div>
+<div class="mock-field"><div class="mock-label">法人名 <span class="field-required">*</span></div><div class="mock-input">株式会社○○介護</div></div>
+<div class="mock-field"><div class="mock-label">電話番号 <span class="field-required">*</span></div><div class="mock-input">03-1234-5678</div></div>
+<div class="mock-field"><div class="mock-label">従業員数</div><div class="mock-input">▼ 選択してください</div></div>
+<div class="mock-field"><div class="mock-label">ご相談内容</div><div class="mock-input">自由記述...</div></div>
+<div class="mock-btn btn-consult">無料相談を予約する</div>
+</div>
+</div>
+</div>
+
+<div class="info-box">
+<strong>設計方針:</strong> フォーム項目数はCVR（コンバージョン率）に直結します。項目が1つ増えるごとにCVRが約5-10%低下するため、各フォームの目的に応じて最小限の項目に絞っています。
+</div>
+
+<h3>全体のデータフロー</h3>
+
+<div class="workflow-diagram">フォーム送信
+  ↓
+HubSpot CRM に自動でコンタクト作成/更新
+  ↓
+ライフサイクルステージ = 「リード」に自動設定
+  ↓
+リードステータスのプロパティを自動設定
+  ├─ ウェビナー申込み → 「ウェビナー申込済」
+  ├─ 資料請求       → 「資料請求済」
+  └─ 無料相談予約   → 「無料相談予約済」
+  ↓
+自動返信メールを即時送信
+  ↓
+対応するワークフロー（メールシーケンス）に自動登録
+  ↓
+社内通知メール（担当者へ）を送信</div>
+
+</section>
+
+<!-- 事前準備 -->
+<section id="before">
+<h2><span class="section-num">0.5</span>事前準備</h2>
+
+<h3>HubSpotで確認・設定しておくこと</h3>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>カスタムプロパティの作成</h4>
+<p><strong>設定 → プロパティ → コンタクトプロパティ</strong>から、以下のカスタムプロパティを事前に作成してください。</p>
+</div>
+</div>
+</div>
+
+<table class="field-table">
+<thead><tr><th>プロパティ名</th><th>内部名（英語）</th><th>タイプ</th><th>選択肢</th></tr></thead>
+<tbody>
+<tr><td>リード獲得元</td><td>lead_source_detail</td><td>ドロップダウン</td><td>ウェビナー申込み / 資料請求 / 無料相談予約 / DM返信 / 紹介 / その他</td></tr>
+<tr><td>参加希望ウェビナー日程</td><td>webinar_date</td><td>ドロップダウン</td><td>※開催日程ごとに選択肢を追加（例: 2026/3/13 14:00〜）</td></tr>
+<tr><td>従業員数</td><td>company_size_range</td><td>ドロップダウン</td><td>1-9名 / 10-49名 / 50-99名 / 100-299名 / 300名以上</td></tr>
+<tr><td>ご相談内容</td><td>consultation_note</td><td>複数行テキスト</td><td>-</td></tr>
+</tbody>
+</table>
+
+<div class="warn-box">
+<strong>注意:</strong> HubSpotにデフォルトで存在する「会社名」「電話番号」「メールアドレス」「姓」「名」などのプロパティはそのまま使用します。上記はデフォルトに存在しないため、カスタムで作成が必要です。
+</div>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>カスタムプロパティの作成手順</h4>
+<p><strong>① HubSpotにログイン → 右上の歯車アイコン（設定）→ 左メニュー「プロパティ」→ 「プロパティを作成」ボタン</strong></p>
+<p>② オブジェクトタイプ: 「コンタクト」を選択</p>
+<p>③ グループ: 「コンタクト情報」を選択</p>
+<p>④ ラベル（表示名）: 上の表の「プロパティ名」を入力</p>
+<p>⑤ フィールドタイプ: 上の表の「タイプ」を選択</p>
+<p>⑥ ドロップダウンの場合は選択肢を追加</p>
+<p>⑦ 「作成」をクリック</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>通知メールの受信者を確認</h4>
+<p>フォーム送信時に社内通知を受け取る担当者のメールアドレスを確認しておいてください。HubSpotにユーザーとして登録されている必要があります。</p>
+</div>
+</div>
+</div>
+
+</section>
+
+<!-- フォーム① ウェビナー申込み -->
+<section id="form1">
+<h2><span class="section-num">1</span>フォーム① ウェビナー申込みフォーム</h2>
+
+<div class="form-badge badge-webinar">主CTA ／ 商談化率 15-25%</div>
+
+<h3>フォームの作成手順</h3>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>フォームエディタを開く</h4>
+<p><strong>マーケティング → リード情報の収集 → フォーム → 「フォームを作成」</strong></p>
+<p>フォームタイプ: 「埋め込みフォーム」を選択 → 「次へ」</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>テンプレートを選択</h4>
+<p>「空白のテンプレート」を選択して「開始」をクリック</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>フォーム名を設定</h4>
+<p>左上のフォーム名を「ウェビナー申込みフォーム」に変更</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">4</div>
+<div class="step-content">
+<h4>フィールドを追加</h4>
+<p>左パネルからフィールドをドラッグ&ドロップで追加します。以下の順番で配置してください。</p>
+</div>
+</div>
+</div>
+
+<h3>フィールド構成</h3>
+
+<table class="field-table">
+<thead><tr><th>順序</th><th>フィールド名（表示）</th><th>HubSpotプロパティ</th><th>必須</th><th>タイプ</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>姓</td><td>姓（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「お名前（姓）」に変更</td></tr>
+<tr><td>2</td><td>名</td><td>名（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「お名前（名）」に変更。姓と同じ行に横並び配置</td></tr>
+<tr><td>3</td><td>Eメール</td><td>Eメール（デフォルト）</td><td><span class="field-required">必須</span></td><td>メール</td><td>-</td></tr>
+<tr><td>4</td><td>会社名</td><td>会社名（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「法人名・施設名」に変更</td></tr>
+<tr><td>5</td><td>参加希望日程</td><td>webinar_date（カスタム）</td><td><span class="field-required">必須</span></td><td>ドロップダウン</td><td>開催日程の選択肢を設定</td></tr>
+</tbody>
+</table>
+
+<h3>フィールドの詳細設定</h3>
+
+<h4>各フィールド共通の設定</h4>
+<ul>
+<li>フィールドをクリック → 右パネルで設定を編集</li>
+<li>「このフィールドを必須にする」をONにする（上記の必須フィールド）</li>
+<li>プレースホルダーテキストを設定（入力例を表示）</li>
+</ul>
+
+<table class="field-table">
+<thead><tr><th>フィールド</th><th>ラベル（変更後）</th><th>プレースホルダー</th></tr></thead>
+<tbody>
+<tr><td>姓</td><td>お名前（姓）</td><td>山田</td></tr>
+<tr><td>名</td><td>お名前（名）</td><td>太郎</td></tr>
+<tr><td>Eメール</td><td>メールアドレス</td><td>yamada@example.co.jp</td></tr>
+<tr><td>会社名</td><td>法人名・施設名</td><td>株式会社○○介護</td></tr>
+<tr><td>webinar_date</td><td>参加希望日程</td><td>選択してください</td></tr>
+</tbody>
+</table>
+
+<h3>送信ボタンの設定</h3>
+<ul>
+<li>ボタンテキスト: <strong>「無料ウェビナーに申し込む」</strong></li>
+<li>上部の「スタイルとプレビュー」タブでボタンの色を設定可能</li>
+</ul>
+
+<h3>送信後の動作設定</h3>
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>「オプション」タブをクリック</h4>
+<p>フォームエディタ上部の「オプション」タブを選択します。</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>送信後のアクションを設定</h4>
+<p>「フォーム送信後の表示」→「インラインのお礼メッセージ」を選択し、以下のメッセージを入力:</p>
+</div>
+</div>
+</div>
+
+<div class="copy-block">ウェビナーへのお申し込みありがとうございます。
+
+ご登録いただいたメールアドレスに、参加用のZoomリンクと詳細をお送りしました。
+ご不明点がございましたら、お気軽にお問い合わせください。</div>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>ライフサイクルステージを設定</h4>
+<p>「コンタクトのライフサイクルステージを設定」→「リード」を選択</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">4</div>
+<div class="step-content">
+<h4>フォロー通知メールを設定</h4>
+<p>「フォームの送信通知をEメールで送信」をON → 通知先のメールアドレスを入力（担当者のアドレス）</p>
+</div>
+</div>
+</div>
+
+<div class="success-box">
+<strong>完了:</strong> 右上の「公開」ボタンをクリックしてフォームを公開します。
+</div>
+</section>
+
+<!-- フォーム② 資料請求 -->
+<section id="form2">
+<h2><span class="section-num">2</span>フォーム② 資料請求フォーム</h2>
+
+<div class="form-badge badge-doc">副CTA ／ CVR最大化のため項目最小</div>
+
+<h3>作成手順</h3>
+<p>フォーム①と同じ手順でフォームエディタを開き、フォーム名を<strong>「資料請求フォーム」</strong>に設定してください。</p>
+
+<h3>フィールド構成</h3>
+
+<table class="field-table">
+<thead><tr><th>順序</th><th>フィールド名（表示）</th><th>HubSpotプロパティ</th><th>必須</th><th>タイプ</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>姓</td><td>姓（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「お名前（姓）」に変更</td></tr>
+<tr><td>2</td><td>名</td><td>名（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「お名前（名）」に変更。姓と横並び</td></tr>
+<tr><td>3</td><td>Eメール</td><td>Eメール（デフォルト）</td><td><span class="field-required">必須</span></td><td>メール</td><td>-</td></tr>
+</tbody>
+</table>
+
+<div class="info-box">
+<strong>項目を3つに絞る理由:</strong> 資料請求は「ちょっと見てみたい」程度の軽い動機で行われます。項目が増えると離脱率が上がるため、名前とメールアドレスのみに絞ります。会社名などは後続のメールシーケンス内のアンケートや、商談時にヒアリングで取得します。
+</div>
+
+<h3>送信ボタンの設定</h3>
+<ul>
+<li>ボタンテキスト: <strong>「無料で資料をダウンロード」</strong></li>
+</ul>
+
+<h3>送信後の動作設定</h3>
+<p>「オプション」タブで以下を設定:</p>
+
+<h4>お礼メッセージ</h4>
+<div class="copy-block">資料のご請求ありがとうございます。
+
+ご登録いただいたメールアドレスに、資料のダウンロードリンクをお送りしました。
+メールが届かない場合は、迷惑メールフォルダをご確認ください。</div>
+
+<h4>その他の設定</h4>
+<ul>
+<li>ライフサイクルステージ: 「リード」</li>
+<li>通知メール: ON（担当者のアドレスを入力）</li>
+</ul>
+
+<div class="success-box">
+<strong>完了:</strong> 「公開」をクリックしてフォームを公開します。
+</div>
+</section>
+
+<!-- フォーム③ 無料相談予約 -->
+<section id="form3">
+<h2><span class="section-num">3</span>フォーム③ 無料相談予約フォーム</h2>
+
+<div class="form-badge badge-consult">第三CTA ／ 高意図リード ／ 商談直結</div>
+
+<h3>作成手順</h3>
+<p>同様にフォームエディタを開き、フォーム名を<strong>「無料相談予約フォーム」</strong>に設定してください。</p>
+
+<h3>フィールド構成</h3>
+
+<table class="field-table">
+<thead><tr><th>順序</th><th>フィールド名（表示）</th><th>HubSpotプロパティ</th><th>必須</th><th>タイプ</th><th>備考</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>姓</td><td>姓（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「お名前（姓）」に変更</td></tr>
+<tr><td>2</td><td>名</td><td>名（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「お名前（名）」に変更。姓と横並び</td></tr>
+<tr><td>3</td><td>Eメール</td><td>Eメール（デフォルト）</td><td><span class="field-required">必須</span></td><td>メール</td><td>-</td></tr>
+<tr><td>4</td><td>会社名</td><td>会社名（デフォルト）</td><td><span class="field-required">必須</span></td><td>単一行テキスト</td><td>ラベルを「法人名・施設名」に変更</td></tr>
+<tr><td>5</td><td>電話番号</td><td>電話番号（デフォルト）</td><td><span class="field-required">必須</span></td><td>電話番号</td><td>-</td></tr>
+<tr><td>6</td><td>従業員数</td><td>company_size_range（カスタム）</td><td><span class="field-optional">任意</span></td><td>ドロップダウン</td><td>助成金シミュレーションの参考情報</td></tr>
+<tr><td>7</td><td>ご相談内容</td><td>consultation_note（カスタム）</td><td><span class="field-optional">任意</span></td><td>複数行テキスト</td><td>事前に知りたいことを把握</td></tr>
+</tbody>
+</table>
+
+<div class="info-box">
+<strong>項目が多い理由:</strong> 無料相談を予約する人は検討段階が進んでおり、フォーム項目の多さで離脱するリスクが低いです。電話番号・従業員数・相談内容を事前に取得することで、商談準備の質が上がり成約率の向上につながります。
+</div>
+
+<h3>送信ボタンの設定</h3>
+<ul>
+<li>ボタンテキスト: <strong>「無料相談を予約する」</strong></li>
+</ul>
+
+<h3>送信後の動作設定</h3>
+
+<h4>お礼メッセージ</h4>
+<div class="copy-block">無料相談のご予約ありがとうございます。
+
+担当者より1営業日以内にご連絡いたします。
+ご希望の日程をお伺いし、Web会議（Zoom）の日程を調整させていただきます。</div>
+
+<h4>その他の設定</h4>
+<ul>
+<li>ライフサイクルステージ: 「リード」</li>
+<li>通知メール: ON（担当者のアドレスを入力）</li>
+</ul>
+
+<div class="warn-box">
+<strong>重要:</strong> 無料相談予約は商談に直結するため、通知メールは必ずONにしてください。可能であれば、Slack連携やモバイル通知も設定し、1営業日以内の対応を徹底してください。
+</div>
+
+<div class="success-box">
+<strong>完了:</strong> 「公開」をクリックしてフォームを公開します。
+</div>
+</section>
+
+<!-- 自動返信メール設定 -->
+<section id="autoreply">
+<h2><span class="section-num">4</span>自動返信メール設定</h2>
+
+<p>フォーム送信後に自動で送信されるメールを設定します。HubSpot Marketing Hub Professionalでは、フォーム送信をトリガーにしたワークフローで自動メールを送ることができます。</p>
+
+<h3>設定方法</h3>
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>メールを作成</h4>
+<p><strong>マーケティング → Eメール → 「Eメールを作成」→ 「自動配信Eメール」</strong>を選択</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>テンプレートを選択</h4>
+<p>シンプルなテンプレートを選択（過度な装飾は不要。テキスト中心が開封率・信頼性ともに高い）</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>メール内容を作成</h4>
+<p>以下の3種類のメールをそれぞれ作成します。</p>
+</div>
+</div>
+</div>
+
+<h3>① ウェビナー申込み確認メール</h3>
+
+<div class="email-preview">
+<div class="email-subject">件名: 【ホリエモンAI学校 介護校】ウェビナーへのお申し込みありがとうございます</div>
+<div class="email-body">
+<p>{{contact.firstname}} {{contact.lastname}} 様</p>
+<p>ホリエモンAI学校 介護校のウェビナーにお申し込みいただき、<br>誠にありがとうございます。</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+■ ウェビナー詳細<br>
+━━━━━━━━━━━━━━━━━━━━<br>
+テーマ：介護現場のAI活用最前線 - 記録業務を半分にする方法<br>
+日時：{{contact.webinar_date}}<br>
+形式：Zoom ウェビナー（オンライン）<br>
+参加費：無料<br>
+参加URL：開催日前日にメールでお送りします</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+■ 当日までにご準備いただくこと<br>
+━━━━━━━━━━━━━━━━━━━━<br>
+・インターネット接続環境<br>
+・PC、タブレット、またはスマートフォン<br>
+・ご質問があれば事前にメールでお送りください</p>
+<p>ご不明な点がございましたら、お気軽にご連絡ください。<br>
+当日のご参加を心よりお待ちしております。</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+ホリエモンAI学校 介護校<br>
+URL: https://fc.horiemon.ai/kaigo<br>
+━━━━━━━━━━━━━━━━━━━━</p>
+</div>
+</div>
+
+<h4>メール設定</h4>
+<table class="field-table">
+<thead><tr><th>項目</th><th>設定値</th></tr></thead>
+<tbody>
+<tr><td>メール名（内部用）</td><td>自動返信_ウェビナー申込み確認</td></tr>
+<tr><td>送信者名</td><td>ホリエモンAI学校 介護校</td></tr>
+<tr><td>送信者アドレス</td><td>※御社のメールアドレス</td></tr>
+<tr><td>件名</td><td>【ホリエモンAI学校 介護校】ウェビナーへのお申し込みありがとうございます</td></tr>
+</tbody>
+</table>
+
+<h3>② 資料請求確認メール</h3>
+
+<div class="email-preview">
+<div class="email-subject">件名: 【ホリエモンAI学校 介護校】資料をお届けします</div>
+<div class="email-body">
+<p>{{contact.firstname}} {{contact.lastname}} 様</p>
+<p>ホリエモンAI学校 介護校の資料をご請求いただき、<br>
+誠にありがとうございます。</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+■ 資料ダウンロード<br>
+━━━━━━━━━━━━━━━━━━━━<br>
+以下のリンクから資料をダウンロードいただけます。</p>
+<p>▼ 介護校パンフレット・助成金活用ガイド<br>
+[ダウンロードリンクをここに挿入]</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+■ 無料ウェビナーのご案内<br>
+━━━━━━━━━━━━━━━━━━━━<br>
+介護現場でのAI活用について、より詳しくご紹介する<br>
+無料ウェビナーを定期開催しております。</p>
+<p>テーマ：介護現場のAI活用最前線<br>
+開催：毎月第2・第4木曜 14:00〜<br>
+参加費：無料</p>
+<p>▼ ウェビナーのお申し込みはこちら<br>
+[ウェビナー申込みページのリンク]</p>
+<p>ご不明な点がございましたら、お気軽にご連絡ください。</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+ホリエモンAI学校 介護校<br>
+URL: https://fc.horiemon.ai/kaigo<br>
+━━━━━━━━━━━━━━━━━━━━</p>
+</div>
+</div>
+
+<h3>③ 無料相談予約確認メール</h3>
+
+<div class="email-preview">
+<div class="email-subject">件名: 【ホリエモンAI学校 介護校】無料相談のご予約を承りました</div>
+<div class="email-body">
+<p>{{contact.firstname}} {{contact.lastname}} 様</p>
+<p>無料相談のご予約をいただき、誠にありがとうございます。</p>
+<p>担当者より<strong>1営業日以内</strong>にご連絡を差し上げ、<br>
+Web会議（Zoom）の日程を調整させていただきます。</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+■ ご相談の流れ<br>
+━━━━━━━━━━━━━━━━━━━━<br>
+1. 担当者からの日程調整メール（1営業日以内）<br>
+2. Web会議（Zoom）でのご相談（約30分）<br>
+3. 御社に合ったプラン・助成金活用のご提案<br>
+4. ご希望の場合、社労士との面談設定</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+■ 事前にご確認いただけると助かる情報<br>
+━━━━━━━━━━━━━━━━━━━━<br>
+・受講予定人数（おおよそで結構です）<br>
+・現在のAI活用状況<br>
+・助成金の申請経験の有無</p>
+<p>ご不明な点がございましたら、お気軽にご連絡ください。</p>
+<p>━━━━━━━━━━━━━━━━━━━━<br>
+ホリエモンAI学校 介護校<br>
+URL: https://fc.horiemon.ai/kaigo<br>
+━━━━━━━━━━━━━━━━━━━━</p>
+</div>
+</div>
+
+<div class="warn-box">
+<strong>メール作成後の注意:</strong> メールは「レビューして送信」をクリックした後、まだ「送信」は押さないでください。ワークフロー内で使用するため、先にメールを作成・保存しておき、次のワークフロー設定で紐づけます。
+</div>
+
+</section>
+
+<!-- ワークフロー設定 -->
+<section id="workflow">
+<h2><span class="section-num">5</span>ワークフロー設定（自動化）</h2>
+
+<p>各フォームの送信をトリガーに、自動返信メール送信・プロパティ更新・社内通知を自動実行するワークフローを作成します。</p>
+
+<h3>ワークフロー① ウェビナー申込み</h3>
+
+<div class="workflow-diagram">【トリガー】
+コンタクトがフォーム「ウェビナー申込みフォーム」を送信
+  │
+  ↓
+【アクション1】プロパティ値を設定
+  リード獲得元 = 「ウェビナー申込み」
+  │
+  ↓
+【アクション2】Eメールを送信
+  「自動返信_ウェビナー申込み確認」メールを送信
+  │
+  ↓
+【アクション3】社内通知Eメールを送信
+  担当者に「新規ウェビナー申込み」の通知
+  │
+  ↓
+【アクション4】（オプション）リストに追加
+  「ウェビナー申込者リスト」に追加</div>
+
+<h3>ワークフロー② 資料請求</h3>
+
+<div class="workflow-diagram">【トリガー】
+コンタクトがフォーム「資料請求フォーム」を送信
+  │
+  ↓
+【アクション1】プロパティ値を設定
+  リード獲得元 = 「資料請求」
+  │
+  ↓
+【アクション2】Eメールを送信
+  「自動返信_資料請求確認」メールを送信
+  │
+  ↓
+【アクション3】社内通知Eメールを送信
+  担当者に「新規資料請求」の通知
+  │
+  ↓
+【アクション4】（オプション）リストに追加
+  「資料請求者リスト」に追加</div>
+
+<h3>ワークフロー③ 無料相談予約</h3>
+
+<div class="workflow-diagram">【トリガー】
+コンタクトがフォーム「無料相談予約フォーム」を送信
+  │
+  ↓
+【アクション1】プロパティ値を設定
+  リード獲得元 = 「無料相談予約」
+  │
+  ↓
+【アクション2】Eメールを送信
+  「自動返信_無料相談予約確認」メールを送信
+  │
+  ↓
+【アクション3】社内通知Eメールを送信
+  担当者に「【至急】新規無料相談予約」の通知
+  │
+  ↓
+【アクション4】タスクを作成
+  担当者に「相談予約への日程調整連絡」タスクを作成（期限: 1営業日）</div>
+
+<h3>ワークフローの作成手順</h3>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>ワークフローエディタを開く</h4>
+<p><strong>自動化 → ワークフロー → 「ワークフローを作成」→ 「ゼロから作成」</strong></p>
+<p>「コンタクトベース」を選択して「次へ」</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>トリガーを設定</h4>
+<p>「トリガーを設定」→「フォーム送信」を選択 → 対象のフォームを選択</p>
+<p>「フィルターを追加」→ フォームのフィルタから該当フォームを選びます</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>アクションを追加</h4>
+<p>「+」ボタンをクリックして以下のアクションを順番に追加:</p>
+<p>・「コンタクトプロパティ値を設定」→ リード獲得元を設定</p>
+<p>・「Eメールを送信」→ 事前に作成した自動返信メールを選択</p>
+<p>・「社内Eメール通知を送信」→ 通知先と件名を設定</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">4</div>
+<div class="step-content">
+<h4>ワークフロー名を設定して有効化</h4>
+<p>左上のワークフロー名を設定（例: 「WF_ウェビナー申込み自動対応」）</p>
+<p>右上の「確認と公開」→ 「有効にする」をクリック</p>
+</div>
+</div>
+</div>
+
+<div class="warn-box">
+<strong>社内通知メールの件名例:</strong>
+<ul style="margin:.5rem 0 0;padding-left:1.2rem">
+<li>ウェビナー: 「【ウェビナー申込み】{{contact.firstname}} {{contact.lastname}} 様（{{contact.company}}）」</li>
+<li>資料請求: 「【資料請求】{{contact.firstname}} {{contact.lastname}} 様」</li>
+<li>無料相談: 「【至急・無料相談予約】{{contact.firstname}} {{contact.lastname}} 様（{{contact.company}}）- 1営業日以内に要対応」</li>
+</ul>
+</div>
+
+</section>
+
+<!-- ペライチへの埋め込み -->
+<section id="embed">
+<h2><span class="section-num">6</span>ペライチLPへのフォーム埋め込み</h2>
+
+<p>HubSpotで作成したフォームをペライチのLP（fc.horiemon.ai/kaigo）に埋め込む手順です。</p>
+
+<h3>HubSpotから埋め込みコードを取得</h3>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>フォーム一覧を開く</h4>
+<p><strong>マーケティング → リード情報の収集 → フォーム</strong></p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>埋め込みコードをコピー</h4>
+<p>埋め込みたいフォームの行にマウスを乗せ、<strong>「アクション」→「共有」</strong>をクリック</p>
+<p>「埋め込みコード」タブを選択し、表示されるコードをコピーします。</p>
+</div>
+</div>
+</div>
+
+<p>取得したコードは以下のような形式です:</p>
+
+<div class="embed-code">&lt;script charset="utf-8" type="text/javascript"
+  src="//js.hsforms.net/forms/embed/v2.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  hbspt.forms.create({
+    region: "na1",
+    portalId: "あなたのポータルID",
+    formId: "フォームのID"
+  });
+&lt;/script&gt;</div>
+
+<h3>ペライチへの設置手順</h3>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>ペライチのページ編集画面を開く</h4>
+<p>ペライチにログイン → 対象のページの「編集」をクリック</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>HTMLブロックを追加</h4>
+<p>フォームを設置したいセクションで「+」ボタンをクリック →「HTML埋め込み」ブロックを選択</p>
+<p>※ペライチの「レギュラープラン」以上で利用可能です</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>埋め込みコードを貼り付け</h4>
+<p>HTML埋め込みブロックの入力欄に、HubSpotからコピーした埋め込みコードを貼り付けます。</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">4</div>
+<div class="step-content">
+<h4>プレビューで確認</h4>
+<p>「プレビュー」ボタンでフォームが正しく表示されているか確認します。</p>
+<p>PC・スマホの両方で表示を確認してください。</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">5</div>
+<div class="step-content">
+<h4>公開</h4>
+<p>問題なければ「公開する」をクリックして反映させます。</p>
+</div>
+</div>
+</div>
+
+<h3>ペライチLP内でのフォーム配置場所</h3>
+
+<table class="field-table">
+<thead><tr><th>フォーム</th><th>配置場所</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>ウェビナー申込み</td><td>ファーストビュー直下 + ページ下部CTA</td><td>主CTAとしてページの目立つ位置に2箇所設置</td></tr>
+<tr><td>資料請求</td><td>カリキュラム説明の直後</td><td>内容を理解した上で「もっと知りたい」と思ったタイミング</td></tr>
+<tr><td>無料相談予約</td><td>料金・助成金セクションの直後</td><td>具体的な費用を見て「相談したい」と思ったタイミング</td></tr>
+</tbody>
+</table>
+
+<div class="warn-box">
+<strong>ペライチの注意点:</strong> ペライチの「HTML埋め込み」はレギュラープラン（月額2,950円〜）以上で利用可能です。ライトプランでは使えないため、プランをご確認ください。
+</div>
+
+</section>
+
+<!-- HubSpot LP埋め込み -->
+<section id="hubspot-lp">
+<h2><span class="section-num">7</span>HubSpot LP（ウェビナー専用・資料請求専用）への設置</h2>
+
+<p>ペライチのメインLPとは別に、HubSpotで作成するウェビナー専用LP・資料請求専用LPにもフォームを設置します。HubSpot LPの場合、フォームの埋め込みはドラッグ&ドロップで簡単に行えます。</p>
+
+<h3>設置手順</h3>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>ランディングページエディタを開く</h4>
+<p><strong>マーケティング → ランディングページ → 対象のページ → 「編集」</strong></p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>フォームモジュールを追加</h4>
+<p>左パネルの「追加」タブから「フォーム」モジュールをドラッグして、ページ上の目的の位置にドロップします。</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">3</div>
+<div class="step-content">
+<h4>フォームを選択</h4>
+<p>配置したフォームモジュールをクリック → 左パネルで「既存のフォームを選択」→ 作成済みのフォームを選択</p>
+<ul>
+<li>ウェビナー専用LP → 「ウェビナー申込みフォーム」を選択</li>
+<li>資料請求専用LP → 「資料請求フォーム」を選択</li>
+</ul>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">4</div>
+<div class="step-content">
+<h4>プレビュー・公開</h4>
+<p>右上の「プレビュー」で確認後、「公開」をクリック</p>
+</div>
+</div>
+</div>
+
+<div class="info-box">
+<strong>HubSpot LPのメリット:</strong> HubSpotで作成したLPにHubSpotフォームを設置する場合、トラッキングコードの設置は不要です（自動で統合されます）。また、フォーム送信からLP閲覧までのすべてのデータが自動でHubSpotのレポートに反映されます。
+</div>
+
+</section>
+
+<!-- UTM・トラッキング -->
+<section id="tracking">
+<h2><span class="section-num">8</span>UTM・トラッキング連携</h2>
+
+<p>各フォームに流入したリードがどの広告・チャネルから来たかをHubSpotで自動的に把握するための設定です。</p>
+
+<h3>HubSpotトラッキングコードの設置</h3>
+
+<p>HubSpotのトラッキングコードがペライチLPに設置されていれば、UTMパラメータは自動的にHubSpotのコンタクトレコードに記録されます。</p>
+
+<div class="step-flow">
+<div class="step-item">
+<div class="step-num">1</div>
+<div class="step-content">
+<h4>トラッキングコードを取得</h4>
+<p><strong>設定 → トラッキングとアナリティクス → トラッキングコード</strong></p>
+<p>表示されるJavaScriptコードをコピーします。</p>
+</div>
+</div>
+<div class="step-item">
+<div class="step-num">2</div>
+<div class="step-content">
+<h4>ペライチに設置</h4>
+<p>ペライチの「ページ設定」→「ヘッダー/フッター設定」→「フッターHTML」にトラッキングコードを貼り付け</p>
+</div>
+</div>
+</div>
+
+<h3>UTMパラメータの設計</h3>
+
+<p>広告やメールのリンクにUTMパラメータを付与することで、リードの獲得元を正確に追跡できます。</p>
+
+<table class="field-table">
+<thead><tr><th>パラメータ</th><th>設定値の例</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>utm_source</td><td>facebook / google / line / linkedin / dm / email</td><td>流入元の媒体</td></tr>
+<tr><td>utm_medium</td><td>cpc / social / email / direct_mail</td><td>流入の種類</td></tr>
+<tr><td>utm_campaign</td><td>webinar_202603 / subsidy_guide / retargeting</td><td>キャンペーン名</td></tr>
+<tr><td>utm_content</td><td>ad_a / ad_b / banner_top / dm_flyer</td><td>クリエイティブの識別</td></tr>
+</tbody>
+</table>
+
+<h4>URL例</h4>
+<div class="copy-block">ウェビナーLP（Facebook広告経由）:
+https://fc.horiemon.ai/kaigo/webinar?utm_source=facebook&utm_medium=cpc&utm_campaign=webinar_202603&utm_content=ad_a
+
+資料請求LP（Google広告経由）:
+https://fc.horiemon.ai/kaigo/document?utm_source=google&utm_medium=cpc&utm_campaign=subsidy_guide
+
+ペライチメインLP（DM QRコード経由）:
+https://fc.horiemon.ai/kaigo?utm_source=dm&utm_medium=direct_mail&utm_campaign=dm_202603</div>
+
+<div class="info-box">
+<strong>HubSpotの自動取得:</strong> HubSpotトラッキングコードが設置済みであれば、UTMパラメータは自動的にコンタクトの「元のソース」「最初のページ閲覧」などのプロパティに記録されます。手動でのデータ入力は不要です。
+</div>
+
+</section>
+
+<!-- チェックリスト -->
+<section id="checklist">
+<h2><span class="section-num">9</span>最終チェックリスト</h2>
+
+<h3>フォーム作成チェック</h3>
+<ul class="checklist-final">
+<li>ウェビナー申込みフォーム: フィールド5項目を設定した</li>
+<li>ウェビナー申込みフォーム: すべての必須フィールドを「必須」に設定した</li>
+<li>ウェビナー申込みフォーム: ボタンテキストを「無料ウェビナーに申し込む」に変更した</li>
+<li>ウェビナー申込みフォーム: お礼メッセージを設定した</li>
+<li>ウェビナー申込みフォーム: ライフサイクルステージを「リード」に設定した</li>
+<li>資料請求フォーム: フィールド3項目（姓・名・メール）を設定した</li>
+<li>資料請求フォーム: ボタンテキストを「無料で資料をダウンロード」に変更した</li>
+<li>無料相談予約フォーム: フィールド7項目を設定した</li>
+<li>無料相談予約フォーム: ボタンテキストを「無料相談を予約する」に変更した</li>
+<li>3つのフォームすべてを「公開」した</li>
+</ul>
+
+<h3>自動返信メールチェック</h3>
+<ul class="checklist-final">
+<li>ウェビナー申込み確認メール: パーソナライゼーションタグが正しく入っている</li>
+<li>資料請求確認メール: 資料ダウンロードリンクを挿入した</li>
+<li>無料相談予約確認メール: 相談の流れが記載されている</li>
+<li>すべてのメールでプレビュー表示を確認した（PC・スマホ両方）</li>
+<li>送信者名・送信者アドレスが正しい</li>
+<li>テストメールを自分宛に送信して内容を確認した</li>
+</ul>
+
+<h3>ワークフローチェック</h3>
+<ul class="checklist-final">
+<li>ワークフロー①（ウェビナー）: トリガー・アクションを設定し有効化した</li>
+<li>ワークフロー②（資料請求）: トリガー・アクションを設定し有効化した</li>
+<li>ワークフロー③（無料相談）: トリガー・アクションを設定し有効化した</li>
+<li>社内通知メールの送信先が正しい</li>
+<li>リード獲得元プロパティが正しく設定される</li>
+</ul>
+
+<h3>埋め込み・連携チェック</h3>
+<ul class="checklist-final">
+<li>HubSpotトラッキングコードをペライチLPに設置した</li>
+<li>ペライチLPにフォームを埋め込んだ（HTML埋め込みブロック）</li>
+<li>ペライチLP上でフォームが正しく表示される（PC・スマホ）</li>
+<li>フォーム送信テスト: ペライチLP上でテスト送信し、CRMにコンタクトが作成された</li>
+<li>フォーム送信テスト: 自動返信メールが届いた</li>
+<li>フォーム送信テスト: 社内通知メールが届いた</li>
+<li>フォーム送信テスト: リード獲得元プロパティが正しく設定された</li>
+<li>UTMパラメータ付きURLでアクセスし、HubSpotにソース情報が記録された</li>
+</ul>
+
+<div class="warn-box">
+<strong>テスト送信のポイント:</strong> テスト用のコンタクトは、送信後にHubSpot CRMから削除してください。または、テスト用のメールアドレス（test+任意@ドメイン.com の形式）を使い、後でフィルタリングできるようにしてください。
+</div>
+
+</section>
+
+<!-- フッター -->
+<div class="footer-note">
+<p><a href="index.html">マーケティング計画</a> ｜ <a href="tasks.html">タスク一覧</a> ｜ <a href="lp-guide.html">LP改修指示書</a></p>
+<p style="margin-top:.5rem">ホリエモンAI学校 介護校 デジタルマーケティング計画 — HubSpotフォーム作成ガイド</p>
+</div>
+
+</div>
+
+<!-- 上に戻るボタン -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<script>
+window.addEventListener('scroll',function(){document.getElementById('backToTop').classList.toggle('visible',window.scrollY>400)});
+document.querySelectorAll('#sidebar a[href^="#"]').forEach(function(a){a.addEventListener('click',function(){document.querySelectorAll('#sidebar a').forEach(function(l){l.classList.remove('active')});this.classList.add('active')})});
+</script>
+
+</body>
+</html>

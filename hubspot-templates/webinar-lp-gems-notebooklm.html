@@ -1,0 +1,744 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: ウェビナーLP - Gems × NotebookLM 完全活用ガイド
+  screenshotPath: ../images/webinar-gems-notebooklm-preview.png
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ content.html_title }}</title>
+{{ standard_header_includes }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========== Reset & Variables ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gradient:linear-gradient(135deg,#FF0080,#7928CA);
+  --accent:#FF0080;
+  --purple:#7928CA;
+  --dark:#1a202c;
+  --bg-gray:#f5f7fa;
+  --text:#333;
+  --text-sub:#666;
+  --text-muted:#999;
+  --border:#e2e8f0;
+  --radius:16px;
+  --green:#22c55e;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;line-height:1.7;margin:0}
+
+/* ========== Typography ========== */
+.text-huge{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;line-height:1.2;letter-spacing:-.02em}
+.text-large{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;line-height:1.3}
+.text-medium{font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:700;line-height:1.4}
+.text-body{font-size:1rem;line-height:1.8;color:var(--text-sub)}
+.text-small{font-size:.875rem;color:var(--text-muted)}
+.text-accent{color:var(--accent)}
+.highlight{background:linear-gradient(transparent 60%,rgba(255,0,128,.15) 60%)}
+
+/* ========== Header ========== */
+.lp-header{background:rgba(26,32,44,.95);padding:.75rem 2rem;display:flex;align-items:center;justify-content:space-between;position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(8px)}
+.lp-header-logo{color:#fff;font-size:.85rem;font-weight:700;text-decoration:none}
+.lp-header-cta{background:var(--gradient);color:#fff;padding:.5rem 1.25rem;border-radius:50px;font-size:.8rem;font-weight:700;text-decoration:none;transition:.2s}
+.lp-header-cta:hover{transform:translateY(-2px)}
+
+/* ========== Hero ========== */
+.lp-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 20px 100px;background:linear-gradient(135deg,#FF0080 0%,#a020c0 50%,#7928CA 100%);position:relative;overflow:hidden}
+.lp-hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.18) 1px,transparent 1px);background-size:28px 28px;z-index:1;pointer-events:none}
+.hero-orb1{position:absolute;top:8%;left:3%;width:420px;height:420px;background:radial-gradient(circle,rgba(255,255,255,.18) 0%,transparent 65%);border-radius:50%;animation:floatA 9s ease-in-out infinite;pointer-events:none}
+.hero-orb2{position:absolute;bottom:5%;right:3%;width:320px;height:320px;background:radial-gradient(circle,rgba(255,255,255,.13) 0%,transparent 65%);border-radius:50%;animation:floatB 11s ease-in-out infinite;pointer-events:none}
+.hero-orb3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%);border-radius:50%;pointer-events:none}
+@keyframes floatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(25px,-18px) scale(1.08)}}
+@keyframes floatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-18px,25px) scale(1.06)}}
+.hero-content{position:relative;z-index:2;max-width:960px;text-align:center;color:#fff}
+.hero-eyebrow{font-size:1rem;font-weight:700;letter-spacing:.1em;color:#fff;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,.55);display:inline-block;padding:.35rem 1.25rem;border-radius:50px;backdrop-filter:blur(6px);background:rgba(255,255,255,.12);text-shadow:0 1px 6px rgba(0,0,0,.2)}
+.hero-badge{display:inline-flex;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap;justify-content:center}
+.hero-badge span{padding:.35rem 1rem;border-radius:50px;font-size:.72rem;font-weight:700;backdrop-filter:blur(6px)}
+.hero-badge .badge-free{background:rgba(34,197,94,.25);border:1px solid rgba(34,197,94,.6);color:#a7f3c0}
+.hero-badge .badge-zoom{background:rgba(59,130,246,.25);border:1px solid rgba(59,130,246,.6);color:#bfdbfe}
+.hero-badge .badge-demo{background:rgba(251,146,60,.25);border:1px solid rgba(251,146,60,.6);color:#fed7aa}
+.hero-title{margin-bottom:.75rem;text-shadow:0 4px 30px rgba(0,0,0,.2);font-size:clamp(1.5rem,4.5vw,3.8rem) !important;font-weight:900;line-height:1.1;letter-spacing:-.03em}
+.hero-divider{width:80px;height:3px;background:linear-gradient(90deg,#FFE566,#ff80c0,#a78bfa);margin:.25rem auto 1.5rem;border-radius:2px}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:2.5rem;line-height:1.9;text-shadow:0 2px 10px rgba(0,0,0,.12)}
+.hero-target{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2rem}
+.hero-target span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);padding:.4rem 1rem;border-radius:50px;font-size:.8rem}
+.hero-target span::before{content:'▶ ';font-size:.6em;color:#FFE566;vertical-align:middle}
+.hero-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.hero-cta .cta-btn{display:inline-flex;align-items:center;gap:.6rem;background:#fff;color:var(--purple);padding:1.25rem 2.75rem;border-radius:50px;font-size:1.05rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.hero-cta .cta-btn::after{content:'→';font-size:1.05rem;transition:.3s}
+.hero-cta .cta-btn:hover{transform:translateY(-4px);box-shadow:0 22px 55px rgba(0,0,0,.3)}
+.hero-cta .cta-btn:hover::after{transform:translateX(4px)}
+.hero-note{font-size:.75rem;color:rgba(255,255,255,.55)}
+.hero-accent{color:#FFE566;font-weight:900}
+.hero-sub strong{color:#fff;font-weight:700}
+.hero-sub span{color:rgba(255,255,255,.65);font-size:.9em}
+@keyframes pulse{0%,100%{box-shadow:0 12px 40px rgba(0,0,0,.25),0 0 0 0 rgba(255,255,255,.4)}70%{box-shadow:0 12px 40px rgba(0,0,0,.25),0 0 0 12px rgba(255,255,255,0)}}
+.hero-cta .cta-btn{animation:pulse 2.4s ease-in-out infinite}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(255,255,255,.5);font-size:.65rem;letter-spacing:.08em;animation:scrollBounce 2.2s ease-in-out infinite;z-index:2;text-decoration:none}
+.hero-scroll::after{content:'';display:block;width:1px;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent)}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+/* ========== Section ========== */
+.section{padding:100px 20px}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-header{text-align:center;margin-bottom:60px}
+.section-title{margin-bottom:.5rem}
+.section-lead{font-size:1rem;color:var(--text-muted)}
+.bg-gray{background:var(--bg-gray)}
+.bg-dark{background:var(--dark);color:#fff}
+.bg-gradient{background:var(--gradient)}
+
+/* ========== Problem ========== */
+.problem-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.problem-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.05);border-left:4px solid #ef4444;transition:.2s}
+.problem-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.problem-icon{font-size:2rem;margin-bottom:1rem}
+.problem-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.problem-card p{font-size:.9rem;color:var(--text-sub);margin:0}
+
+/* ========== Update（最新アップデート） ========== */
+.update-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-bottom:30px}
+.update-card{background:#fff;border-radius:var(--radius);padding:1.75rem;box-shadow:0 4px 20px rgba(0,0,0,.05);border-top:3px solid var(--accent);transition:.2s}
+.update-card:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.update-label{display:inline-block;background:var(--gradient);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .7rem;border-radius:50px;margin-bottom:.75rem;letter-spacing:.05em}
+.update-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.update-card p{font-size:.85rem;color:var(--text-sub);margin:0}
+
+/* ========== What is ========== */
+.whatis-container{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:stretch}
+.whatis-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.whatis-card h3{font-size:1.2rem;font-weight:700;margin-bottom:1rem}
+.whatis-card p{font-size:.95rem;color:var(--text-sub);margin-bottom:1rem}
+.whatis-card ul{list-style:none;padding:0}
+.whatis-card ul li{padding:.4rem 0;font-size:.9rem;display:flex;align-items:flex-start;gap:.5rem}
+.whatis-card ul li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.1rem}
+.gems-example{background:var(--bg-gray);border-radius:12px;padding:1.25rem;font-size:.85rem;margin-top:1rem;font-family:monospace;line-height:1.8;white-space:pre-wrap}
+.synergy-box{background:linear-gradient(135deg,rgba(255,0,128,.08),rgba(121,40,202,.08));border:2px solid var(--accent);border-radius:var(--radius);padding:2rem;margin-top:30px}
+.synergy-box h3{font-size:1.3rem;font-weight:700;margin-bottom:1rem;text-align:center}
+.synergy-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.synergy-item{background:#fff;border-radius:10px;padding:.875rem 1rem;font-size:.875rem;font-weight:600;display:flex;align-items:center;gap:.5rem;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.synergy-item span{font-size:1.1rem}
+
+/* ========== Agenda ========== */
+.agenda-list{max-width:700px;margin:0 auto;display:grid;gap:12px}
+.agenda-item{background:#fff;border-radius:var(--radius);padding:1.25rem 1.5rem;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;align-items:center;gap:1.25rem}
+.agenda-part{background:var(--gradient);color:#fff;border-radius:50px;font-size:.7rem;font-weight:700;padding:.3rem .8rem;white-space:nowrap;flex-shrink:0}
+.agenda-time{font-size:.8rem;color:var(--text-muted);flex-shrink:0;min-width:40px}
+.agenda-text{font-size:.95rem;font-weight:700;flex:1}
+
+/* ========== Use Cases ========== */
+.usecase-grid{display:grid;gap:30px}
+.usecase-card{background:#fff;border-radius:var(--radius);padding:2.5rem;box-shadow:0 4px 20px rgba(0,0,0,.05);display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start}
+.usecase-num{font-size:3rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1}
+.usecase-content h3{font-size:1.2rem;font-weight:700;margin-bottom:.5rem}
+.usecase-content .usecase-challenge{font-size:.85rem;color:#ef4444;font-weight:700;margin-bottom:.5rem}
+.usecase-content .usecase-solution{font-size:.9rem;color:var(--text-sub);margin-bottom:1rem}
+.usecase-demo{background:var(--bg-gray);border-radius:12px;padding:1.25rem;font-size:.9rem}
+.usecase-demo .demo-q{color:var(--accent);font-weight:700;margin-bottom:.5rem}
+.usecase-demo .demo-a{color:var(--text);line-height:1.8}
+
+/* ========== Benefits ========== */
+.benefit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.benefit-card{background:#fff;border-radius:var(--radius);padding:2rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.05);transition:.2s}
+.benefit-card:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.1)}
+.benefit-icon{font-size:2.5rem;margin-bottom:1rem}
+.benefit-card h3{font-size:1.1rem;font-weight:700;margin-bottom:.5rem}
+.benefit-card p{font-size:.85rem;color:var(--text-sub);margin:0}
+
+/* ========== Comparison Table ========== */
+.comparison-table{width:100%;border-collapse:collapse;border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.comparison-table th{padding:1rem 1.5rem;font-size:.9rem;font-weight:700}
+.comparison-table th:first-child{background:#f1f5f9;color:var(--text-sub)}
+.comparison-table th:last-child{background:var(--gradient);color:#fff}
+.comparison-table td{padding:1rem 1.5rem;font-size:.9rem;border-top:1px solid var(--border)}
+.comparison-table td:first-child{background:#fff;color:#ef4444}
+.comparison-table td:last-child{background:#f0fdf4;color:#166534;font-weight:600}
+.comparison-table tr:nth-child(even) td:first-child{background:#fafafa}
+
+/* ========== Summary Points ========== */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;max-width:800px;margin:0 auto}
+.summary-card{background:#fff;border-radius:var(--radius);padding:1.5rem;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+.summary-num{font-size:2rem;font-weight:900;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem}
+.summary-card p{font-size:.85rem;color:var(--text-sub);margin:0;line-height:1.6}
+
+/* ========== Steps ========== */
+.steps-container{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.step-card{text-align:center;position:relative}
+.step-card::after{content:'→';position:absolute;right:-15px;top:30px;font-size:1.5rem;color:var(--border)}
+.step-card:last-child::after{display:none}
+.step-num{width:60px;height:60px;background:var(--gradient);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:900;margin:0 auto 1rem}
+.step-card h3{font-size:1rem;font-weight:700;margin-bottom:.5rem}
+.step-card p{font-size:.8rem;color:var(--text-sub)}
+
+/* ========== Event Details ========== */
+.details-box{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.05);max-width:700px;margin:0 auto}
+.details-header{background:var(--dark);color:#fff;padding:1rem 1.5rem;font-weight:700;font-size:1.1rem}
+.details-row{display:flex;padding:1rem 1.5rem;border-bottom:1px solid var(--border)}
+.details-row:last-child{border-bottom:none}
+.details-label{width:120px;font-weight:700;flex-shrink:0;font-size:.9rem}
+.details-value{flex:1;font-size:.95rem;color:var(--text-sub)}
+.details-value .price{color:var(--green);font-weight:900;font-size:1.3rem}
+
+/* ========== Form ========== */
+.form-section{background:var(--gradient);padding:100px 20px;text-align:center;position:relative}
+.form-section .section-title{color:#fff}
+.form-section .section-lead{color:rgba(255,255,255,.8)}
+.form-wrapper{max-width:500px;margin:0 auto;background:#fff;border-radius:var(--radius);padding:2.5rem;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.form-note{color:rgba(255,255,255,.6);font-size:.75rem;margin-top:1.5rem}
+
+/* ========== FAQ ========== */
+.faq-list{max-width:700px;margin:0 auto}
+.faq-item{margin-bottom:1rem;background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.faq-q{padding:1.25rem 1.5rem;font-weight:700;font-size:1rem;position:relative;padding-left:3.5rem}
+.faq-q::before{content:'Q';position:absolute;left:1.25rem;top:50%;transform:translateY(-50%);width:28px;height:28px;background:var(--gradient);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+.faq-a{padding:0 1.5rem 1.25rem 3.5rem;font-size:.9rem;color:var(--text-sub)}
+
+/* ========== CTA Block ========== */
+.cta-block{text-align:center;padding:60px 20px}
+.cta-btn-large{display:inline-block;background:var(--gradient);color:#fff;padding:1.25rem 3rem;border-radius:50px;font-size:1.1rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 10px 40px rgba(255,0,128,.3)}
+.cta-btn-large:hover{transform:translateY(-4px);box-shadow:0 15px 50px rgba(255,0,128,.4)}
+.cta-note{display:block;margin-top:.75rem;font-size:.8rem;color:var(--text-muted)}
+
+/* ========== Speaker ========== */
+.speaker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;max-width:800px;margin:0 auto}
+.speaker-card{background:#fff;border-radius:var(--radius);padding:2rem;box-shadow:0 4px 20px rgba(0,0,0,.06);display:flex;flex-direction:column;align-items:center;text-align:center}
+.speaker-photo{width:120px;height:120px;border-radius:50%;background:var(--bg-gray);border:3px solid var(--border);margin-bottom:1.25rem;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:var(--text-muted);overflow:hidden}
+.speaker-photo img{width:100%;height:100%;object-fit:cover}
+.speaker-name{font-size:1.2rem;font-weight:900;color:var(--dark);margin-bottom:.25rem}
+.speaker-title{font-size:.85rem;color:var(--purple);font-weight:700;margin-bottom:.75rem}
+.speaker-bio{font-size:.875rem;color:var(--text-sub);line-height:1.8;text-align:left}
+
+/* ========== Footer CTA ========== */
+.footer-cta{background:var(--dark);color:#fff;padding:80px 20px;text-align:center}
+.footer-cta .text-large{margin-bottom:1rem}
+.footer-cta .text-body{color:rgba(255,255,255,.6);margin-bottom:2rem}
+
+/* ========== Footer ========== */
+.lp-footer{background:#0f0c29;color:rgba(255,255,255,.4);padding:1.5rem;text-align:center;font-size:.75rem}
+.lp-footer a{color:rgba(255,255,255,.5);text-decoration:none}
+.lp-footer a:hover{color:#fff}
+
+/* ========== Responsive ========== */
+@media(max-width:768px){
+  .section{padding:60px 15px}
+  .hero-content{padding:0 10px}
+  .whatis-container{grid-template-columns:1fr}
+  .benefit-grid{grid-template-columns:1fr}
+  .steps-container{grid-template-columns:1fr;gap:30px}
+  .step-card::after{display:none}
+  .usecase-card{grid-template-columns:1fr;text-align:center}
+  .details-row{flex-direction:column;gap:.3rem}
+  .details-label{width:auto}
+  .lp-header{padding:.6rem 1rem}
+  .comparison-table th,.comparison-table td{padding:.75rem 1rem;font-size:.8rem}
+  .summary-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<!-- ========== ヘッダー ========== -->
+<header class="lp-header">
+  <a href="https://fc.horiemon.ai/kaigo" class="lp-header-logo">ホリエモンAI学校 介護校</a>
+  <a href="#form" class="lp-header-cta">無料で参加 &gt;</a>
+</header>
+
+<!-- ========== ヒーロー ========== -->
+<section class="lp-hero">
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
+  <div class="hero-orb3"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">ホリエモンAI学校介護校</p>
+    <div class="hero-badge">
+      <span class="badge-free">✦ 参加無料</span>
+      <span class="badge-zoom">🎥 Zoom開催</span>
+      <span class="badge-demo">🖥 ライブデモあり</span>
+    </div>
+    {% module "hero_title" path="@hubspot/rich_text", label="ヒーロータイトル",
+      html="<h1 class='text-huge hero-title'>緊急時対応アプリを<br><span class='hero-accent'>5分</span>で作成！<br><span style='font-size:.6em;font-weight:700;opacity:.95'>〜1人夜勤もこれで安心〜</span></h1>" %}
+    <div class="hero-divider"></div>
+    <p class="hero-sub"><strong>写真を撮って話すだけ。AIが社内マニュアルに沿って対応を指示</strong><br><span>NotebookLM最新活用術 ｜ 介護事業者向け 無料ウェビナー</span></p>
+    <div class="hero-target">
+      <span>介護施設の施設長・管理者</span>
+      <span>マニュアル管理に困っている方</span>
+      <span>介護スタッフの育成担当者</span>
+      <span>AIを現場で活用したい方</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#form" class="cta-btn">無料ウェビナーに申し込む</a>
+      <p class="hero-note">※ お申し込み30秒</p>
+    </div>
+  </div>
+  <a href="#about" class="hero-scroll">SCROLL</a>
+</section>
+
+<!-- ========== 問題提起 ========== -->
+<section class="section bg-gray" id="about">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">こんな<span class="highlight">課題</span>ありませんか？</h2>
+      <p class="section-lead">介護現場の情報管理「3つの悩み」</p>
+    </div>
+    {% module "problems" path="@hubspot/rich_text", label="問題カード",
+      html="<div class='problem-grid'>
+        <div class='problem-card'>
+          <div class='problem-icon'>📋</div>
+          <h3>マニュアルが古い・どれが最新か分からない</h3>
+          <p>更新するたびにスタッフから「これ最新版ですか？」と聞かれる日々。管理しきれず古い情報が現場に残り続けている</p>
+        </div>
+        <div class='problem-card'>
+          <div class='problem-icon'>🔄</div>
+          <h3>AIの知識更新が手間すぎる</h3>
+          <p>ファイルを削除して再アップロード…どれを入れ替えたか管理しきれない。更新のたびに一から設定し直す手間が続いている</p>
+        </div>
+        <div class='problem-card'>
+          <div class='problem-icon'>🚨</div>
+          <h3>緊急時に手順書を探す時間がない</h3>
+          <p>転倒・誤嚥・体調急変の緊急場面でマニュアルを探し回るロスが現場の不安につながっている</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 2026年最新アップデート ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">なぜ今<span class="highlight">Gems × NotebookLM</span>なのか</h2>
+      <p class="section-lead">この組み合わせが、介護現場の情報管理を根本から変える4つの理由</p>
+    </div>
+    {% module "updates" path="@hubspot/rich_text", label="最新アップデート",
+      html="<div class='update-grid'>
+        <div class='update-card'>
+          <div class='update-label'>圧倒的な差</div>
+          <h3>読み込める資料数が10倍</h3>
+          <p>Gemは最大10ファイルまで。NotebookLMは最大100ソースまで対応。マニュアル・研修資料・法改正・契約書、すべてまとめて管理できる</p>
+        </div>
+        <div class='update-card'>
+          <div class='update-label'>簡単更新</div>
+          <h3>更新はボタン1つ</h3>
+          <p>Googleドライブで資料を修正するだけ。NotebookLMで更新ボタンを押すだけでAIの知識が最新になる。ファイルの入れ替え作業は不要</p>
+        </div>
+        <div class='update-card'>
+          <div class='update-label'>NEW</div>
+          <h3>写真を送るだけで対応指示</h3>
+          <p>Gemと連携すると写真入力が可能に。転倒・出血の状況をスマホで撮影して送るだけで、AIが具体的な対応指示を出してくれる</p>
+        </div>
+        <div class='update-card'>
+          <div class='update-label'>ノーコード</div>
+          <h3>プログラミングなしで介護専用AIアプリが作れる</h3>
+          <p>契約書説明・会社理念・緊急対応…介護事業所専用のAIアプリをプログラミング知識なしで構築できる</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== Gems × NotebookLMとは ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title"><span class="highlight">Gems × NotebookLM</span>とは？</h2>
+      <p class="section-lead">Googleが提供する2つの無料AIツールを組み合わせた最強の活用法</p>
+    </div>
+    {% module "whatis" path="@hubspot/rich_text", label="ツール説明",
+      html="<div class='whatis-container'>
+        <div class='whatis-card'>
+          <h3>📘 NotebookLM = AI資料管理</h3>
+          <p>「あなたの資料だけを知っているAI」。マニュアル・契約書・研修資料をまとめて管理し、Googleドライブと連携しているので更新はボタン1つでOK。</p>
+          <ul>
+            <li>Googleが提供する完全無料のAIツール</li>
+            <li>最大100ソース（資料）を読み込み可能</li>
+            <li>PDF・Googleドキュメント・スライドに対応</li>
+            <li>Googleドライブと連携して更新ボタン1つで最新化</li>
+            <li>資料に基づいた回答で出典（ページ・箇所）を明示</li>
+            <li>ハルシネーション（嘘）を防止</li>
+          </ul>
+        </div>
+        <div class='whatis-card'>
+          <h3>💎 Gems = AIチャット（現場利用）</h3>
+          <p>「自分専用のGemini」を作る機能。Geminiに役割と指示を一度設定すれば、毎回プロンプトを書かなくてOK。写真を送っての相談も可能。</p>
+          <ul>
+            <li>Geminiに「役割」と「指示」を設定</li>
+            <li>毎回プロンプトを打たなくてOK</li>
+            <li>URLを共有するだけでチーム展開</li>
+            <li>写真を送って状況を判断させることが可能</li>
+            <li>知識（Knowledge）にNotebookLMを追加可能</li>
+          </ul>
+          <div class='gems-example'>名前: 緊急時対応アドバイザー
+役割: あなたは介護現場の緊急時対応をサポートするAIです
+指示:
+- 利用者の状態を確認してから対応手順を案内してください
+- 緊急時マニュアルに基づいて正確に回答してください
+- 写真が送られた場合は画像を見て具体的な指示を出してください</div>
+        </div>
+      </div>
+      <div class='synergy-box'>
+        <h3>🔗 管理はNotebookLM × 現場利用はGem = 介護事業所専用AIアプリ</h3>
+        <div class='synergy-list'>
+          <div class='synergy-item'><span>📄</span>契約書・重要事項説明書をもとに答える契約書説明AI</div>
+          <div class='synergy-item'><span>💡</span>法人理念・行動指針を伝える会社理念AI</div>
+          <div class='synergy-item'><span>🚑</span>緊急時マニュアルで即時対応する緊急時対応AI</div>
+          <div class='synergy-item'><span>📚</span>研修資料・マニュアルで答えるAI上司</div>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== ウェビナーアジェンダ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">ウェビナーの<span class="highlight">内容・流れ</span></h2>
+      <p class="section-lead">30分で「今日から使える知識」をギュッと凝縮してお届けします</p>
+    </div>
+    {% module "agenda" path="@hubspot/rich_text", label="アジェンダ",
+      html="<div class='agenda-list'>
+        <div class='agenda-item'>
+          <span class='agenda-part'>第1部</span>
+          <span class='agenda-time'>3分</span>
+          <span class='agenda-text'>オープニング — マニュアル管理・資料更新・緊急対応。介護現場の「3つの課題」を確認</span>
+        </div>
+        <div class='agenda-item'>
+          <span class='agenda-part'>第2部</span>
+          <span class='agenda-time'>7分</span>
+          <span class='agenda-text'>NotebookLMとGemの違い — Gem=AIチャット、NotebookLM=AI資料管理、それぞれの役割を整理</span>
+        </div>
+        <div class='agenda-item'>
+          <span class='agenda-part'>第3部</span>
+          <span class='agenda-time'>8分</span>
+          <span class='agenda-text'>更新の手間と資料数の違い — Googleドライブ連携で更新ボタン1つ・最大100ソース対応の実力</span>
+        </div>
+        <div class='agenda-item'>
+          <span class='agenda-part'>第4部</span>
+          <span class='agenda-time'>7分</span>
+          <span class='agenda-text'>AIアプリの具体例ライブデモ — 契約書説明アプリ・会社理念アプリを実際の画面で実演</span>
+        </div>
+        <div class='agenda-item'>
+          <span class='agenda-part'>第5部</span>
+          <span class='agenda-time'>4分</span>
+          <span class='agenda-text'>緊急時対応アプリ（最大のインパクト） — 写真を送るだけで対応指示が出る仕組みを実演</span>
+        </div>
+        <div class='agenda-item'>
+          <span class='agenda-part'>第6部</span>
+          <span class='agenda-time'>1分</span>
+          <span class='agenda-text'>まとめ＋Q&amp;A — 管理はNotebookLM・現場利用はGem。今日から始める導入ステップ</span>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== ビジネス活用事例 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">ビジネス<span class="highlight">活用事例</span></h2>
+      <p class="section-lead">ウェビナーでは実際にデモをお見せします</p>
+    </div>
+    {% module "usecases" path="@hubspot/rich_text", label="活用事例",
+      html="<div class='usecase-grid'>
+        <div class='usecase-card'>
+          <div class='usecase-num'>01</div>
+          <div class='usecase-content'>
+            <h3>契約書説明アプリ</h3>
+            <p class='usecase-challenge'>課題：契約書・重要事項説明書の説明に時間がかかる。新人スタッフは特に不安</p>
+            <p class='usecase-solution'>契約書や重要事項説明書をNotebookLMに登録しておくと、スタッフが「この条項はどう説明すればいいですか？」と聞くだけで契約書の該当箇所・利用者への説明例・注意点を即答。新人でも安心して説明できる環境に。</p>
+            <div class='usecase-demo'>
+              <div class='demo-q'>👤「第3条の退居要件について、家族にわかりやすく説明してください」</div>
+              <div class='demo-a'>🤖「第3条では〜という場合に退居いただく場合があります。家族への説明例：『ご本人の状態が著しく変化し、当施設での対応が困難になった場合にご相談させていただくことがあります』とお伝えください。（出典：重要事項説明書 p.5）」</div>
+            </div>
+          </div>
+        </div>
+        <div class='usecase-card'>
+          <div class='usecase-num'>02</div>
+          <div class='usecase-content'>
+            <h3>会社理念アプリ</h3>
+            <p class='usecase-challenge'>課題：理念や行動指針が浸透しにくく、スタッフによって対応にばらつきが出る</p>
+            <p class='usecase-solution'>法人理念・行動指針をAIに覚えさせると、AIが「社長もよく言っていますが、迷ったら利用者目線で考えるのが当社の方針です」と答えてくれる。理念が実際の判断基準として機能するようになる。</p>
+            <div class='usecase-demo'>
+              <div class='demo-q'>👤「利用者の要望と家族の意向が食い違う場合、どちらを優先すればいいですか？」</div>
+              <div class='demo-a'>🤖「当法人の理念『迷ったら利用者目線で考えろ』に基づき、まず利用者ご本人の気持ちを丁寧に確認することが大切です。その上で家族と連携し、三者で最善策を探っていきましょう。（出典：法人理念・行動指針）」</div>
+            </div>
+          </div>
+        </div>
+        <div class='usecase-card'>
+          <div class='usecase-num'>03</div>
+          <div class='usecase-content'>
+            <h3>緊急時対応アプリ（写真対応付き）</h3>
+            <p class='usecase-challenge'>課題：転倒・出血・誤嚥など緊急時に手順書を探す時間がない。新人はパニックになってしまう</p>
+            <p class='usecase-solution'>緊急時マニュアル・医療判断表をNotebookLMに登録。Gem連携で写真を撮影して送るだけで、AIが状況を判断し具体的な対応指示まで出してくれる。新人職員でも冷静に対応できる。</p>
+            <div class='usecase-demo'>
+              <div class='demo-q'>👤（出血部位の写真を送信）「利用者が転倒して出血しています」</div>
+              <div class='demo-a'>🤖「出血が確認できます。①圧迫止血を行ってください②看護師に連絡してください③意識・呼吸を確認④必要な場合は119番通報⑤施設長・家族へ連絡。（出典：緊急時対応マニュアル p.5）」</div>
+            </div>
+          </div>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== CTA ========== -->
+<div class="cta-block">
+  <a href="#form" class="cta-btn-large">無料ウェビナーに申し込む</a>
+  <span class="cta-note">お申し込みは30秒で完了</span>
+</div>
+
+<!-- ========== ベネフィット ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">このウェビナーで<span class="highlight">わかること</span></h2>
+    </div>
+    {% module "benefits" path="@hubspot/rich_text", label="ベネフィット",
+      html="<div class='benefit-grid'>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>🔄</div>
+          <h3>更新の手間から解放される</h3>
+          <p>Googleドライブで資料を修正 → NotebookLMで更新ボタン1つ。常に最新状態を維持できる仕組みがわかる</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>🎬</div>
+          <h3>ライブデモで実際の使い方がわかる</h3>
+          <p>契約書説明・会社理念・緊急時対応の3アプリを実際の画面で実演。終わったらすぐ使えるレベルで解説</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>🏥</div>
+          <h3>介護現場の3つの活用事例</h3>
+          <p>契約書説明・会社理念・緊急時対応（写真対応付き）をすぐ使えるケースで具体的に紹介</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>📸</div>
+          <h3>写真で対応指示が出る仕組み</h3>
+          <p>転倒・出血の状況をスマホで撮影して送るだけでAIが具体的な対応手順を出す仕組みを実演</p>
+        </div>
+        <div class='benefit-card'>
+          <div class='benefit-icon'>👣</div>
+          <h3>今日から始めるステップがわかる</h3>
+          <p>Googleアカウントがあればすぐ始められる。プログラミング不要で介護専用AIアプリを作る手順を説明</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 比較表 ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">Gemだけ vs <span class="highlight">Gems × NotebookLM</span>の違い</h2>
+    </div>
+    {% module "comparison" path="@hubspot/rich_text", label="比較表",
+      html="<table class='comparison-table'>
+        <thead>
+          <tr>
+            <th>Gemだけ使う場合</th>
+            <th>Gems × NotebookLM連携</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>資料の更新：古いファイルを削除→新しいファイルをアップロード（手間がかかる）</td>
+            <td>✅ Googleドライブで修正→更新ボタン1つで完了</td>
+          </tr>
+          <tr>
+            <td>読み込める資料数：最大10ファイルまで</td>
+            <td>✅ 最大100ソース。マニュアル・契約書・研修資料すべて管理</td>
+          </tr>
+          <tr>
+            <td>どれを入れ替えたか管理しきれない</td>
+            <td>✅ Googleドライブと連携して常に最新状態を自動維持</td>
+          </tr>
+          <tr>
+            <td>AIが嘘をつく（ハルシネーション）が不安</td>
+            <td>✅ 登録した資料だけをもとに回答・出典を明示</td>
+          </tr>
+          <tr>
+            <td>緊急時に文字で状況を説明するのが難しい</td>
+            <td>✅ 写真を送るだけでAIが状況を判断して対応指示</td>
+          </tr>
+        </tbody>
+      </table>" %}
+  </div>
+</section>
+
+<!-- ========== 今日の要点まとめ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">今日の<span class="highlight">要点</span></h2>
+    </div>
+    {% module "summary" path="@hubspot/rich_text", label="要点まとめ",
+      html="<div class='summary-grid'>
+        <div class='summary-card'>
+          <div class='summary-num'>1</div>
+          <p><strong>NotebookLM</strong><br>AI資料管理。最大100ソース対応</p>
+        </div>
+        <div class='summary-card'>
+          <div class='summary-num'>2</div>
+          <p><strong>Gem</strong><br>AIチャット。現場で使う窓口</p>
+        </div>
+        <div class='summary-card'>
+          <div class='summary-num'>3</div>
+          <p><strong>更新ボタン1つ</strong><br>Googleドライブと連携で常に最新</p>
+        </div>
+        <div class='summary-card'>
+          <div class='summary-num'>4</div>
+          <p><strong>3つのAIアプリ</strong><br>契約書・理念・緊急対応をアプリ化</p>
+        </div>
+        <div class='summary-card'>
+          <div class='summary-num'>5</div>
+          <p><strong>無料</strong><br>Googleアカウントで今日から始められる</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 導入ステップ ========== -->
+<section class="section bg-gray">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">今日から始める<span class="highlight">導入4ステップ</span></h2>
+    </div>
+    {% module "steps" path="@hubspot/rich_text", label="ステップ",
+      html="<div class='steps-container'>
+        <div class='step-card'>
+          <div class='step-num'>1</div>
+          <h3>準備（5分）</h3>
+          <p>Googleアカウントを用意し、活用したい資料（PDF・ドキュメント等）を選定する</p>
+        </div>
+        <div class='step-card'>
+          <div class='step-num'>2</div>
+          <h3>NotebookLM設定（10分）</h3>
+          <p>notebooklm.google.com で新規ノートブック作成 → 資料をアップロード → 動作確認</p>
+        </div>
+        <div class='step-card'>
+          <div class='step-num'>3</div>
+          <h3>Gems作成（5分）</h3>
+          <p>gemini.google.com の「Gemマネージャー」から新規Gem作成 → 「知識」にNotebookLMを追加</p>
+        </div>
+        <div class='step-card'>
+          <div class='step-num'>4</div>
+          <h3>チームへ展開</h3>
+          <p>URLを共有するだけで全員が利用可能。Google Workspaceなら組織全体で管理できる</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 開催概要 ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">開催<span class="highlight">概要</span></h2>
+    </div>
+    <div class="details-box">
+      <div class="details-header">ウェビナー詳細</div>
+      {% module "event_details" path="@hubspot/rich_text", label="開催概要",
+        html="<div class='details-row'><span class='details-label'>テーマ</span><span class='details-value'>NotebookLM最新活用術〜「修正できない」「管理が大変」を卒業する30分〜</span></div>
+        <div class='details-row'><span class='details-label'>内容</span><span class='details-value'>Gems × NotebookLM 介護版完全活用ガイド（対談形式）</span></div>
+        <div class='details-row'><span class='details-label'>日時</span><span class='details-value'>3月26日（木）13:30 - 14:00</span></div>
+        <div class='details-row'><span class='details-label'>所要時間</span><span class='details-value'>30分（質疑応答含む）</span></div>
+        <div class='details-row'><span class='details-label'>形式</span><span class='details-value'>Zoomウェビナー（オンライン）</span></div>
+        <div class='details-row'><span class='details-label'>参加費</span><span class='details-value'><span class='price'>無料</span></span></div>
+        <div class='details-row'><span class='details-label'>対象</span><span class='details-value'>介護施設の施設長・管理者・マニュアル管理に困っている方・介護スタッフの育成担当者・AIを現場で活用したい方</span></div>
+        <div class='details-row'><span class='details-label'>録画</span><span class='details-value'>参加者全員に後日配信</span></div>" %}
+    </div>
+  </div>
+</section>
+
+<!-- ========== 登壇者 ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">登壇者<span class="highlight">紹介</span></h2>
+    </div>
+    {% module "speakers" path="@hubspot/rich_text", label="登壇者",
+      html="<div class='speaker-grid'>
+        <div class='speaker-card'>
+          <div class='speaker-photo'>👤</div>
+          <div class='speaker-name'>お名前</div>
+          <div class='speaker-title'>肩書き・所属</div>
+          <p class='speaker-bio'>プロフィールテキストが入ります。経歴や専門領域、実績などを2〜3文でご記入ください。</p>
+        </div>
+        <div class='speaker-card'>
+          <div class='speaker-photo'>👤</div>
+          <div class='speaker-name'>お名前</div>
+          <div class='speaker-title'>肩書き・所属</div>
+          <p class='speaker-bio'>プロフィールテキストが入ります。経歴や専門領域、実績などを2〜3文でご記入ください。</p>
+        </div>
+      </div>" %}
+  </div>
+</section>
+
+<!-- ========== 申込みフォーム ========== -->
+<section class="form-section" id="form">
+  <div class="section-header">
+    <h2 class="text-large section-title">今すぐ<span style="background:linear-gradient(transparent 60%,rgba(255,255,255,.3) 60%)">申し込む</span></h2>
+    <p class="section-lead">3月26日（木）13:30〜14:00（30分）</p>
+  </div>
+  <div class="form-wrapper">
+    {% module "webinar_form" path="@hubspot/form", label="ウェビナー申込みフォーム",
+      form={
+        "response_type": "inline",
+        "message": "お申し込みありがとうございます！<br>日程が決まり次第、メールでご案内します。"
+      } %}
+  </div>
+  <p class="form-note">※ 営業電話は一切いたしません</p>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <h2 class="text-large section-title">よくある<span class="highlight">質問</span></h2>
+    </div>
+    <div class="faq-list">
+      {% module "faq_content" path="@hubspot/rich_text", label="FAQ",
+        html="<div class='faq-item'>
+          <div class='faq-q'>NotebookLMやGemsは無料で使えますか？</div>
+          <div class='faq-a'>はい、NotebookLMもGemsも、Googleアカウントがあれば無料で利用できます。より高度な機能はGoogle Workspace有料プランで利用可能です。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>社内資料をアップロードしてセキュリティは大丈夫ですか？</div>
+          <div class='faq-a'>NotebookLMはGoogleのエンタープライズセキュリティ基準に準拠しており、アップロードしたデータはAIの学習には使用されません。Google Workspaceをご利用の場合、組織の管理ポリシーを適用できます。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>日本語に対応していますか？</div>
+          <div class='faq-a'>はい、完全対応しています。Audio OverviewやVideo Overviewsも日本語で生成可能です。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>どのような資料形式に対応していますか？</div>
+          <div class='faq-a'>PDF、Googleドキュメント・スライド・スプレッドシート、ウェブサイトURL、YouTube動画、テキストファイルなど多数に対応しています。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>当日参加できない場合はどうなりますか？</div>
+          <div class='faq-a'>録画を後日配信します。お申し込みいただければ、録画をご視聴いただけます。</div>
+        </div>
+        <div class='faq-item'>
+          <div class='faq-q'>スマートフォンでも使えますか？</div>
+          <div class='faq-a'>はい。2026年1月からiOS/Androidアプリも提供開始されており、Video Overviewsのカスタマイズもスマホから可能です。</div>
+        </div>" %}
+    </div>
+  </div>
+</section>
+
+<!-- ========== フッターCTA ========== -->
+<section class="footer-cta">
+  <h2 class="text-large">「マニュアルが古い」「資料作りで残業」から<br><span class="text-accent">卒業する</span>時代へ</h2>
+  <p class="text-body">参加無料・録画配信あり</p>
+  <a href="#form" class="cta-btn-large">無料ウェビナーに申し込む</a>
+</section>
+
+<!-- ========== フッター ========== -->
+<footer class="lp-footer">
+  {% module "footer_text" path="@hubspot/rich_text", label="フッター",
+    html="<p>© 2026 ホリエモンAI学校 介護校 ｜ <a href='https://fc.horiemon.ai/kaigo'>ホーム</a> ｜ <a href='https://fc.horiemon.ai/kaigo/privacy'>プライバシーポリシー</a></p>" %}
+</footer>
+
+{{ standard_footer_includes }}
+</body>
+</html>

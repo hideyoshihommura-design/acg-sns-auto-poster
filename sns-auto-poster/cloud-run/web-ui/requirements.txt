@@ -1,4 +1,0 @@
-flask==3.*
-gunicorn==21.*
-requests==2.*
-google-cloud-firestore==2.*
