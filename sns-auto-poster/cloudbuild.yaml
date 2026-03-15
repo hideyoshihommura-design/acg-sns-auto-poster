@@ -1,0 +1,41 @@
+steps:
+  # Dockerイメージのビルド
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - build
+      - -t
+      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/acg-sns-auto-poster:${SHORT_SHA}"
+      - .
+    dir: "sns-auto-poster"
+
+  # Artifact Registry へプッシュ
+  - name: "gcr.io/cloud-builders/docker"
+    args:
+      - push
+      - "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/acg-sns-auto-poster:${SHORT_SHA}"
+
+  # Cloud Run へデプロイ
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - acg-sns-auto-poster
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/acg-sns-auto-poster:${SHORT_SHA}
+      - --platform=managed
+      - --region=${_REGION}
+      - --no-allow-unauthenticated
+      - --set-secrets=HUBSPOT_ACCESS_TOKEN=hubspot-access-token:latest,TIKTOK_ACCESS_TOKEN=tiktok-access-token:latest
+      - --set-env-vars=GCP_PROJECT_ID=${PROJECT_ID},VERTEX_LOCATION=asia-northeast1
+      - --cpu=1
+      - --memory=1Gi
+      - --timeout=300
+      - --min-instances=0
+      - --max-instances=3
+
+substitutions:
+  _REGION: asia-northeast1
+  _REPO: acg-repo
+
+options:
+  logging: CLOUD_LOGGING_ONLY
