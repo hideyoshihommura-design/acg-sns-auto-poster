@@ -112,7 +112,7 @@ def generate_posts(article: Article, platforms: list[str] = None) -> dict:
     """記事からSNS投稿文を生成する"""
     project_id = os.getenv("GCP_PROJECT_ID")
     location = os.getenv("VERTEX_LOCATION", "asia-northeast1")
-    model_name = os.getenv("VERTEX_MODEL", "gemini-2.0-flash-001")
+    model_name = os.getenv("VERTEX_MODEL", "gemini-2.5-flash")
 
     vertexai.init(project=project_id, location=location)
     model = GenerativeModel(model_name)
