@@ -1,0 +1,1266 @@
+<!--
+  templateType: page
+  isAvailableForNewContent: true
+  label: AIバイブコーディング実践研修 LP
+  screenshotPath: ../images/ai-vibe-coding-lp-preview.png
+-->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ content.html_title }}</title>
+{{ standard_header_includes }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+/* ========== Reset & Variables ========== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue-dark:#0d3b6e;
+  --blue:#1a5fa8;
+  --blue-light:#2e86de;
+  --orange:#e67e22;
+  --orange-light:#f39c12;
+  --gold:#f1c40f;
+  --green:#27ae60;
+  --dark:#1a202c;
+  --bg-gray:#f4f7fb;
+  --bg-light:#fafbfd;
+  --text:#2d3748;
+  --text-sub:#4a5568;
+  --text-muted:#718096;
+  --border:#e2e8f0;
+  --radius:12px;
+  --radius-lg:20px;
+  --shadow:0 4px 24px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,.14);
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;line-height:1.7;margin:0}
+a{text-decoration:none}
+img{max-width:100%;height:auto}
+
+/* ========== Utilities ========== */
+.container{max-width:960px;margin:0 auto;padding:0 20px}
+.container-wide{max-width:1100px;margin:0 auto;padding:0 20px}
+.section{padding:80px 0}
+.section-sm{padding:60px 0}
+.text-center{text-align:center}
+.text-orange{color:var(--orange)}
+.text-blue{color:var(--blue)}
+.highlight-orange{background:linear-gradient(transparent 55%,rgba(230,126,34,.25) 55%)}
+.highlight-blue{background:linear-gradient(transparent 55%,rgba(26,95,168,.2) 55%)}
+
+/* ========== Header ========== */
+.lp-header{
+  background:rgba(13,59,110,.97);
+  padding:.7rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  backdrop-filter:blur(10px);
+}
+.lp-header-logo{color:#fff;font-size:.85rem;font-weight:700}
+.lp-header-cta{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;padding:.45rem 1.2rem;border-radius:50px;
+  font-size:.8rem;font-weight:700;transition:.2s;
+  box-shadow:0 4px 12px rgba(230,126,34,.4);
+}
+.lp-header-cta:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(230,126,34,.5)}
+
+/* ========== Section 1: Hero ========== */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  padding:120px 20px 80px;
+  background:linear-gradient(150deg,#0a2744 0%,#0d3b6e 40%,#1a5fa8 100%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+  background:
+    radial-gradient(circle at 20% 50%,rgba(230,126,34,.12) 0%,transparent 50%),
+    radial-gradient(circle at 80% 20%,rgba(46,134,222,.15) 0%,transparent 40%),
+    radial-gradient(circle at 60% 80%,rgba(241,196,15,.08) 0%,transparent 35%);
+}
+.hero-inner{
+  position:relative;z-index:2;
+  max-width:860px;text-align:center;color:#fff;
+}
+.hero-badge-row{
+  display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:1.8rem;
+}
+.hero-badge{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  color:#fff;padding:.35rem 1rem;border-radius:50px;
+  font-size:.75rem;font-weight:700;
+}
+.hero-badge.orange{
+  background:rgba(230,126,34,.25);
+  border-color:rgba(230,126,34,.6);
+  color:#f9d79e;
+}
+.hero-main-copy{
+  font-size:clamp(1rem,3vw,1.15rem);
+  color:rgba(255,255,255,.75);
+  margin-bottom:1rem;
+  font-weight:500;
+}
+.hero-headline{
+  font-size:clamp(2.4rem,7vw,5rem);
+  font-weight:900;
+  line-height:1.1;
+  letter-spacing:-.02em;
+  margin-bottom:.6rem;
+}
+.hero-headline .num{
+  color:var(--gold);
+  font-size:clamp(3rem,9vw,6.5rem);
+}
+.hero-headline .unit{
+  font-size:clamp(1.5rem,4vw,2.8rem);
+}
+.hero-sub-copy{
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color:rgba(255,255,255,.8);
+  margin:1.5rem 0 2.5rem;
+  font-weight:500;
+  line-height:1.6;
+}
+.hero-sub-copy strong{color:#fff}
+.hero-cta-area{display:flex;flex-direction:column;align-items:center;gap:.8rem}
+.btn-primary{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;
+  padding:1.2rem 3.5rem;
+  border-radius:50px;
+  font-size:1.15rem;font-weight:900;
+  transition:.3s;
+  box-shadow:0 8px 32px rgba(230,126,34,.5);
+  letter-spacing:.02em;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(230,126,34,.6)}
+.btn-secondary{
+  display:inline-block;
+  background:rgba(255,255,255,.12);
+  border:2px solid rgba(255,255,255,.35);
+  color:#fff;
+  padding:.85rem 2.5rem;
+  border-radius:50px;
+  font-size:1rem;font-weight:700;
+  transition:.3s;
+}
+.btn-secondary:hover{background:rgba(255,255,255,.2)}
+.hero-note{
+  font-size:.8rem;color:rgba(255,255,255,.5);margin-top:.5rem;
+}
+.hero-stats{
+  display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;
+  margin-top:3.5rem;padding-top:3rem;
+  border-top:1px solid rgba(255,255,255,.15);
+}
+.hero-stat{text-align:center}
+.hero-stat-num{
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:900;color:var(--gold);
+  line-height:1;
+}
+.hero-stat-label{
+  font-size:.75rem;color:rgba(255,255,255,.65);margin-top:.3rem;
+}
+
+/* ========== Section 2: Concerns ========== */
+.concerns{background:var(--bg-gray)}
+.section-label{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--blue),var(--blue-light));
+  color:#fff;
+  padding:.35rem 1.2rem;border-radius:50px;
+  font-size:.8rem;font-weight:700;
+  margin-bottom:1rem;
+}
+.section-title{
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:900;line-height:1.3;
+  margin-bottom:.8rem;
+}
+.section-desc{
+  font-size:1rem;color:var(--text-sub);
+  margin-bottom:3rem;
+}
+.concern-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.25rem;
+  margin-top:2.5rem;
+}
+.concern-card{
+  background:#fff;
+  border-radius:var(--radius);
+  padding:1.75rem 1.5rem;
+  border-left:4px solid var(--orange);
+  box-shadow:var(--shadow);
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.concern-icon{
+  font-size:2rem;flex-shrink:0;margin-top:.1rem;
+}
+.concern-text strong{
+  display:block;font-size:1rem;font-weight:700;margin-bottom:.3rem;color:var(--text);
+}
+.concern-text p{font-size:.9rem;color:var(--text-sub);line-height:1.6}
+.concern-answer{
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+  color:#fff;
+  border-radius:var(--radius-lg);
+  padding:2.5rem;
+  margin-top:3rem;
+  text-align:center;
+}
+.concern-answer h3{
+  font-size:clamp(1.3rem,3vw,1.8rem);
+  font-weight:900;margin-bottom:1rem;
+}
+.concern-answer p{color:rgba(255,255,255,.8);font-size:.95rem}
+.concern-answer strong{color:var(--gold)}
+
+/* ========== Section 3: Service Overview ========== */
+.service{background:#fff}
+.step-flow{
+  display:flex;gap:1rem;align-items:stretch;margin-top:3rem;
+}
+.step-arrow{
+  display:flex;align-items:center;
+  font-size:1.8rem;color:var(--orange);
+  flex-shrink:0;
+}
+.step-card{
+  flex:1;
+  background:var(--bg-light);
+  border:2px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:2rem 1.5rem;
+  text-align:center;
+  transition:.3s;
+  position:relative;
+  overflow:hidden;
+}
+.step-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;
+}
+.step-card.step1::before{background:linear-gradient(90deg,var(--blue),var(--blue-light))}
+.step-card.step2::before{background:linear-gradient(90deg,var(--orange),var(--orange-light))}
+.step-card.step3::before{background:linear-gradient(90deg,var(--green),#2ecc71)}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.step-num{
+  font-size:.75rem;font-weight:700;
+  color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:.1em;
+  margin-bottom:.5rem;
+}
+.step-icon{font-size:2.5rem;margin-bottom:.75rem}
+.step-title{
+  font-size:1.15rem;font-weight:900;
+  color:var(--text);margin-bottom:.75rem;
+}
+.step-month{
+  display:inline-block;
+  background:var(--blue-dark);color:#fff;
+  padding:.25rem .85rem;border-radius:50px;
+  font-size:.75rem;font-weight:700;
+  margin-bottom:.75rem;
+}
+.step-card.step2 .step-month{background:var(--orange)}
+.step-card.step3 .step-month{background:var(--green)}
+.step-desc{font-size:.875rem;color:var(--text-sub);line-height:1.7}
+
+.outcome-box{
+  background:linear-gradient(135deg,#fef9e7,#fdebd0);
+  border:2px solid var(--gold);
+  border-radius:var(--radius-lg);
+  padding:2rem;
+  margin-top:2.5rem;
+  display:flex;align-items:center;gap:1.5rem;
+}
+.outcome-icon{font-size:3rem;flex-shrink:0}
+.outcome-text h4{font-size:1.1rem;font-weight:900;margin-bottom:.4rem;color:var(--dark)}
+.outcome-text p{font-size:.9rem;color:var(--text-sub)}
+
+/* ========== Section 4: Subsidy ========== */
+.subsidy{background:linear-gradient(150deg,#0a2744,#0d3b6e)}
+.subsidy .section-title{color:#fff}
+.subsidy .section-desc{color:rgba(255,255,255,.7)}
+.subsidy .section-label{background:linear-gradient(135deg,var(--orange),var(--orange-light))}
+.price-comparison{
+  display:flex;gap:1.5rem;align-items:center;
+  margin-top:2.5rem;flex-wrap:wrap;justify-content:center;
+}
+.price-card{
+  flex:1;min-width:200px;max-width:280px;
+  border-radius:var(--radius-lg);
+  padding:2rem 1.5rem;
+  text-align:center;
+}
+.price-card.before{
+  background:rgba(255,255,255,.08);
+  border:2px solid rgba(255,255,255,.2);
+}
+.price-card.after{
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  box-shadow:0 16px 48px rgba(230,126,34,.5);
+  transform:scale(1.05);
+}
+.price-label{
+  font-size:.75rem;font-weight:700;
+  color:rgba(255,255,255,.6);
+  text-transform:uppercase;letter-spacing:.1em;
+  margin-bottom:.75rem;
+}
+.price-card.after .price-label{color:rgba(255,255,255,.85)}
+.price-num{
+  font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:900;color:#fff;
+  line-height:1;
+}
+.price-unit{font-size:.9rem;font-weight:700;color:rgba(255,255,255,.8)}
+.price-note{font-size:.75rem;color:rgba(255,255,255,.6);margin-top:.5rem}
+.price-arrow{
+  font-size:2.5rem;color:var(--gold);flex-shrink:0;font-weight:900;
+}
+.off-badge{
+  display:inline-block;
+  background:var(--gold);color:var(--dark);
+  padding:.3rem .9rem;border-radius:50px;
+  font-size:.8rem;font-weight:900;
+  margin-top:.6rem;
+}
+.subsidy-table{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  margin-top:3rem;
+}
+.subsidy-table table{width:100%;border-collapse:collapse}
+.subsidy-table th{
+  background:rgba(255,255,255,.1);
+  color:rgba(255,255,255,.85);
+  font-size:.8rem;font-weight:700;
+  padding:1rem 1.2rem;text-align:left;
+}
+.subsidy-table td{
+  color:rgba(255,255,255,.8);
+  font-size:.875rem;
+  padding:.9rem 1.2rem;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.subsidy-table tr:last-child td{
+  font-weight:900;color:var(--gold);
+  font-size:1rem;background:rgba(241,196,15,.08);
+}
+.subsidy-note{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:var(--radius);
+  padding:1.25rem 1.5rem;
+  margin-top:1.5rem;
+  font-size:.85rem;color:rgba(255,255,255,.65);
+  line-height:1.7;
+}
+.subsidy-note strong{color:rgba(255,255,255,.9)}
+.subsidy-cta{margin-top:3rem;text-align:center}
+
+/* ========== Section 5: Program Detail ========== */
+.program{background:var(--bg-gray)}
+.program-phases{
+  display:flex;flex-direction:column;gap:1.5rem;
+  margin-top:2.5rem;
+}
+.phase-card{
+  background:#fff;
+  border-radius:var(--radius-lg);
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  display:flex;
+}
+.phase-side{
+  width:200px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem 1.5rem;text-align:center;color:#fff;
+}
+.phase-card.phase1 .phase-side{background:linear-gradient(150deg,var(--blue-dark),var(--blue))}
+.phase-card.phase2 .phase-side{background:linear-gradient(150deg,#7d3c98,#9b59b6)}
+.phase-card.phase3 .phase-side{background:linear-gradient(150deg,#1a6b38,var(--green))}
+.phase-num{font-size:.7rem;font-weight:700;letter-spacing:.1em;opacity:.8;margin-bottom:.3rem}
+.phase-icon{font-size:2.2rem;margin-bottom:.5rem}
+.phase-period{
+  font-size:.7rem;font-weight:700;
+  background:rgba(255,255,255,.2);
+  padding:.25rem .7rem;border-radius:50px;
+  margin-bottom:.5rem;
+}
+.phase-hours{
+  font-size:1.6rem;font-weight:900;line-height:1;
+}
+.phase-hours-unit{font-size:.7rem;opacity:.8}
+.phase-main{flex:1;padding:2rem}
+.phase-title{
+  font-size:1.15rem;font-weight:900;
+  margin-bottom:.3rem;color:var(--text);
+}
+.phase-subtitle{font-size:.85rem;color:var(--text-muted);margin-bottom:1.25rem}
+.phase-curriculum{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;
+}
+.curriculum-item{
+  background:var(--bg-gray);
+  border-radius:8px;padding:.75rem 1rem;
+  font-size:.8rem;
+}
+.curriculum-item .week{
+  font-weight:700;color:var(--blue);
+  font-size:.7rem;margin-bottom:.2rem;
+}
+.curriculum-item.orange .week{color:var(--orange)}
+.curriculum-item.green .week{color:var(--green)}
+.curriculum-item p{color:var(--text-sub);line-height:1.5}
+.program-summary{
+  background:linear-gradient(135deg,var(--blue-dark),var(--blue));
+  border-radius:var(--radius-lg);
+  padding:2.5rem;
+  margin-top:2.5rem;
+  color:#fff;
+}
+.program-summary h3{
+  font-size:1.2rem;font-weight:900;margin-bottom:1.5rem;
+  text-align:center;
+}
+.summary-row{
+  display:flex;gap:1rem;flex-wrap:wrap;
+  justify-content:center;
+}
+.summary-item{
+  background:rgba(255,255,255,.1);
+  border-radius:var(--radius);
+  padding:1rem 1.5rem;
+  text-align:center;flex:1;min-width:160px;
+}
+.summary-item .s-num{
+  font-size:1.6rem;font-weight:900;color:var(--gold);margin-bottom:.2rem;
+}
+.summary-item .s-label{font-size:.75rem;color:rgba(255,255,255,.75)}
+.includes-list{
+  margin-top:1.5rem;
+  display:flex;flex-wrap:wrap;gap:.5rem;justify-content:center;
+}
+.includes-tag{
+  background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.25);
+  color:rgba(255,255,255,.85);
+  padding:.3rem .85rem;border-radius:50px;
+  font-size:.75rem;font-weight:700;
+}
+
+/* ========== Section 6: Cases ========== */
+.cases{background:#fff}
+.case-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1.5rem;
+  margin-top:2.5rem;
+}
+.case-card{
+  border-radius:var(--radius-lg);
+  padding:2rem;
+  position:relative;overflow:hidden;
+  box-shadow:var(--shadow);
+}
+.case-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+}
+.case-card.case1{background:#f0f7ff}
+.case-card.case1::before{background:linear-gradient(90deg,var(--blue),var(--blue-light))}
+.case-card.case2{background:#fff8f0}
+.case-card.case2::before{background:linear-gradient(90deg,var(--orange),var(--gold))}
+.case-card.case3{background:#f0faf4}
+.case-card.case3::before{background:linear-gradient(90deg,var(--green),#2ecc71)}
+.case-card.case4{background:#f8f0ff}
+.case-card.case4::before{background:linear-gradient(90deg,#7d3c98,#9b59b6)}
+.case-industry{
+  font-size:.75rem;font-weight:700;
+  color:var(--text-muted);
+  letter-spacing:.05em;margin-bottom:.5rem;
+}
+.case-result{
+  font-size:clamp(1.1rem,2.5vw,1.35rem);
+  font-weight:900;color:var(--text);
+  line-height:1.4;margin-bottom:1rem;
+}
+.case-result strong{color:var(--orange)}
+.case-quote{
+  background:rgba(0,0,0,.04);
+  border-left:3px solid var(--blue);
+  padding:.75rem 1rem;
+  font-size:.85rem;color:var(--text-sub);
+  border-radius:0 6px 6px 0;
+  font-style:italic;line-height:1.6;
+}
+.case-card.case2 .case-quote{border-left-color:var(--orange)}
+.case-card.case3 .case-quote{border-left-color:var(--green)}
+.case-card.case4 .case-quote{border-left-color:#9b59b6}
+.case-person{
+  margin-top:.75rem;
+  font-size:.75rem;color:var(--text-muted);
+  font-weight:700;
+}
+.trust-bar{
+  background:var(--bg-gray);
+  border-radius:var(--radius-lg);
+  padding:2rem;
+  margin-top:3rem;
+  display:flex;gap:2rem;align-items:center;
+  justify-content:center;flex-wrap:wrap;
+  text-align:center;
+}
+.trust-item .t-num{
+  font-size:1.8rem;font-weight:900;color:var(--blue);
+}
+.trust-item .t-label{font-size:.75rem;color:var(--text-muted)}
+.trust-divider{
+  width:1px;height:50px;background:var(--border);
+  flex-shrink:0;
+}
+
+/* ========== Section 7: CTA ========== */
+.cta-section{
+  background:linear-gradient(150deg,#0a2744,#0d3b6e 50%,#1a5fa8);
+  padding:100px 20px;
+  text-align:center;
+}
+.cta-section h2{
+  font-size:clamp(1.8rem,5vw,3rem);
+  font-weight:900;color:#fff;
+  line-height:1.3;margin-bottom:1rem;
+}
+.cta-section h2 strong{color:var(--gold)}
+.cta-section p{
+  color:rgba(255,255,255,.75);font-size:1rem;
+  margin-bottom:2.5rem;line-height:1.8;
+}
+.cta-cards{
+  display:flex;gap:1.5rem;justify-content:center;
+  flex-wrap:wrap;margin-top:3rem;
+}
+.cta-feature{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radius);
+  padding:1.25rem 1.5rem;
+  text-align:center;
+  min-width:160px;
+}
+.cta-feature-icon{font-size:1.8rem;margin-bottom:.5rem}
+.cta-feature-text{font-size:.8rem;color:rgba(255,255,255,.8);font-weight:700}
+.form-wrap{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:var(--radius-lg);
+  padding:2.5rem;
+  max-width:560px;margin:3rem auto 0;
+}
+.form-title{
+  font-size:1.1rem;font-weight:900;color:#fff;
+  margin-bottom:.5rem;
+}
+.form-subtitle{font-size:.875rem;color:rgba(255,255,255,.65);margin-bottom:1.5rem}
+.form-group{margin-bottom:1rem}
+.form-group label{
+  display:block;font-size:.8rem;font-weight:700;
+  color:rgba(255,255,255,.75);margin-bottom:.4rem;
+}
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.25);
+  border-radius:8px;
+  padding:.75rem 1rem;
+  color:#fff;font-size:.9rem;
+  font-family:inherit;
+  transition:.2s;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:rgba(255,255,255,.35)}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+  outline:none;
+  border-color:var(--orange);
+  background:rgba(255,255,255,.15);
+}
+.form-group select option{background:#0d3b6e;color:#fff}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.btn-form{
+  width:100%;
+  background:linear-gradient(135deg,var(--orange),var(--orange-light));
+  color:#fff;
+  padding:1.1rem;
+  border:none;border-radius:50px;
+  font-size:1.1rem;font-weight:900;
+  cursor:pointer;transition:.3s;
+  font-family:inherit;
+  box-shadow:0 8px 24px rgba(230,126,34,.5);
+  margin-top:.5rem;
+}
+.btn-form:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(230,126,34,.6)}
+.form-note{font-size:.75rem;color:rgba(255,255,255,.45);margin-top:.75rem}
+
+/* ========== Footer ========== */
+.lp-footer{
+  background:#0a1628;
+  padding:3rem 20px 2rem;
+  text-align:center;
+}
+.footer-logo{
+  font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:.5rem;
+}
+.footer-info{font-size:.8rem;color:rgba(255,255,255,.4);line-height:1.8}
+.footer-copy{font-size:.75rem;color:rgba(255,255,255,.25);margin-top:1.5rem}
+
+/* ========== Responsive ========== */
+@media(max-width:768px){
+  .section{padding:60px 0}
+  .concern-grid{grid-template-columns:1fr}
+  .step-flow{flex-direction:column}
+  .step-arrow{transform:rotate(90deg);justify-content:center}
+  .price-comparison{flex-direction:column;align-items:center}
+  .price-card.after{transform:none}
+  .phase-card{flex-direction:column}
+  .phase-side{width:100%;padding:1.5rem;flex-direction:row;gap:1rem}
+  .phase-curriculum{grid-template-columns:1fr}
+  .case-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .hero-stats{gap:1.5rem}
+  .trust-divider{display:none}
+  .subsidy-table{overflow-x:auto}
+}
+@media(max-width:480px){
+  .hero-headline .num{font-size:clamp(2.8rem,15vw,4rem)}
+  .summary-row{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== Fixed Header ===== -->
+<header class="lp-header">
+  <div class="lp-header-logo">ACG｜AIバイブコーディング実践研修</div>
+  <a href="#contact" class="lp-header-cta">無料相談を申し込む</a>
+</header>
+
+<!-- ===========================
+  Section 1: Hero / ファーストビュー
+=========================== -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge-row">
+      <span class="hero-badge orange">人材開発支援助成金 対応</span>
+      <span class="hero-badge">1年間の伴走プログラム</span>
+      <span class="hero-badge">AI内製化支援</span>
+    </div>
+
+    <p class="hero-main-copy">240万円のAI開発研修が——</p>
+
+    <h1 class="hero-headline">
+      実質<span class="num">47</span><span class="unit">万円</span>。
+    </h1>
+
+    <p class="hero-sub-copy">
+      国の助成金で、<strong>御社のAI内製化</strong>を始めませんか？<br>
+      AIでアプリを作れる社員を育てる、1年間の実践プログラム
+    </p>
+
+    <div class="hero-cta-area">
+      <a href="#contact" class="btn-primary">無料相談を申し込む →</a>
+      <a href="#program" class="btn-secondary">プログラム詳細を見る</a>
+      <p class="hero-note">※ 2名受講・中小企業の場合。助成金額は企業規模・条件により異なります。</p>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">約80%</div>
+        <div class="hero-stat-label">最大助成率</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1年間</div>
+        <div class="hero-stat-label">伴走サポート</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">64時間</div>
+        <div class="hero-stat-label">実践プログラム</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">1アプリ</div>
+        <div class="hero-stat-label">研修の成果物</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+  Section 2: Concerns / こんなお悩みありませんか？
+=========================== -->
+<section class="concerns section" id="concerns">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">こんなお悩みありませんか？</span>
+      <h2 class="section-title">
+        AI活用したいのに<br>
+        一歩が踏み出せない<span class="text-orange">理由</span>がある
+      </h2>
+    </div>
+
+    <div class="concern-grid">
+      <div class="concern-card">
+        <div class="concern-icon">💸</div>
+        <div class="concern-text">
+          <strong>外注費用が高すぎる</strong>
+          <p>業務アプリを外注すると数百万円〜数千万円。ちょっとした修正にも毎回費用が発生する。</p>
+        </div>
+      </div>
+      <div class="concern-card">
+        <div class="concern-icon">🤔</div>
+        <div class="concern-text">
+          <strong>何から始めればいいかわからない</strong>
+          <p>AIを活用したいとは思っているが、具体的に何をすればいいか、誰に相談すればいいか不明。</p>
+        </div>
+      </div>
+      <div class="concern-card">
+        <div class="concern-icon">📚</div>
+        <div class="concern-text">
+          <strong>研修費用が高くて踏み切れない</strong>
+          <p>社員にITスキルを身につけさせたいが、研修費用の負担が大きくなかなか決断できない。</p>
+        </div>
+      </div>
+      <div class="concern-card">
+        <div class="concern-icon">🔗</div>
+        <div class="concern-text">
+          <strong>開発会社への依存から抜け出せない</strong>
+          <p>システムの仕様を理解しているのは外部の開発会社だけ。小さな修正にも時間とお金がかかる。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="concern-answer">
+      <h3>その課題、<strong>AIバイブコーディング研修</strong>で解決できます</h3>
+      <p>
+        プログラミング経験ゼロでも、<strong>AIを「指示する力」</strong>を身につければ業務アプリが作れる時代に。<br>
+        しかも国の助成金を活用すれば、<strong>実質負担を最大80%削減</strong>できます。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+  Section 3: Service Overview / サービス概要
+=========================== -->
+<section class="service section" id="service">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">サービス概要</span>
+      <h2 class="section-title">
+        「<span class="text-blue">教える</span>」×「<span class="text-orange">一緒に作る</span>」×「<span class="text-blue highlight-blue">自走を支援する</span>」
+      </h2>
+      <p class="section-desc">
+        1年間3ステップで、社員が自力でAIアプリを作り・運用・改善できる状態を目指します
+      </p>
+    </div>
+
+    <div class="step-flow">
+      <div class="step-card step1">
+        <div class="step-num">Step 01</div>
+        <div class="step-icon">🎓</div>
+        <span class="step-month">月1〜2（2ヶ月）</span>
+        <h3 class="step-title">基礎を学び、<br>業務アプリを作る</h3>
+        <p class="step-desc">
+          AI開発の全体像からプロンプト設計まで基礎を習得。受講者自身の実業務課題を題材に、実際に動くアプリを完成させます。
+        </p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card step2">
+        <div class="step-num">Step 02</div>
+        <div class="step-icon">🔧</div>
+        <span class="step-month">月3〜7（5ヶ月）</span>
+        <h3 class="step-title">運用しながら<br>改善スキルを定着</h3>
+        <p class="step-desc">
+          月次ハンズオンで実際に運用中のアプリを改善。エラー対応・機能追加・セキュリティなど実践的スキルを身につけます。
+        </p>
+      </div>
+      <div class="step-arrow">→</div>
+      <div class="step-card step3">
+        <div class="step-num">Step 03</div>
+        <div class="step-icon">🚀</div>
+        <span class="step-month">月8〜12（5ヶ月）</span>
+        <h3 class="step-title">自走できる<br>AI人材へ</h3>
+        <p class="step-desc">
+          マルチAI活用・第2アプリ開発・社内展開戦略まで。1年後には「社内のAI推進リーダー」として活躍できる状態に。
+        </p>
+      </div>
+    </div>
+
+    <div class="outcome-box">
+      <div class="outcome-icon">🏆</div>
+      <div class="outcome-text">
+        <h4>研修の成果物：実際に動く業務アプリ</h4>
+        <p>「シフト管理アプリ」「利用者情報検索システム」など、受講者の実業務に役立つアプリが研修期間中に完成。研修費用を払いながら、業務効率化も同時に実現できます。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+  Section 4: Subsidy / 助成金で実質80%OFF
+=========================== -->
+<section class="subsidy section" id="subsidy">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">助成金で実質80%OFF</span>
+      <h2 class="section-title">
+        240万円の研修が、<br>実質<span style="color:var(--gold)">47万円</span>になる理由
+      </h2>
+      <p class="section-desc" style="color:rgba(255,255,255,.7)">
+        人材開発支援助成金（事業展開等リスキリング支援コース）を活用することで<br>
+        企業の実質負担を大幅に削減できます
+      </p>
+    </div>
+
+    <div class="price-comparison">
+      <div class="price-card before">
+        <div class="price-label">通常の研修費用（2名）</div>
+        <div class="price-num">240<span class="price-unit">万円</span></div>
+        <div class="price-note">税別 / 1年間</div>
+      </div>
+      <div class="price-arrow">→</div>
+      <div class="price-card after">
+        <div class="price-label">助成金適用後の実質負担</div>
+        <div class="price-num">47<span class="price-unit">万円</span></div>
+        <div class="price-note">※ 2名・中小企業の場合</div>
+        <div class="off-badge">約80% OFF</div>
+      </div>
+    </div>
+
+    <div class="subsidy-table">
+      <table>
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>研修①<br>基礎・実践</th>
+            <th>研修②③各<br>運用・自走化</th>
+            <th>年間合計</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>研修費（2名）</td>
+            <td>800,000円</td>
+            <td>800,000円</td>
+            <td>2,400,000円</td>
+          </tr>
+          <tr>
+            <td>経費助成（75%→上限30万/人）</td>
+            <td>600,000円</td>
+            <td>600,000円</td>
+            <td>1,800,000円</td>
+          </tr>
+          <tr>
+            <td>賃金助成（@1,000円）</td>
+            <td>80,000円</td>
+            <td>24,000円</td>
+            <td>128,000円</td>
+          </tr>
+          <tr>
+            <td>クライアント実質負担</td>
+            <td>120,000円</td>
+            <td>176,000円</td>
+            <td>472,000円</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsidy-note">
+      <strong>重要なご案内：</strong>研修費は全額を先払いいただき、助成金は審査後（申請から3〜6ヶ月後）に企業様へ直接入金されます。<br>
+      申請主体はクライアント企業様ですが、<strong>書類作成のサポートは当社が全面的に行います</strong>。社労士との連携も含め、申請をスムーズに進められるよう伴走します。
+    </div>
+
+    <div class="subsidy-cta">
+      <a href="#contact" class="btn-primary">貴社の場合のシミュレーションを見る →</a>
+      <p style="color:rgba(255,255,255,.5);font-size:.8rem;margin-top:.75rem">
+        ※ 助成金額は企業規模・受講者数・賃金等の条件により異なります。無料相談でお見積もりします。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+  Section 5: Program Detail / プログラム詳細
+=========================== -->
+<section class="program section" id="program">
+  <div class="container-wide">
+    <div class="text-center">
+      <span class="section-label">プログラム詳細</span>
+      <h2 class="section-title">
+        3つの研修フェーズで<br>
+        <span class="text-blue">1年間・64時間</span>の実践プログラム
+      </h2>
+      <p class="section-desc">
+        各フェーズは受講企業の業務に合わせてカスタマイズ。実業務課題を題材にした「使える」研修です。
+      </p>
+    </div>
+
+    <div class="program-phases">
+
+      <!-- Phase 1 -->
+      <div class="phase-card phase1">
+        <div class="phase-side">
+          <div class="phase-num">PHASE 01</div>
+          <div class="phase-icon">🎓</div>
+          <div class="phase-period">月1〜2（2ヶ月）</div>
+          <div class="phase-hours">40<span class="phase-hours-unit">時間</span></div>
+        </div>
+        <div class="phase-main">
+          <h3 class="phase-title">AIバイブコーディング基礎・実践研修</h3>
+          <p class="phase-subtitle">週5時間 × 8週 ／ OFF-JT（同時双方向型オンライン or 対面）</p>
+          <div class="phase-curriculum">
+            <div class="curriculum-item">
+              <div class="week">第1週</div>
+              <p>AI開発の全体像とClaude Code環境構築・初回アプリ生成体験</p>
+            </div>
+            <div class="curriculum-item">
+              <div class="week">第2週</div>
+              <p>プロンプトエンジニアリング基礎・CLAUDE.md作成法</p>
+            </div>
+            <div class="curriculum-item">
+              <div class="week">第3週</div>
+              <p>Webアプリ開発基礎・React入門・AIによるUI生成実践</p>
+            </div>
+            <div class="curriculum-item">
+              <div class="week">第4週</div>
+              <p>データベース設計とAPI連携・認証機能の実装</p>
+            </div>
+            <div class="curriculum-item">
+              <div class="week">第5〜6週</div>
+              <p>【実践】自社業務アプリ開発①　要件定義〜プロトタイプ完成</p>
+            </div>
+            <div class="curriculum-item">
+              <div class="week">第7〜8週</div>
+              <p>【実践】自社業務アプリ開発②　テスト・デプロイ・成果発表</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 2 -->
+      <div class="phase-card phase2">
+        <div class="phase-side">
+          <div class="phase-num">PHASE 02</div>
+          <div class="phase-icon">🔧</div>
+          <div class="phase-period">月3〜7（5ヶ月）</div>
+          <div class="phase-hours">12<span class="phase-hours-unit">時間</span></div>
+        </div>
+        <div class="phase-main">
+          <h3 class="phase-title">AIアプリ運用・改善ハンズオン研修</h3>
+          <p class="phase-subtitle">月2.5時間 × 5回 ／ 月次ハンズオンセッション</p>
+          <div class="phase-curriculum">
+            <div class="curriculum-item orange">
+              <div class="week">第1回</div>
+              <p>エラーログ分析とデバッグ手法・AI活用の自己解決プロセス</p>
+            </div>
+            <div class="curriculum-item orange">
+              <div class="week">第2回</div>
+              <p>機能追加・改修の実践手法・要件定義からコードレビューまで</p>
+            </div>
+            <div class="curriculum-item orange">
+              <div class="week">第3回</div>
+              <p>パフォーマンス最適化とセキュリティ・データバックアップ運用</p>
+            </div>
+            <div class="curriculum-item orange">
+              <div class="week">第4回</div>
+              <p>外部サービス連携と自動化・API連携応用・Webhook活用</p>
+            </div>
+            <div class="curriculum-item orange">
+              <div class="week">第5回</div>
+              <p>振り返りと応用課題・自走に向けたチェックリスト作成</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phase 3 -->
+      <div class="phase-card phase3">
+        <div class="phase-side">
+          <div class="phase-num">PHASE 03</div>
+          <div class="phase-icon">🚀</div>
+          <div class="phase-period">月8〜12（5ヶ月）</div>
+          <div class="phase-hours">12<span class="phase-hours-unit">時間</span></div>
+        </div>
+        <div class="phase-main">
+          <h3 class="phase-title">AI自走化・高度活用研修</h3>
+          <p class="phase-subtitle">月2.5時間 × 5回 ／ 月次ハンズオンセッション（修了証発行）</p>
+          <div class="phase-curriculum">
+            <div class="curriculum-item green">
+              <div class="week">第1回</div>
+              <p>マルチエージェント活用法・Claude Code + 他AIツール連携</p>
+            </div>
+            <div class="curriculum-item green">
+              <div class="week">第2回</div>
+              <p>第2アプリの企画・開発・習得スキルを活かした自律的な開発</p>
+            </div>
+            <div class="curriculum-item green">
+              <div class="week">第3回</div>
+              <p>テスト自動化とCI/CD・GitHub Actions・継続的デプロイ</p>
+            </div>
+            <div class="curriculum-item green">
+              <div class="week">第4回</div>
+              <p>社内AI活用の展開戦略・他部門への横展開・ナレッジ蓄積</p>
+            </div>
+            <div class="curriculum-item green">
+              <div class="week">第5回</div>
+              <p>総合演習・卒業プレゼン・今後の自走計画策定・修了証授与</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="program-summary">
+      <h3>研修費用に含まれるサービス</h3>
+      <div class="summary-row">
+        <div class="summary-item">
+          <div class="s-num">64h</div>
+          <div class="s-label">合計実践時間</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">月10件</div>
+          <div class="s-label">Q&Aチャットサポート</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">個別</div>
+          <div class="s-label">カリキュラムカスタマイズ</div>
+        </div>
+        <div class="summary-item">
+          <div class="s-num">全回</div>
+          <div class="s-label">コードレビュー付き</div>
+        </div>
+      </div>
+      <div class="includes-list">
+        <span class="includes-tag">✓ ハンズオンセッション指導料</span>
+        <span class="includes-tag">✓ セッション間Q&Aサポート</span>
+        <span class="includes-tag">✓ 教材・テンプレート一式</span>
+        <span class="includes-tag">✓ コードレビュー・フィードバック</span>
+        <span class="includes-tag">✓ 受講レポート・成果物評価</span>
+        <span class="includes-tag">✓ 修了証発行（研修③）</span>
+        <span class="includes-tag">✓ 助成金申請書類サポート</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+  Section 6: Cases / 導入事例・お客様の声
+=========================== -->
+<section class="cases section" id="cases">
+  <div class="container">
+    <div class="text-center">
+      <span class="section-label">導入事例・お客様の声</span>
+      <h2 class="section-title">
+        現場スタッフが<span class="text-orange">業務アプリを自作</span>した実績
+      </h2>
+      <p class="section-desc">
+        介護・医療・福祉分野での実績をもとに、各企業の業務課題を解決しています
+      </p>
+    </div>
+
+    <div class="case-grid">
+      <div class="case-card case1">
+        <div class="case-industry">介護事業者 ／ 50名規模</div>
+        <div class="case-result">
+          シフト管理アプリを<strong>社員が自作</strong>。<br>月20時間の管理工数を削減
+        </div>
+        <div class="case-quote">
+          「プログラミング未経験でしたが、AIに指示するだけで本当にアプリが動いたときは感動しました。今では毎月自分でアップデートしています。」
+        </div>
+        <div class="case-person">介護事業所 管理職 / 40代</div>
+      </div>
+
+      <div class="case-card case2">
+        <div class="case-industry">デイサービス ／ 3拠点</div>
+        <div class="case-result">
+          利用者情報の検索時間を<strong>30秒に短縮</strong>。<br>紙台帳からのデジタル化も完結
+        </div>
+        <div class="case-quote">
+          「外注すると100万円以上かかると言われていたシステムが、研修の中で完成しました。しかも自分でメンテナンスできるので安心です。」
+        </div>
+        <div class="case-person">デイサービス 事務担当 / 30代</div>
+      </div>
+
+      <div class="case-card case3">
+        <div class="case-industry">訪問看護ステーション</div>
+        <div class="case-result">
+          記録入力の<strong>自動化ツール</strong>を開発。<br>スタッフの残業時間が月15時間減少
+        </div>
+        <div class="case-quote">
+          「1年後には自分でアプリの機能を追加できるようになり、他のスタッフへの展開も自分で担当できるようになりました。」
+        </div>
+        <div class="case-person">訪問看護 チームリーダー / 35歳</div>
+      </div>
+
+      <div class="case-card case4">
+        <div class="case-industry">福祉施設 ／ 本部主導のDX</div>
+        <div class="case-result">
+          研修修了者が<strong>社内AI推進リーダー</strong>に。<br>3部門へのノウハウ横展開を実現
+        </div>
+        <div class="case-quote">
+          「助成金のサポートがあったので投資判断がしやすかった。研修と同時に業務改善が進み、費用対効果は申し分なかったです。」
+        </div>
+        <div class="case-person">福祉法人 DX推進担当役員</div>
+      </div>
+    </div>
+
+    <div class="trust-bar">
+      <div class="trust-item">
+        <div class="t-num">50拠点</div>
+        <div class="t-label">ACG運営拠点数</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="t-num">500名</div>
+        <div class="t-label">グループ従業員数</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="t-num">42億円</div>
+        <div class="t-label">グループ売上規模</div>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <div class="t-num">自社実証</div>
+        <div class="t-label">介護現場で培ったAI活用知見</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+  Section 7: CTA / 問い合わせ
+=========================== -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <h2>
+      まずは<strong>無料相談</strong>から。<br>
+      貴社の場合のシミュレーションをお出しします。
+    </h2>
+    <p>
+      「どれくらい助成金が出るか知りたい」「研修の内容をもっと詳しく聞きたい」<br>
+      そんなご質問にもお気軽にどうぞ。完全無料・押し売り一切なし。
+    </p>
+
+    <div class="cta-cards">
+      <div class="cta-feature">
+        <div class="cta-feature-icon">💰</div>
+        <div class="cta-feature-text">助成金シミュレーション<br>無料で試算</div>
+      </div>
+      <div class="cta-feature">
+        <div class="cta-feature-icon">📋</div>
+        <div class="cta-feature-text">申請書類作成<br>全面サポート</div>
+      </div>
+      <div class="cta-feature">
+        <div class="cta-feature-icon">🎯</div>
+        <div class="cta-feature-text">業務課題に合わせた<br>カリキュラム提案</div>
+      </div>
+      <div class="cta-feature">
+        <div class="cta-feature-icon">🤝</div>
+        <div class="cta-feature-text">社労士との<br>連携紹介も可能</div>
+      </div>
+    </div>
+
+    <div class="form-wrap">
+      <div class="form-title">無料相談を申し込む</div>
+      <div class="form-subtitle">フォームにご入力ください。2営業日以内にご連絡いたします。</div>
+
+      <!-- HubSpot Form Embed Placeholder -->
+      <!-- HubSpotフォームを使用する場合は以下のscriptタグに差し替えてください -->
+      <!-- <script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+      <script>
+        hbspt.forms.create({
+          region: "na1",
+          portalId: "YOUR_PORTAL_ID",
+          formId: "YOUR_FORM_ID"
+        });
+      </script> -->
+
+      <form>
+        <div class="form-row">
+          <div class="form-group">
+            <label>会社名 <span style="color:var(--orange)">*</span></label>
+            <input type="text" placeholder="株式会社〇〇">
+          </div>
+          <div class="form-group">
+            <label>お名前 <span style="color:var(--orange)">*</span></label>
+            <input type="text" placeholder="山田 太郎">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>メールアドレス <span style="color:var(--orange)">*</span></label>
+            <input type="email" placeholder="info@example.com">
+          </div>
+          <div class="form-group">
+            <label>電話番号</label>
+            <input type="tel" placeholder="03-0000-0000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>従業員数</label>
+          <select>
+            <option value="">選択してください</option>
+            <option>〜20名</option>
+            <option>21〜50名</option>
+            <option>51〜100名</option>
+            <option>101〜300名</option>
+            <option>301名以上</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ご相談内容・ご質問</label>
+          <textarea rows="3" placeholder="「助成金の対象になるか確認したい」「まず話を聞きたい」など、お気軽にご記入ください"></textarea>
+        </div>
+        <button type="submit" class="btn-form">無料相談を申し込む →</button>
+        <div class="form-note">
+          個人情報は相談対応のみに使用し、第三者への提供は行いません。
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="lp-footer">
+  <div class="footer-logo">あおぞらケアグループ（ACG）</div>
+  <div class="footer-info">
+    AIバイブコーディング実践研修サービス<br>
+    50拠点・500名・42億円規模の介護グループが提供する、現場発のAI内製化支援
+  </div>
+  <div class="footer-copy">&copy; 2026 Aozora Care Group. All Rights Reserved.</div>
+</footer>
+
+{{ standard_footer_includes }}
+</body>
+</html>
