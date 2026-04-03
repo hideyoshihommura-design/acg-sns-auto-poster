@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# 環境変数（APIキーなど機密情報）
+.env
+.env.*
+
+# SNS自動投稿の出力ファイル
+sns-auto-poster/output/
+
+# Claude Code ローカル設定
+.claude/settings.local.json
