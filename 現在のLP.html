@@ -127,15 +127,22 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
   .hero-orb3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%);border-radius:50%;pointer-events:none}
   @keyframes floatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(25px,-18px) scale(1.08)}}
   @keyframes floatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-18px,25px) scale(1.06)}}
-  .hero-content{position:relative;z-index:2;max-width:960px;text-align:center;color:#fff}
+  /* Hero 2カラムレイアウト */
+  .hero-inner{position:relative;z-index:2;max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center}
+  .hero-content{color:#fff;text-align:left}
+  /* フォームパネル */
+  .hero-form-panel{background:rgba(255,255,255,.97);border-radius:20px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+  .hero-form-panel h3{font-size:1.05rem;font-weight:900;color:#1a202c;margin-bottom:.35rem;text-align:center}
+  .hero-form-panel .hero-form-lead{font-size:.8rem;color:#666;text-align:center;margin-bottom:1.25rem}
+  .hero-form-panel .hs-form-frame{display:block}
   .hero-eyebrow{font-size:1.05rem;font-weight:700;letter-spacing:.1em;color:#fff;margin-bottom:1.5rem;border:1px solid rgba(255,255,255,.55);display:inline-block;padding:.4rem
   1.4rem;border-radius:50px;backdrop-filter:blur(6px);background:rgba(255,255,255,.12);text-shadow:0 1px 6px rgba(0,0,0,.2)}
-  .hero-badge{display:inline-flex;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap;justify-content:center}
+  .hero-badge{display:inline-flex;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap}
   .hero-badge span{padding:.4rem 1.1rem;border-radius:50px;font-size:.85rem;font-weight:700;backdrop-filter:blur(6px)}
   .hero-badge .badge-free{background:rgba(34,197,94,.25);border:1px solid rgba(34,197,94,.6);color:#a7f3c0}
   .hero-badge .badge-zoom{background:rgba(59,130,246,.25);border:1px solid rgba(59,130,246,.6);color:#bfdbfe}
   .hero-badge .badge-demo{background:rgba(251,146,60,.25);border:1px solid rgba(251,146,60,.6);color:#fed7aa}
-  .hero-target{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2rem}
+  .hero-target{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
   .hero-target span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);padding:.45rem 1.1rem;border-radius:50px;font-size:.92rem}
   .hero-target span::before{content:'▶ ';font-size:.6em;color:#FFE566;vertical-align:middle}
   .hero-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem}
@@ -300,7 +307,10 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
   /* ========== Responsive ========== */
   @media(max-width:768px){
     .section{padding:60px 15px}
-    .hero-content{padding:0 10px}                                                                                                                                                                                                                                               
+    .hero-inner{grid-template-columns:1fr;gap:32px}
+    .hero-content{text-align:center;padding:0 10px}
+    .hero-badge{justify-content:center}
+    .hero-target{justify-content:center}
     .hero-img-main{max-width:100%;margin:1.25rem auto 1.75rem}                                                                                                                                                                                                                  
     .whatis-container{grid-template-columns:1fr}                                                                                                                                                                                                                                
     .benefit-grid{grid-template-columns:1fr}                                                                                                                                                                                                                                    
@@ -328,33 +338,38 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
     <a href="#form" class="lp-header-cta">無料で参加 &gt;</a>                                                                                                                                                                                                                   
   </header>                                                                                                                                                                                                                                                                     
                                                                                                                                                                                                                                                                                 
-  <!-- ========== ヒーロー ========== -->                                                                                                                                                                                                                                       
-  <section class="lp-hero">                                                                                                                                                                                                                                                     
-    <div class="hero-orb1"></div>                                                                                                                                                                                                                                               
-    <div class="hero-orb2"></div>                                                                                                                                                                                                                                               
-    <div class="hero-orb3"></div>                                                                                                                                                                                                                                               
-    <div class="hero-content">                                                                                                                                                                                                                                                  
-      <p class="hero-eyebrow">ホリエモンAI学校介護校 ｜ 介護事業者向け無料ウェビナー</p>                                                                                                                                                                                        
-      <div class="hero-badge">                                                                                                                                                                                                                                                  
-        <span class="badge-free">✦ 参加無料</span>                                                                                                                                                                                                                              
-        <span class="badge-zoom">🎥 Zoom開催</span>                                                                                                                                                                                                                             
-        <span class="badge-demo">🖥 ライブデモあり</span>                                                                                                                                                                                                                        
-      </div>                                                                                                                                                                                                                                                                    
-      <div class="hero-img-main">                                                                                                                                                                                                                                               
-        <img src="https://243875500.hs-sites-na2.com/hubfs/Gemini_Generated_Image_5qd1au5qd1au5qd1.png" alt="緊急時対応アプリを5分で作成！〜1人夜勤もこれで安心〜 ホリエモンAI学校介護校ウェビナー">                                                    
-      </div>                                                                                                                                                                                                                                                                    
-      <div class="hero-cta">                                                                                                                                                                                                                                                    
-        <a href="#form" class="cta-btn">無料ウェビナーに申し込む</a>                                                                                                                                                                                                            
-        <p class="hero-note">※ お申し込み30秒 ｜ 3月26日（木）13:30〜14:00</p>                                                                                                                                                                                                  
-      </div>                                                                                                                                                                                                                                                                    
-      <div class="hero-target" style="margin-top:1.75rem">                                                                                                                                                                                                                      
-        <span>介護施設の施設長・管理者</span>                                                                                                                                                                                                                                   
-        <span>マニュアル管理に困っている方</span>                                                                                                                                                                                                                               
-        <span>介護スタッフの育成担当者</span>                                                                                                                                                                                                                                   
-        <span>AIを現場で活用したい方</span>                                                                                                                                                                                                                                     
-      </div>                                                                                                                                                                                                                                                                    
-    </div>                                                                                                                                                                                                                                                                      
-    <a href="#about" class="hero-scroll">SCROLL</a>                                                                                                                                                                                                                             
+  <!-- ========== ヒーロー ========== -->
+  <section class="lp-hero" id="form">
+    <div class="hero-orb1"></div>
+    <div class="hero-orb2"></div>
+    <div class="hero-orb3"></div>
+    <div class="hero-inner">
+      <!-- 左：テキスト＋画像 -->
+      <div class="hero-content">
+        <p class="hero-eyebrow">ホリエモンAI学校介護校 ｜ 介護事業者向け無料ウェビナー</p>
+        <div class="hero-badge">
+          <span class="badge-free">✦ 参加無料</span>
+          <span class="badge-zoom">🎥 Zoom開催</span>
+          <span class="badge-demo">🖥 ライブデモあり</span>
+        </div>
+        <div class="hero-img-main">
+          <img src="https://243875500.hs-sites-na2.com/hubfs/Gemini_Generated_Image_5qd1au5qd1au5qd1.png" alt="緊急時対応アプリを5分で作成！〜1人夜勤もこれで安心〜 ホリエモンAI学校介護校ウェビナー">
+        </div>
+        <div class="hero-target" style="margin-top:1.75rem">
+          <span>介護施設の施設長・管理者</span>
+          <span>マニュアル管理に困っている方</span>
+          <span>介護スタッフの育成担当者</span>
+          <span>AIを現場で活用したい方</span>
+        </div>
+      </div>
+      <!-- 右：フォーム -->
+      <div class="hero-form-panel">
+        <h3>無料ウェビナーに申し込む</h3>
+        <p class="hero-form-lead">お申し込み30秒・参加費無料｜3月26日（木）13:30〜</p>
+        <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
+      </div>
+    </div>
+    <a href="#about" class="hero-scroll">SCROLL</a>
   </section>                                                                                                                                                                                                                                                                    
                                                                                                                                                                                                                                                                                 
   <!-- ========== 福祉現場のあるある ========== -->

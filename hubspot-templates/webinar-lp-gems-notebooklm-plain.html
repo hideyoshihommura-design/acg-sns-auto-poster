@@ -6,6 +6,7 @@
 <title>「自分専用AIアシスタント」を無料で作る方法 | Gems × NotebookLM完全活用ガイド</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<script src="https://js-na2.hsforms.net/forms/embed/243875500.js" defer></script>
 <style>
 /* ========== Reset & Variables ========== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -48,21 +49,28 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
 .hero-orb3{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:700px;background:radial-gradient(circle,rgba(255,255,255,.06) 0%,transparent 60%);border-radius:50%;pointer-events:none}
 @keyframes floatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(25px,-18px) scale(1.08)}}
 @keyframes floatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-18px,25px) scale(1.06)}}
-.hero-content{position:relative;z-index:2;max-width:960px;text-align:center;color:#fff}
+/* Hero 2カラムレイアウト */
+.hero-inner{position:relative;z-index:2;max-width:1200px;width:100%;display:grid;grid-template-columns:1fr 420px;gap:48px;align-items:center}
+.hero-content{color:#fff;text-align:left}
 .hero-eyebrow{font-size:1.15rem;font-weight:900;letter-spacing:.04em;color:#fff;margin-bottom:1.5rem;opacity:.95}
-.hero-badge{display:inline-flex;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap;justify-content:center}
+.hero-badge{display:inline-flex;gap:.5rem;margin-bottom:1.75rem;flex-wrap:wrap}
 .hero-badge span{background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.4);color:rgba(255,255,255,.85);padding:.35rem 1rem;border-radius:50px;font-size:.72rem;font-weight:700;backdrop-filter:blur(6px)}
-.hero-title{margin-bottom:.75rem;text-shadow:0 4px 30px rgba(0,0,0,.2);font-size:clamp(1.5rem,4.5vw,3.8rem) !important;font-weight:900;line-height:1.1;letter-spacing:-.03em}
-.hero-divider{width:56px;height:3px;background:rgba(255,255,255,.5);margin:.25rem auto 1.5rem;border-radius:2px}
-.hero-sub{font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:2.5rem;line-height:1.9;text-shadow:0 2px 10px rgba(0,0,0,.12)}
-.hero-target{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;margin-bottom:2rem}
+.hero-title{margin-bottom:.75rem;text-shadow:0 4px 30px rgba(0,0,0,.2);font-size:clamp(1.5rem,3.5vw,3rem) !important;font-weight:900;line-height:1.1;letter-spacing:-.03em}
+.hero-divider{width:56px;height:3px;background:rgba(255,255,255,.5);margin:.25rem 0 1.5rem;border-radius:2px}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.85);margin-bottom:2rem;line-height:1.9;text-shadow:0 2px 10px rgba(0,0,0,.12)}
+.hero-target{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:0}
 .hero-target span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.9);padding:.4rem 1rem;border-radius:50px;font-size:.8rem}
-.hero-cta{display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.hero-cta{display:flex;flex-direction:column;align-items:flex-start;gap:.75rem}
 .hero-cta .cta-btn{display:inline-flex;align-items:center;gap:.6rem;background:#fff;color:var(--purple);padding:1.25rem 2.75rem;border-radius:50px;font-size:1.05rem;font-weight:700;text-decoration:none;transition:.3s;box-shadow:0 12px 40px rgba(0,0,0,.25)}
 .hero-cta .cta-btn::after{content:'→';font-size:1.05rem;transition:.3s}
 .hero-cta .cta-btn:hover{transform:translateY(-4px);box-shadow:0 22px 55px rgba(0,0,0,.3)}
 .hero-cta .cta-btn:hover::after{transform:translateX(4px)}
 .hero-note{font-size:.75rem;color:rgba(255,255,255,.55)}
+/* フォームパネル */
+.hero-form-panel{position:relative;z-index:2;background:rgba(255,255,255,.97);border-radius:20px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.hero-form-panel h3{font-size:1.05rem;font-weight:900;color:var(--dark);margin-bottom:.35rem;text-align:center}
+.hero-form-panel p{font-size:.8rem;color:var(--text-sub);text-align:center;margin-bottom:1.25rem}
+.hero-form-panel .hs-form-frame{display:block}
 .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(255,255,255,.5);font-size:.65rem;letter-spacing:.08em;animation:scrollBounce 2.2s ease-in-out infinite;z-index:2;text-decoration:none}
 .hero-scroll::after{content:'';display:block;width:1px;height:32px;background:linear-gradient(to bottom,rgba(255,255,255,.45),transparent)}
 @keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
@@ -210,7 +218,12 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
 /* ========== Responsive ========== */
 @media(max-width:768px){
   .section{padding:60px 15px}
-  .hero-content{padding:0 10px}
+  .hero-inner{grid-template-columns:1fr;gap:32px}
+  .hero-content{text-align:center}
+  .hero-badge{justify-content:center}
+  .hero-divider{margin-left:auto;margin-right:auto}
+  .hero-target{justify-content:center}
+  .hero-cta{align-items:center}
   .whatis-container{grid-template-columns:1fr}
   .benefit-grid{grid-template-columns:1fr}
   .steps-container{grid-template-columns:1fr;gap:30px}
@@ -233,29 +246,34 @@ body{font-family:"Noto Sans JP",sans-serif;color:var(--text);background:#fff;lin
 </header>
 
 <!-- ========== ヒーロー ========== -->
-<section class="lp-hero">
+<section class="lp-hero" id="form">
   <div class="hero-orb1"></div>
   <div class="hero-orb2"></div>
   <div class="hero-orb3"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">ホリエモンAI学校介護校</p>
-    <div class="hero-badge">
-      <span>✦ 参加無料</span>
-      <span>🎥 Zoom開催</span>
-      <span>🖥 ライブデモあり</span>
+  <div class="hero-inner">
+    <!-- 左：テキストコンテンツ -->
+    <div class="hero-content">
+      <p class="hero-eyebrow">ホリエモンAI学校介護校</p>
+      <div class="hero-badge">
+        <span>✦ 参加無料</span>
+        <span>🎥 Zoom開催</span>
+        <span>🖥 ライブデモあり</span>
+      </div>
+      <h1 class="text-huge hero-title">「自分専用AIアシスタント」<br>を無料で作る方法</h1>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Gems × NotebookLM連携で業務効率が劇的に変わる<br>生成AI 実践ウェビナー</p>
+      <div class="hero-target">
+        <span>生成AIを業務活用したい方</span>
+        <span>社内ナレッジ活用に課題を感じている方</span>
+        <span>DX推進担当者</span>
+        <span>経営者・管理職</span>
+      </div>
     </div>
-    <h1 class="text-huge hero-title">「自分専用AIアシスタント」<br>を無料で作る方法</h1>
-    <div class="hero-divider"></div>
-    <p class="hero-sub">Gems × NotebookLM連携で業務効率が劇的に変わる<br>生成AI 実践ウェビナー</p>
-    <div class="hero-target">
-      <span>生成AIを業務活用したい方</span>
-      <span>社内ナレッジ活用に課題を感じている方</span>
-      <span>DX推進担当者</span>
-      <span>経営者・管理職</span>
-    </div>
-    <div class="hero-cta">
-      <a href="#form" class="cta-btn">無料ウェビナーに申し込む</a>
-      <p class="hero-note">※ お申し込み30秒</p>
+    <!-- 右：フォーム -->
+    <div class="hero-form-panel">
+      <h3>無料ウェビナーに申し込む</h3>
+      <p>お申し込み30秒・参加費無料</p>
+      <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
     </div>
   </div>
   <a href="#about" class="hero-scroll">SCROLL</a>
