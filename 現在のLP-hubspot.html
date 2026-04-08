@@ -297,6 +297,14 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
   .lp-footer a{color:rgba(255,255,255,.5);text-decoration:none}
   .lp-footer a:hover{color:#fff}
 
+  /* ========== Thank You 表示制御 ========== */
+  #ty-hero-msg{display:none}
+  #ty-form-msg{display:none}
+  html.is-success #ty-hero-msg{display:block!important}
+  html.is-success #form-hero-wrap{display:none!important}
+  html.is-success #ty-form-msg{display:block!important}
+  html.is-success #form-section-wrap{display:none!important}
+
   /* ========== Hero Main Image ========== */
   .hero-img-main{width:100%;max-width:100%;margin:1.25rem 0 0}
   .hero-img-main img{width:100%;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.45);display:block;transition:.35s}
@@ -364,17 +372,18 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
       </div>
       <!-- 右：フォーム -->
       <div class="hero-form-panel">
-        {% if request.query_dict.sl == "webinar-success" %}
-        <div style="text-align:center;padding:2rem 1rem;">
+        <!-- サンクスメッセージ（is-successクラスで表示） -->
+        <div id="ty-hero-msg" style="text-align:center;padding:2rem 1rem;">
           <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
           <h3 style="font-size:1.15rem;font-weight:900;color:#1a202c;margin-bottom:.75rem;">お申し込みありがとうございました！</h3>
           <p style="font-size:.9rem;color:#666;line-height:1.8;">ご登録のメールアドレスに確認メールをお送りしました。<br>当日のZoom URLは開催前日にお送りします。</p>
         </div>
-        {% else %}
-        <h3>無料ウェビナーに申し込む</h3>
-        <p class="hero-form-lead">お申し込み30秒・参加費無料｜4月16日（木）13:30〜</p>
-        <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
-        {% endif %}
+        <!-- フォーム（is-successクラスで非表示） -->
+        <div id="form-hero-wrap">
+          <h3>無料ウェビナーに申し込む</h3>
+          <p class="hero-form-lead">お申し込み30秒・参加費無料｜4月16日（木）13:30〜</p>
+          <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
+        </div>
       </div>
     </div>
     <a href="#about" class="hero-scroll">SCROLL</a>
@@ -592,22 +601,23 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
 
   <!-- ========== 申込みフォーム ========== -->
   <section class="form-section" id="form">
-    {% if request.query_dict.sl == "webinar-success" %}
-    <div style="text-align:center;padding:60px 20px;">
+    <!-- サンクスメッセージ（is-successクラスで表示） -->
+    <div id="ty-form-msg" style="text-align:center;padding:60px 20px;">
       <div style="font-size:3.5rem;margin-bottom:1rem;">✅</div>
       <h2 style="color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;margin-bottom:1rem;">お申し込みありがとうございました！</h2>
       <p style="color:rgba(255,255,255,.85);font-size:1.05rem;line-height:1.85;">ご登録のメールアドレスに確認メールをお送りしました。<br>当日のZoom URLは開催前日にお送りします。</p>
     </div>
-    {% else %}
-    <div class="section-header">
-      <h2 class="text-large section-title">今すぐ<span style="background:linear-gradient(transparent 60%,rgba(255,255,255,.3) 60%)">申し込む</span></h2>
-      <p class="section-lead">4月16日（木）13:30〜14:00（30分）</p>
+    <!-- フォーム（is-successクラスで非表示） -->
+    <div id="form-section-wrap">
+      <div class="section-header">
+        <h2 class="text-large section-title">今すぐ<span style="background:linear-gradient(transparent 60%,rgba(255,255,255,.3) 60%)">申し込む</span></h2>
+        <p class="section-lead">4月16日（木）13:30〜14:00（30分）</p>
+      </div>
+      <div class="form-wrapper">
+        <script src="https://js-na2.hsforms.net/forms/embed/243875500.js" defer></script>
+        <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
+      </div>
     </div>
-    <div class="form-wrapper">
-      <script src="https://js-na2.hsforms.net/forms/embed/243875500.js" defer></script>
-      <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
-    </div>
-    {% endif %}
   </section>
 
   <!-- ========== FAQ ========== -->
@@ -656,6 +666,14 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
   <footer class="lp-footer">
     <div id="hs_cos_wrapper_footer_text" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><span id="hs_cos_wrapper_footer_text_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="rich_text"><p>© 2026 ホリエモンAI学校 介護校 ｜ <a href="https://fc.horiemon.ai/kaigo">ホーム</a> ｜ <a href="https://horiemon.ai/privacypolicy?utm_source=direct&utm_medium=none">プライバシーポリシー</a></p></span></div>
   </footer>
+
+  <script>
+  (function(){
+    if(new URLSearchParams(window.location.search).get('sl')==='webinar-success'){
+      document.documentElement.classList.add('is-success');
+    }
+  })();
+  </script>
 
   {{ standard_footer_includes }}
 
