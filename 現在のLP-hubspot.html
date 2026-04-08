@@ -364,9 +364,17 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
       </div>
       <!-- 右：フォーム -->
       <div class="hero-form-panel">
+        {% if request.query_dict.sl == "webinar-success" %}
+        <div style="text-align:center;padding:2rem 1rem;">
+          <div style="font-size:3rem;margin-bottom:1rem;">✅</div>
+          <h3 style="font-size:1.15rem;font-weight:900;color:#1a202c;margin-bottom:.75rem;">お申し込みありがとうございました！</h3>
+          <p style="font-size:.9rem;color:#666;line-height:1.8;">ご登録のメールアドレスに確認メールをお送りしました。<br>当日のZoom URLは開催前日にお送りします。</p>
+        </div>
+        {% else %}
         <h3>無料ウェビナーに申し込む</h3>
-        <p class="hero-form-lead">お申し込み30秒・参加費無料｜4月9日（水）13:30〜</p>
+        <p class="hero-form-lead">お申し込み30秒・参加費無料｜4月16日（木）13:30〜</p>
         <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
+        {% endif %}
       </div>
     </div>
     <a href="#about" class="hero-scroll">SCROLL</a>
@@ -549,7 +557,7 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
         <div class="details-header">ウェビナー詳細</div>
         <div id="hs_cos_wrapper_event_details" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><span id="hs_cos_wrapper_event_details_" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_rich_text" style="" data-hs-cos-general-type="widget" data-hs-cos-type="rich_text"><div class="details-row"><span class="details-label">テーマ</span><span class="details-value">NotebookLM最新活用術〜「修正できない」「管理が大変」を卒業する30分〜</span></div>
           <div class="details-row"><span class="details-label">内容</span><span class="details-value">Gems × NotebookLM 介護版完全活用ガイド（対談形式）</span></div>
-          <div class="details-row"><span class="details-label">日時</span><span class="details-value">4月9日（水）13:30 - 14:00</span></div>
+          <div class="details-row"><span class="details-label">日時</span><span class="details-value">4月16日（木）13:30 - 14:00</span></div>
           <div class="details-row"><span class="details-label">所要時間</span><span class="details-value">30分（質疑応答含む）</span></div>
           <div class="details-row"><span class="details-label">形式</span><span class="details-value">Zoomウェビナー（オンライン）</span></div>
           <div class="details-row"><span class="details-label">参加費</span><span class="details-value"><span class="price">無料</span></span></div>
@@ -584,14 +592,22 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
 
   <!-- ========== 申込みフォーム ========== -->
   <section class="form-section" id="form">
+    {% if request.query_dict.sl == "webinar-success" %}
+    <div style="text-align:center;padding:60px 20px;">
+      <div style="font-size:3.5rem;margin-bottom:1rem;">✅</div>
+      <h2 style="color:#fff;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;margin-bottom:1rem;">お申し込みありがとうございました！</h2>
+      <p style="color:rgba(255,255,255,.85);font-size:1.05rem;line-height:1.85;">ご登録のメールアドレスに確認メールをお送りしました。<br>当日のZoom URLは開催前日にお送りします。</p>
+    </div>
+    {% else %}
     <div class="section-header">
       <h2 class="text-large section-title">今すぐ<span style="background:linear-gradient(transparent 60%,rgba(255,255,255,.3) 60%)">申し込む</span></h2>
-      <p class="section-lead">4月9日（水）13:30〜14:00（30分）</p>
+      <p class="section-lead">4月16日（木）13:30〜14:00（30分）</p>
     </div>
     <div class="form-wrapper">
       <script src="https://js-na2.hsforms.net/forms/embed/243875500.js" defer></script>
       <div class="hs-form-frame" data-region="na2" data-form-id="77e48724-f297-4ec0-a921-3b7fabd444da" data-portal-id="243875500"></div>
     </div>
+    {% endif %}
   </section>
 
   <!-- ========== FAQ ========== -->
